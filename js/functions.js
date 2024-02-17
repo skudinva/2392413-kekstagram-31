@@ -4,7 +4,7 @@ function strLenCheck(str, len) {
 }
 
 function palindromeCheck(str) {
-  const clearStr = String(str).replaceAll(" ", "").toLowerCase();
+  const clearStr = String(str).replaceAll(' ', '').toLowerCase();
   if (clearStr.length === 0) {
     return false;
   }
@@ -17,24 +17,24 @@ function palindromeCheck(str) {
 }
 
 function recognizeNum(str) {
-  const numberStr = String(str).replace(/[^0-9]/g, "");
-  return parseInt(numberStr);
+  const numberStr = String(str).replace(/[^0-9]/g, '');
+  return parseInt(numberStr, 10);
 }
 
 // Строка короче 20 символов
-//console.log(strLenCheck("проверяемая строка", 20)); // true
+console.log(strLenCheck('проверяемая строка', 20)); // true
 // Длина строки ровно 18 символов
-//console.log(strLenCheck("проверяемая строка", 18)); // true
+console.log(strLenCheck('проверяемая строка', 18)); // true
 // Строка длиннее 10 символов
-//console.log(strLenCheck("проверяемая строка", 10)); // false
+console.log(strLenCheck('проверяемая строка', 10)); // false
 //-----------------
-//console.log(palindromeCheck("Лёша на полке клопа нашёл "));
+console.log(palindromeCheck('Лёша на полке клопа нашёл '));
 //---------------
-//console.log(recognizeNum("2023 год")); // 2023
-//console.log(recognizeNum("ECMAScript 2022")); // 2022
-//console.log(recognizeNum("1 кефир, 0.5 батона")); // 105
-//console.log(recognizeNum("агент 007")); // 7
-//console.log(recognizeNum("а я томат")); // NaN
-//console.log(recognizeNum(2023)); // 2023
-//console.log(recognizeNum(-1)); // 2023
-//console.log(recognizeNum(1.5)); // 2023
+console.log(recognizeNum('2023 год')); // 2023
+console.log(recognizeNum('ECMAScript 2022')); // 2022
+console.log(recognizeNum('1 кефир, 0.5 батона')); // 105
+console.log(recognizeNum('агент 007')); // 7
+console.log(recognizeNum('а я томат')); // NaN
+console.log(recognizeNum(2023)); // 2023
+console.log(recognizeNum(-1)); // 2023
+console.log(recognizeNum(1.5)); // 2023

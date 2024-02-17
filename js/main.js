@@ -1,26 +1,40 @@
-const descriptions = ["ывавфыа", "фывафыва", "dfjkgh kg", "sqwoiue owy r "];
-const messages = [
-  "Всё отлично!",
-  "В целом всё неплохо. Но не всё.",
-  "Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.",
-  "Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.",
-  "Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.",
-  "Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!",
-];
+const dicts = {
+  descriptions: [
+    'Котики',
+    'Один мой день',
+    'Просто красивая картинка',
+    'На улице',
+    'Красиво?',
+    'Завтрак',
+    'Природа',
+    'Слетал побырому',
+    'На море',
+    'Батонюсь',
+    'Зацените',
+    'Такую вот фиговину увидел',
+    'Без описания'
+  ],
+  messages: [
+    'Всё отлично!',
+    'В целом всё неплохо. Но не всё.',
+    'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+    'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+    'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+    'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+  ],
+  names: [
+    'Иван',
+    'Хуан Себастьян',
+    'Мария',
+    'Кристоф',
+    'Виктор',
+    'Юлия',
+    'Люпита',
+    'Вашингтон',
+  ],
+};
 
-const names = [
-  "Иван",
-  "Хуан Себастьян",
-  "Мария",
-  "Кристоф",
-  "Виктор",
-  "Юлия",
-  "Люпита",
-  "Вашингтон",
-];
-
-const postsCount = 25;
-let commentId = 0;
+let commentId = 1;
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -47,27 +61,28 @@ const createComment = (id, avatar, message, name) => ({
   name: name, //Имена авторов также должны быть случайными. Набор имён для комментаторов составьте сами.
 });
 
-const createComments = () =>
-  Array.from({ length: getRandomInteger(0, 30) }, (vl, key) =>
+const createComments = (maxComments) =>
+  Array.from({ length: getRandomInteger(0, maxComments) }, () =>
     createComment(
       commentId++,
       `img/avatar-${getRandomInteger(1, 6)}.svg`,
-      getRandomArrayElement(messages),
-      getRandomArrayElement(names)
+      getRandomArrayElement(dicts.messages),
+      getRandomArrayElement(dicts.names)
     )
   );
 
-const createPosts = () =>
+const createPosts = (postsCount, maxComments) =>
   Array.from({ length: postsCount }, (vl, key) =>
     createPost(
       key,
       `photos/${key}.jpg`,
-      getRandomArrayElement(descriptions),
+      getRandomArrayElement(dicts.descriptions),
       getRandomInteger(15, 200),
-      createComments()
+      createComments(maxComments)
     )
   );
 
-let posts = createPosts();
+const posts = createPosts(25, 30);
 
-//console.log(posts);
+// eslint-disable-next-line no-console
+console.debug(posts);

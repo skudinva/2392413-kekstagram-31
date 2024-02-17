@@ -22,19 +22,19 @@ function recognizeNum(str) {
 }
 
 // Строка короче 20 символов
-console.log(strLenCheck('проверяемая строка', 20)); // true
+console.debug(strLenCheck('проверяемая строка', 20)); // true
 // Длина строки ровно 18 символов
-console.log(strLenCheck('проверяемая строка', 18)); // true
+console.debug(strLenCheck('проверяемая строка', 18)); // true
 // Строка длиннее 10 символов
-console.log(strLenCheck('проверяемая строка', 10)); // false
+console.debug(strLenCheck('проверяемая строка', 10)); // false
 //-----------------
-console.log(palindromeCheck('Лёша на полке клопа нашёл '));
+console.debug(palindromeCheck('Лёша на полке клопа нашёл '));
 //---------------
-console.log(recognizeNum('2023 год')); // 2023
-console.log(recognizeNum('ECMAScript 2022')); // 2022
-console.log(recognizeNum('1 кефир, 0.5 батона')); // 105
-console.log(recognizeNum('агент 007')); // 7
-console.log(recognizeNum('а я томат')); // NaN
-console.log(recognizeNum(2023)); // 2023
-console.log(recognizeNum(-1)); // 2023
-console.log(recognizeNum(1.5)); // 2023
+console.debug(recognizeNum('2023 год')); // 2023
+console.debug(recognizeNum('ECMAScript 2022')); // 2022
+console.debug(recognizeNum('1 кефир, 0.5 батона')); // 105
+console.debug(recognizeNum('агент 007')); // 7
+console.debug(recognizeNum('а я томат')); // NaN
+console.debug(recognizeNum(2023)); // 2023
+console.debug(recognizeNum(-1)); // 2023
+console.debug(recognizeNum(1.5)); // 2023

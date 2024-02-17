@@ -8,7 +8,16 @@ const messages = [
   "Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!",
 ];
 
-const names = ["Вова", "Саша", "Даша", "Макс", "Ира"];
+const names = [
+  "Иван",
+  "Хуан Себастьян",
+  "Мария",
+  "Кристоф",
+  "Виктор",
+  "Юлия",
+  "Люпита",
+  "Вашингтон",
+];
 
 const postsCount = 25;
 let commentId = 0;
@@ -61,4 +70,4 @@ const createPosts = () =>
 
 let posts = createPosts();
 
-console.log(JSON.parse(JSON.stringify(posts)));
+//console.log(posts);

@@ -3,7 +3,15 @@ import { getRandomArrayElement, getRandomInteger } from './utils';
 
 //let commentId = 1;
 const postConfig = {
-  commentId: 1
+  commentId: 1,
+  likes: {
+    min: 15,
+    max: 200
+  },
+  avatars: {
+    min: 1,
+    max: 6
+  }
 };
 
 const createPost = (id, url, description, likes, comments) => ({
@@ -25,20 +33,23 @@ const createComments = (maxComments) =>
   Array.from({ length: getRandomInteger(0, maxComments) }, () =>
     createComment(
       postConfig.commentId++,
-      `img/avatar-${getRandomInteger(1, 6)}.svg`,
+      `img/avatar-${getRandomInteger(postConfig.avatars.min,
+        postConfig.avatars.max)
+      }.svg`,
       getRandomArrayElement(dicts.messages),
       getRandomArrayElement(dicts.names)
     )
   );
 
-const createPosts = (postsCount, maxComments) => Array.from({ length: postsCount }, (vl, key) =>
-  createPost(
-    key,
-    `photos/${key}.jpg`,
-    getRandomArrayElement(dicts.descriptions),
-    getRandomInteger(15, 200),
-    createComments(maxComments)
-  )
-);
+const createPosts = (postsCount, maxComments) =>
+  Array.from({ length: postsCount }, (vl, key) =>
+    createPost(
+      key,
+      `photos/${key}.jpg`,
+      getRandomArrayElement(dicts.descriptions),
+      getRandomInteger(postConfig.likes.min, postConfig.likes.max),
+      createComments(maxComments)
+    )
+  );
 
 export {createPosts};

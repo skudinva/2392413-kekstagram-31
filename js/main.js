@@ -1,6 +1,5 @@
 import { createPosts } from './posts';
+import { drawThumbnails } from './draw-thumbnails';
 
 const posts = createPosts(25, 30);
-
-// eslint-disable-next-line no-console
-console.debug(posts);
+drawThumbnails(posts);

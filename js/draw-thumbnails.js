@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { onClickPicture } from './draw-picture';
 
 export const drawThumbnails = function(posts) {

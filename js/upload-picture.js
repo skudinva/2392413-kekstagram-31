@@ -1,4 +1,3 @@
-import { Pristine } from '../vendor/pristine/pristine.min';
 import { validateHashtag, validateStringLen } from './utils';
 
 export const initUploadPicture = function () {
@@ -15,7 +14,12 @@ export const initUploadPicture = function () {
     '.img-upload__preview'
   );
   const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
-  const pristine = new Pristine(uploadPictureForm, {}, false);
+  const pristine = new Pristine(uploadPictureForm, {
+    classTo: 'img-upload__field-wrapper',
+    errorTextParent: 'img-upload__field-wrapper',
+    errorTextTag: 'div',
+    errorTextClass: 'img-upload__field-wrapper--error',
+  }, false);
 
   pristine.addValidator(
     uploadPictureForm.querySelector('.text__hashtags'),
@@ -23,9 +27,8 @@ export const initUploadPicture = function () {
     'Начинается с #, до 19 символов и цифр'
   );
 
-  const validateDescription = (description) => {
+  const validateDescription = (description) =>
     validateStringLen(description, 140);
-  };
 
   pristine.addValidator(
     uploadPictureForm.querySelector('.text__description'),

@@ -10,9 +10,7 @@ const getRandomArrayElement = (elements) =>
 
 const validateHashtag = (hashtag) => /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
 
-const validateStringLen = (str, len) => {
-  return String(str).length <= len;
-};
+const validateStringLen = (str, len) => str.length <= len;
 
 export {
   getRandomArrayElement,

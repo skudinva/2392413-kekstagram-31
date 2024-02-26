@@ -14,6 +14,9 @@ export const initUploadPicture = function () {
     '.img-upload__preview'
   );
   const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
+  const hashtagInput = uploadPictureForm.querySelector('.text__hashtags');
+  const descriptionInput = uploadPictureForm.querySelector('.text__description');
+
   const pristine = new Pristine(uploadPictureForm, {
     classTo: 'img-upload__field-wrapper',
     errorTextParent: 'img-upload__field-wrapper',
@@ -43,7 +46,7 @@ export const initUploadPicture = function () {
   };
 
   pristine.addValidator(
-    uploadPictureForm.querySelector('.text__hashtags'),
+    hashtagInput,
     (hashtag) => (getHashtagErrorMessage(hashtag) === ''),
     getHashtagErrorMessage
   );
@@ -52,7 +55,7 @@ export const initUploadPicture = function () {
     validateStringLen(description, 140);
 
   pristine.addValidator(
-    uploadPictureForm.querySelector('.text__description'),
+    descriptionInput,
     validateDescription,
     'не более 140 символов'
   );
@@ -69,16 +72,18 @@ export const initUploadPicture = function () {
   });
 
   const onClickClose = function (evt) {
-    if (
-      (evt.type === 'keydown' && evt.key === 'Escape') ||
-      evt.type === 'click'
+    if ((evt.type === 'keydown' && evt.key === 'Escape'
+      && evt.target !== hashtagInput
+      && evt.target !== descriptionInput)
+      || evt.type === 'click'
     ) {
       uploadPictureOverlay.classList.add('hidden');
       document.body.classList.remove('modal-open');
       uploadPictureInput.value = '';
-      uploadPictureForm.removeEventListener('keydown', onClickClose);
+      document.removeEventListener('keydown', onClickClose);
     }
   };
-  uploadPictureForm.addEventListener('keydown', onClickClose);
+
+  document.addEventListener('keydown', onClickClose);
   uploadPictureFormCancel.addEventListener('click', onClickClose);
 };

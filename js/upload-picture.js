@@ -22,7 +22,7 @@ export const initUploadPicture = function () {
     errorTextParent: 'img-upload__field-wrapper',
     errorTextTag: 'div',
     errorTextClass: 'img-upload__field-wrapper--error',
-  }, false);
+  }, true);
 
   const getHashtagErrorMessage = function(hashtag) {
     if(hashtag === '') {
@@ -61,8 +61,9 @@ export const initUploadPicture = function () {
   );
 
   uploadPictureForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    pristine.validate();
+    if(!pristine.validate()) {
+      evt.preventDefault();
+    }
   });
 
   uploadPictureInput.addEventListener('change', () => {

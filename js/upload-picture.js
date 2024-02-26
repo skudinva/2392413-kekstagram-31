@@ -21,10 +21,31 @@ export const initUploadPicture = function () {
     errorTextClass: 'img-upload__field-wrapper--error',
   }, false);
 
+  const getHashtagErrorMessage = function(hashtag) {
+    if(hashtag === '') {
+      return '';
+    }
+
+    const hashtagArray = hashtag.split(' ');
+    if(!hashtagArray.every(validateHashtag)) {
+      return 'Начинается с #, до 19 символов и цифр';
+    }
+
+    if((new Set(hashtagArray)).size !== hashtagArray.length) {
+      return 'Есть дублирующие хэштеги';
+    }
+
+    if(hashtagArray.length > 5){
+      return 'Нельзя указать больше пяти хэштегов';
+    }
+
+    return '';
+  };
+
   pristine.addValidator(
     uploadPictureForm.querySelector('.text__hashtags'),
-    validateHashtag,
-    'Начинается с #, до 19 символов и цифр'
+    (hashtag) => (getHashtagErrorMessage(hashtag) === ''),
+    getHashtagErrorMessage
   );
 
   const validateDescription = (description) =>

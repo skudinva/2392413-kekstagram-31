@@ -8,7 +8,15 @@ const getRandomInteger = (a, b) => {
 const getRandomArrayElement = (elements) =>
   elements[getRandomInteger(0, elements.length - 1)];
 
-const isHashtagValid = (hashtag) =>
-  /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
+const validateHashtag = (hashtag) => /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
 
-export { getRandomArrayElement, getRandomInteger, isHashtagValid };
+const validateStringLen = (str, len) => {
+  return String(str).length <= len;
+};
+
+export {
+  getRandomArrayElement,
+  getRandomInteger,
+  validateHashtag,
+  validateStringLen,
+};

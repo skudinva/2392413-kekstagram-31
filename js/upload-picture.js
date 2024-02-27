@@ -68,8 +68,7 @@ export const initUploadPicture = function () {
 
   uploadPictureInput.addEventListener('change', () => {
     uploadPictureOverlay.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-    uploadPicturePreviewImg.src = uploadPictureInput.value;
+    document.body.classList.add('modal-open');    
   });
 
   const onClickClose = function (evt) {

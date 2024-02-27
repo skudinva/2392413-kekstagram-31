@@ -1,4 +1,4 @@
-import { validateHashtag, validateStringLen } from './utils';
+import { validateHashtag, validateStringLen, allowHashtagChar } from './utils';
 
 export const initUploadPicture = function () {
   const uploadPictureForm = document.querySelector('.img-upload__form');
@@ -10,17 +10,19 @@ export const initUploadPicture = function () {
   const uploadPictureFormCancel = uploadPictureForm.querySelector(
     '.img-upload__cancel'
   );
-//  const uploadPicturePreview = uploadPictureOverlay.querySelector(
-//    '.img-upload__preview'
-//  );
-//  const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
+  /*
+  const uploadPicturePreview = uploadPictureOverlay.querySelector(
+    '.img-upload__preview'
+  );
+  const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
+*/
   const hashtagInput = uploadPictureForm.querySelector('.text__hashtags');
   const descriptionInput = uploadPictureForm.querySelector('.text__description');
 
   /**
    * Инициализация Pristine для валидации формы ввода.
    * Дока: https://pristine.js.org/
-   */  
+   */
   const pristine = new Pristine(uploadPictureForm, {
     classTo: 'img-upload__field-wrapper',
     errorTextParent: 'img-upload__field-wrapper',
@@ -42,13 +44,18 @@ export const initUploadPicture = function () {
    * - один и тот же хэштег не может быть использован дважды;
    * - нельзя указать больше пяти хэштегов;
    * - хэштеги необязательны.
-   */  
+   */
   const getHashtagErrorMessage = function(hashtag) {
-    if(hashtag === '') {
+    const hashtagNormalize = hashtag.trim();
+    if(hashtagNormalize === ''){
       return '';
     }
 
-    const hashtagArray = hashtag.split(' ');
+    const hashtagArray = hashtagNormalize.split(' ');
+    if(hashtagArray.length === 0) {
+      return '';
+    }
+
     if(!hashtagArray.every(validateHashtag)) {
       return 'Начинается с #, до 19 символов и цифр';
     }
@@ -57,7 +64,7 @@ export const initUploadPicture = function () {
       return 'Есть дублирующие хэштеги';
     }
 
-    if(hashtagArray.length > 5){
+    if(hashtagArray.length > 5) {
       return 'Нельзя указать больше пяти хэштегов';
     }
 
@@ -68,7 +75,7 @@ export const initUploadPicture = function () {
    * Добавляем валидатор для поля с HashTag.
    *
    * Проблема: не понятно как можно обойтись одним вызовом getHashtagErrorMessage!!!
-   */  
+   */
   pristine.addValidator(
     hashtagInput,
     (hashtag) => (getHashtagErrorMessage(hashtag) === ''),
@@ -81,7 +88,7 @@ export const initUploadPicture = function () {
    * Правила:
    * - комментарий не обязателен;
    * - длина комментария не может составлять больше 140 символов;
-   */  
+   */
   pristine.addValidator(
     descriptionInput,
     (description) => validateStringLen(description, 140),
@@ -92,21 +99,11 @@ export const initUploadPicture = function () {
    * Добавляем слушателя на событие submit (отправка формы).
    * Если Pristine возвращает false, значит где-то есть ошибка и
    * необходимо прервать поводение браузера по умолчанию.
-   */  
+   */
   uploadPictureForm.addEventListener('submit', (evt) => {
     if(!pristine.validate()) {
       evt.preventDefault();
     }
-  });
-
-  /**
-   * Добавляем слушателя на событие change поля выбора файла.
-   * У элемента удаляется класс hidden, а body задаётся класс
-   * modal-open.
-   */  
-  uploadPictureInput.addEventListener('change', () => {
-    uploadPictureOverlay.classList.remove('hidden');
-    document.body.classList.add('modal-open');    
   });
 
   /**
@@ -121,9 +118,10 @@ export const initUploadPicture = function () {
    * Нюанс: если фокус находится в поле ввода хэштега или комментария, нажатие на
    * Esc не должно приводить к закрытию формы редактирования изображения.
    *
+   *
    * Проблема: определить что фокус находится в элементах ввода смог опредлелить только
    * через evt.target. Мне кажется можно как-то по другому.
-   */  
+   */
   const onClickClose = function (evt) {
     if ((evt.type === 'keydown' && evt.key === 'Escape'
       && evt.target !== hashtagInput
@@ -138,9 +136,44 @@ export const initUploadPicture = function () {
   };
 
   /**
-   * Добавляем слушателя на событие keydown на все окно и событие click
-   * на иконку закрытия модальной формы.
-   */  
-  document.addEventListener('keydown', onClickClose);
-  uploadPictureFormCancel.addEventListener('click', onClickClose);
+   * Дополнительные правила для хештега:
+   *  - запретил двойной пробел;
+   *  - вводить можно только буквы/цифры и #.
+   *
+   * Проблемы: не удалось сделать автоподстановку # если последний символ пробел
+   */
+  const onKeyDownHashtagInput = function (evt) {
+    const elementValue = evt.target.value;
+    const lastChar = elementValue[elementValue.length - 1];
+    const charEnter = evt.key;
+
+    if(!allowHashtagChar(charEnter)) {
+      evt.preventDefault();
+    } else if (charEnter === ' ' && (lastChar === charEnter || lastChar === undefined)) {
+      evt.preventDefault();
+    }
+  };
+
+  /**
+   * Добавляем слушателя на событие change поля выбора файла.
+   * После выбора файла должна появиться модальная форма. Для этого
+   * удаляется класс hidden, а для body задаётся класс modal-open.
+   * Для закрытия формы добавляем слушателя на событие
+   * keydown на документ и событие click на иконку.
+   */
+  uploadPictureInput.addEventListener('change', () => {
+    uploadPictureOverlay.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+
+    document.addEventListener('keydown', onClickClose);
+    uploadPictureFormCancel.addEventListener('click', onClickClose);
+  });
+
+
+  /**
+   * Добавляем слушателя на событие keydown на поле ввода хэштега
+   */
+  hashtagInput.addEventListener('keydown', onKeyDownHashtagInput);
+
+
 };

@@ -1,4 +1,4 @@
-import dicts from './data';
+import Dictionary from './data';
 import { getRandomArrayElement, getRandomInteger } from './utils';
 import { postConfig } from './config';
 
@@ -24,8 +24,8 @@ const createComments = (maxComments) =>
       `img/avatar-${getRandomInteger(postConfig.avatars.min,
         postConfig.avatars.max)
       }.svg`,
-      getRandomArrayElement(dicts.messages),
-      getRandomArrayElement(dicts.names)
+      getRandomArrayElement(Dictionary.messages),
+      getRandomArrayElement(Dictionary.names)
     )
   );
 
@@ -34,7 +34,7 @@ const createPosts = (postsCount, maxComments) =>
     createPost(
       key + 1,
       `photos/${key + 1}.jpg`,
-      getRandomArrayElement(dicts.descriptions),
+      getRandomArrayElement(Dictionary.descriptions),
       getRandomInteger(postConfig.likes.min, postConfig.likes.max),
       createComments(maxComments)
     )

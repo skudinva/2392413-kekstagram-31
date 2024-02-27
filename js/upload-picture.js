@@ -51,12 +51,9 @@ export const initUploadPicture = function () {
     getHashtagErrorMessage
   );
 
-  const validateDescription = (description) =>
-    validateStringLen(description, 140);
-
   pristine.addValidator(
     descriptionInput,
-    validateDescription,
+    (description) => validateStringLen(description, 140),
     'не более 140 символов'
   );
 

@@ -13,7 +13,7 @@ export const initUploadPicture = function () {
   const uploadPicturePreview = uploadPictureOverlay.querySelector(
     '.img-upload__preview'
   );
-  const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
+  // const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
   const hashtagInput = uploadPictureForm.querySelector('.text__hashtags');
   const descriptionInput = uploadPictureForm.querySelector('.text__description');
 

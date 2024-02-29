@@ -1,14 +1,4 @@
-const bigPicture = document.querySelector('.big-picture');
-const bigPictureImg = bigPicture.querySelector('.big-picture__img');
-const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-const img = bigPictureImg.querySelector('img');
-const likes = bigPicture.querySelector('.social__likes');
-const commentsShowCount = bigPicture.querySelector('.social__comment-shown-count');
-const commentsTotalCount = bigPicture.querySelector('.social__comment-total-count');
-const pictureDescription = bigPicture.querySelector('.social__caption');
-const pictureComments = bigPicture.querySelector('.social__comments');
-const commentBlock = bigPicture.querySelector('.social__comment-count');
-const newComment = bigPicture.querySelector('.comments-loader');
+import { bigPicture, img, likes, commentsShowCount, commentsTotalCount, pictureDescription, pictureComments, commentBlock, newComment, bigPictureCancel } from './const';
 
 const prepareComment = function (comment) {
   const userComment = document.createElement('li');

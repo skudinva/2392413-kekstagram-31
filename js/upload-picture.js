@@ -6,25 +6,9 @@ import {
 
 import { effectPicture } from './effect-picture';
 import { scalePicture } from './scale-picture';
+import { descriptionInput, hashtagInput, uploadPictureForm, uploadPictureFormCancel, uploadPictureInput, uploadPictureOverlay } from './const';
 
 export const initUploadPicture = function () {
-  const uploadPictureForm = document.querySelector('.img-upload__form');
-  const uploadPictureInput =
-    uploadPictureForm.querySelector('.img-upload__input');
-  const uploadPictureOverlay = uploadPictureForm.querySelector(
-    '.img-upload__overlay'
-  );
-  const uploadPictureFormCancel = uploadPictureForm.querySelector(
-    '.img-upload__cancel'
-  );
-  /*
-  const uploadPicturePreview = uploadPictureOverlay.querySelector('.img-upload__preview');
-  const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
-  */
-  const hashtagInput = uploadPictureForm.querySelector('.text__hashtags');
-  const descriptionInput =
-    uploadPictureForm.querySelector('.text__description');
-
   /**
    * Инициализация Pristine для валидации формы ввода.
    * Дока: https://pristine.js.org/

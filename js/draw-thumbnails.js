@@ -1,9 +1,7 @@
+import { picturePool, templatePicture } from './const';
 import { onClickPicture } from './draw-picture';
 
 export const drawThumbnails = function (posts) {
-  const templatePicture = document.querySelector('#picture').content;
-  const picturePool = document.querySelector('.pictures');
-
   posts.forEach((element) => {
     const picture = templatePicture.cloneNode(true);
     const link = picture.querySelector('a');

@@ -1,3 +1,6 @@
+import {effectLevelSlider, effectLevelValue,
+  imgUploadEffectLevel, effectList, uploadPicturePreview} from './const';
+
 export const effectPicture = function () {
   /**
    * В объекте хранится для каждого эффекта параметры слайдера и стиля.
@@ -53,14 +56,6 @@ export const effectPicture = function () {
       css: (value) => `filter: brightness(${value})`,
     },
   };
-
-  const effectLevelSlider = document.querySelector('.effect-level__slider');
-  const effectLevelValue = document.querySelector('.effect-level__value');
-  const imgUploadEffectLevel = document.querySelector(
-    '.img-upload__effect-level'
-  );
-  const effectList = document.querySelector('.effects__list');
-  const uploadPicturePreview = document.querySelector('.img-upload__preview');
 
   /**
    * Создание слайдера

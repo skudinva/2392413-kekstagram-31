@@ -1,12 +1,8 @@
+import { scaleControlBigger, scaleControlSmaller, scaleControlValue,
+  uploadPicturePreview } from './const';
+
 export const scalePicture = function () {
   const SCALE_STEP = 25;
-
-  const scaleControlSmaller = document.querySelector(
-    '.scale__control--smaller'
-  );
-  const scaleControlBigger = document.querySelector('.scale__control--bigger');
-  const scaleControlValue = document.querySelector('.scale__control--value');
-  const uploadPicturePreview = document.querySelector('.img-upload__preview');
 
   /**
    * Функция получения текущего значения масштаба в процентах

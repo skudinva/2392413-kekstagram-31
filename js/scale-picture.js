@@ -31,7 +31,7 @@ export const scalePicture = function () {
     if (newScaleValue < 0 || newScaleValue > 100) {
       return;
     }
-    scaleControlValue.value = newScaleValue + '%';
+    scaleControlValue.value = `${newScaleValue}%`;
 
     scaleControlValue.dispatchEvent(new Event('change'));
   };

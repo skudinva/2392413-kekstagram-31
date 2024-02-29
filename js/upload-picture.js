@@ -1,4 +1,11 @@
-import { validateHashtag, validateStringLen, allowHashtagChar } from './utils';
+import {
+  allowHashtagChar,
+  validateHashtag,
+  validateStringLen,
+} from './utils';
+
+import { effectPicture } from './effect-picture';
+import { scalePicture } from './scale-picture';
 
 export const initUploadPicture = function () {
   const uploadPictureForm = document.querySelector('.img-upload__form');
@@ -15,18 +22,23 @@ export const initUploadPicture = function () {
   const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
   */
   const hashtagInput = uploadPictureForm.querySelector('.text__hashtags');
-  const descriptionInput = uploadPictureForm.querySelector('.text__description');
+  const descriptionInput =
+    uploadPictureForm.querySelector('.text__description');
 
   /**
    * Инициализация Pristine для валидации формы ввода.
    * Дока: https://pristine.js.org/
    */
-  const pristine = new Pristine(uploadPictureForm, {
-    classTo: 'img-upload__field-wrapper',
-    errorTextParent: 'img-upload__field-wrapper',
-    errorTextTag: 'div',
-    errorTextClass: 'img-upload__field-wrapper--error',
-  }, true);
+  const pristine = new Pristine(
+    uploadPictureForm,
+    {
+      classTo: 'img-upload__field-wrapper',
+      errorTextParent: 'img-upload__field-wrapper',
+      errorTextTag: 'div',
+      errorTextClass: 'img-upload__field-wrapper--error',
+    },
+    true
+  );
 
   /**
    * Функция для валидации Hashtag.
@@ -43,26 +55,26 @@ export const initUploadPicture = function () {
    * - нельзя указать больше пяти хэштегов;
    * - хэштеги необязательны.
    */
-  const getHashtagErrorMessage = function(hashtag) {
+  const getHashtagErrorMessage = function (hashtag) {
     const hashtagNormalize = hashtag.trim();
-    if(hashtagNormalize === ''){
+    if (hashtagNormalize === '') {
       return '';
     }
 
     const hashtagArray = hashtagNormalize.split(' ');
-    if(hashtagArray.length === 0) {
+    if (hashtagArray.length === 0) {
       return '';
     }
 
-    if(!hashtagArray.every(validateHashtag)) {
+    if (!hashtagArray.every(validateHashtag)) {
       return 'Начинается с #, до 19 символов и цифр';
     }
 
-    if((new Set(hashtagArray)).size !== hashtagArray.length) {
+    if (new Set(hashtagArray).size !== hashtagArray.length) {
       return 'Есть дублирующие хэштеги';
     }
 
-    if(hashtagArray.length > 5) {
+    if (hashtagArray.length > 5) {
       return 'Нельзя указать больше пяти хэштегов';
     }
 
@@ -76,7 +88,7 @@ export const initUploadPicture = function () {
    */
   pristine.addValidator(
     hashtagInput,
-    (hashtag) => (getHashtagErrorMessage(hashtag) === ''),
+    (hashtag) => getHashtagErrorMessage(hashtag) === '',
     getHashtagErrorMessage
   );
 
@@ -99,7 +111,7 @@ export const initUploadPicture = function () {
    * необходимо прервать поводение браузера по умолчанию.
    */
   uploadPictureForm.addEventListener('submit', (evt) => {
-    if(!pristine.validate()) {
+    if (!pristine.validate()) {
       evt.preventDefault();
     }
   });
@@ -121,10 +133,12 @@ export const initUploadPicture = function () {
    * через evt.target. Мне кажется можно как-то по другому.
    */
   const onClickClose = function (evt) {
-    if ((evt.type === 'keydown' && evt.key === 'Escape'
-      && evt.target !== hashtagInput
-      && evt.target !== descriptionInput)
-      || evt.type === 'click'
+    if (
+      (evt.type === 'keydown' &&
+        evt.key === 'Escape' &&
+        evt.target !== hashtagInput &&
+        evt.target !== descriptionInput) ||
+      evt.type === 'click'
     ) {
       uploadPictureOverlay.classList.add('hidden');
       document.body.classList.remove('modal-open');
@@ -145,9 +159,12 @@ export const initUploadPicture = function () {
     const lastChar = elementValue[elementValue.length - 1];
     const charEnter = evt.key;
 
-    if(!allowHashtagChar(charEnter)) {
+    if (!allowHashtagChar(charEnter)) {
       evt.preventDefault();
-    } else if (charEnter === ' ' && (lastChar === charEnter || lastChar === undefined)) {
+    } else if (
+      charEnter === ' ' &&
+      (lastChar === charEnter || lastChar === undefined)
+    ) {
       evt.preventDefault();
     }
   };
@@ -167,9 +184,11 @@ export const initUploadPicture = function () {
     uploadPictureFormCancel.addEventListener('click', onClickClose);
   });
 
-
   /**
    * Добавляем слушателя на событие keydown на поле ввода хэштега
    */
   hashtagInput.addEventListener('keydown', onKeyDownHashtagInput);
+
+  scalePicture();
+  effectPicture();
 };

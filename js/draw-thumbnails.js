@@ -1,6 +1,6 @@
 import { onClickPicture } from './draw-picture';
 
-export const drawThumbnails = function(posts) {
+export const drawThumbnails = function (posts) {
   const templatePicture = document.querySelector('#picture').content;
   const picturePool = document.querySelector('.pictures');
 

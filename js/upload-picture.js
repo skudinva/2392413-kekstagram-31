@@ -1,12 +1,15 @@
-import {
-  allowHashtagChar,
-  validateHashtag,
-  validateStringLen,
-} from './utils';
+import { allowHashtagChar, validateHashtag, validateStringLen } from './utils';
 
+import {
+  descriptionInput,
+  hashtagInput,
+  uploadPictureForm,
+  uploadPictureFormCancel,
+  uploadPictureInput,
+  uploadPictureOverlay,
+} from './const';
 import { effectPicture } from './effect-picture';
 import { scalePicture } from './scale-picture';
-import { descriptionInput, hashtagInput, uploadPictureForm, uploadPictureFormCancel, uploadPictureInput, uploadPictureOverlay } from './const';
 
 export const initUploadPicture = function () {
   /**

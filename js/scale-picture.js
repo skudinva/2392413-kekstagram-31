@@ -1,5 +1,9 @@
-import { scaleControlBigger, scaleControlSmaller, scaleControlValue,
-  uploadPicturePreview } from './const';
+import {
+  scaleControlBigger,
+  scaleControlSmaller,
+  scaleControlValue,
+  uploadPicturePreview,
+} from './const';
 
 export const scalePicture = function () {
   const SCALE_STEP = 25;

@@ -1,4 +1,15 @@
-import { bigPicture, img, likes, commentsShowCount, commentsTotalCount, pictureDescription, pictureComments, commentBlock, newComment, bigPictureCancel } from './const';
+import {
+  bigPicture,
+  bigPictureCancel,
+  commentBlock,
+  commentsShowCount,
+  commentsTotalCount,
+  img,
+  likes,
+  newComment,
+  pictureComments,
+  pictureDescription,
+} from './const';
 
 const prepareComment = function (comment) {
   const userComment = document.createElement('li');
@@ -17,9 +28,11 @@ const prepareComment = function (comment) {
   return userComment;
 };
 
-const onClickClose = function(evt) {
-  if (evt.type === 'keydown' && evt.key === 'Escape'
-    || evt.type === 'click') {
+const onClickClose = function (evt) {
+  if (
+    (evt.type === 'keydown' && evt.key === 'Escape') ||
+    evt.type === 'click'
+  ) {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', onClickClose);
@@ -33,9 +46,8 @@ export const onClickPicture = function (picture) {
   commentsTotalCount.textContent = picture.comments.length;
   pictureDescription.textContent = picture.description;
   pictureComments.replaceChildren();
-  picture.comments.forEach(
-    (element) =>
-      pictureComments.appendChild(prepareComment(element))
+  picture.comments.forEach((element) =>
+    pictureComments.appendChild(prepareComment(element))
   );
 
   bigPicture.classList.remove('hidden');

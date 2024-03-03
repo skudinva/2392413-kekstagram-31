@@ -1,7 +1,14 @@
+import { showAlert } from './alert';
+import { getData } from './api';
 import { drawThumbnails } from './draw-thumbnails';
-import { createPosts } from './posts';
 import { initUploadPicture } from './upload-picture';
 
-const posts = createPosts(25, 30);
-drawThumbnails(posts);
+getData()
+  .then((posts) => {
+    drawThumbnails(posts);
+  })
+  .catch((err) => {
+    showAlert(err.message);
+  });
+
 initUploadPicture();

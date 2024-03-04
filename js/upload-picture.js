@@ -117,7 +117,8 @@ export const initUploadPicture = function () {
         evt.key === 'Escape' &&
         evt.target !== hashtagInput &&
         evt.target !== descriptionInput) ||
-      evt.type === 'click'
+      evt.type === 'click' ||
+      evt.type === 'submit'
     ) {
       uploadPictureOverlay.classList.add('hidden');
       document.body.classList.remove('modal-open');
@@ -131,7 +132,7 @@ export const initUploadPicture = function () {
    */
   const blockSubmitButton = function () {
     submitButton.disabled = true;
-    submitButton.textContent = 'Отправка данных на сервер...';
+    submitButton.textContent = 'Публикация изображения...';
   };
 
   /**
@@ -153,9 +154,9 @@ export const initUploadPicture = function () {
       return;
     }
     blockSubmitButton();
-    const formData = new FormData(evt.target);
-    sendData(formData)
-      .then(onClickClose)
+
+    sendData(new FormData(evt.target))
+      .then(onClickClose(evt))
       .catch((err) => {
         showAlert(err.message);
       })

@@ -1,8 +1,11 @@
 import { allowHashtagChar, validateHashtag, validateStringLen } from './utils';
 
+import { showAlert } from './alert';
+import { sendData } from './api';
 import {
   descriptionInput,
   hashtagInput,
+  submitButton,
   uploadPictureForm,
   uploadPictureFormCancel,
   uploadPictureInput,
@@ -93,17 +96,6 @@ export const initUploadPicture = function () {
   );
 
   /**
-   * Добавляем слушателя на событие submit (отправка формы).
-   * Если Pristine возвращает false, значит где-то есть ошибка и
-   * необходимо прервать поводение браузера по умолчанию.
-   */
-  uploadPictureForm.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
-  });
-
-  /**
    * Обработчик события закрытия формы. Срабатывает на Esc и Click
    * по иконке на форме.
    * Необходимо:
@@ -133,6 +125,42 @@ export const initUploadPicture = function () {
       document.removeEventListener('keydown', onClickClose);
     }
   };
+
+  /**
+   * Блокировка кнопки отправки формы
+   */
+  const blockSubmitButton = function () {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Отправка данных на сервер...';
+  };
+
+  /**
+   * Разблокировка кнопки отправки формы
+   */
+  const unblockSubmitButton = function () {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Опубликовать';
+  };
+
+  /**
+   * Добавляем слушателя на событие submit (отправка формы).
+   * Если Pristine возвращает false, значит где-то есть ошибка и
+   * необходимо прервать поводение браузера по умолчанию.
+   */
+  uploadPictureForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (!pristine.validate()) {
+      return;
+    }
+    blockSubmitButton();
+    const formData = new FormData(evt.target);
+    sendData(formData)
+      .then(onClickClose)
+      .catch((err) => {
+        showAlert(err.message);
+      })
+      .finally(unblockSubmitButton);
+  });
 
   /**
    * Дополнительные правила для хештега:

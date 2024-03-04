@@ -13,6 +13,9 @@ export const uploadPictureFormCancel = uploadPictureForm.querySelector(
 export const hashtagInput = uploadPictureForm.querySelector('.text__hashtags');
 export const descriptionInput =
   uploadPictureForm.querySelector('.text__description');
+export const submitButton = uploadPictureForm.querySelector(
+  '.img-upload__submit'
+);
 
 export const bigPicture = document.querySelector('.big-picture');
 export const bigPictureImg = bigPicture.querySelector('.big-picture__img');

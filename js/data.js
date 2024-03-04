@@ -1,4 +1,4 @@
-const dicts = {
+const Dictionary = {
   descriptions: [
     'Котики',
     'Один мой день',
@@ -12,7 +12,7 @@ const dicts = {
     'Батонюсь',
     'Зацените',
     'Такую вот фиговину увидел',
-    'Без описания'
+    'Без описания',
   ],
   messages: [
     'Всё отлично!',
@@ -34,4 +34,4 @@ const dicts = {
   ],
 };
 
-export default dicts;
+export default Dictionary;

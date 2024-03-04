@@ -1,6 +1,6 @@
-import dicts from './data';
-import { getRandomArrayElement, getRandomInteger } from './utils';
 import { postConfig } from './config';
+import Dictionary from './data';
+import { getRandomArrayElement, getRandomInteger } from './utils';
 
 const createPost = (id, url, description, likes, comments) => ({
   id: id, // число — идентификатор опубликованной фотографии. Это число от 1 до 25. Идентификаторы не должны повторяться.
@@ -21,11 +21,12 @@ const createComments = (maxComments) =>
   Array.from({ length: getRandomInteger(0, maxComments) }, () =>
     createComment(
       postConfig.commentId++,
-      `img/avatar-${getRandomInteger(postConfig.avatars.min,
-        postConfig.avatars.max)
-      }.svg`,
-      getRandomArrayElement(dicts.messages),
-      getRandomArrayElement(dicts.names)
+      `img/avatar-${getRandomInteger(
+        postConfig.avatars.min,
+        postConfig.avatars.max
+      )}.svg`,
+      getRandomArrayElement(Dictionary.messages),
+      getRandomArrayElement(Dictionary.names)
     )
   );
 
@@ -34,10 +35,10 @@ const createPosts = (postsCount, maxComments) =>
     createPost(
       key + 1,
       `photos/${key + 1}.jpg`,
-      getRandomArrayElement(dicts.descriptions),
+      getRandomArrayElement(Dictionary.descriptions),
       getRandomInteger(postConfig.likes.min, postConfig.likes.max),
       createComments(maxComments)
     )
   );
 
-export {createPosts};
+export { createPosts };

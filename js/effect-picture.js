@@ -1,5 +1,10 @@
-import {effectLevelSlider, effectLevelValue,
-  imgUploadEffectLevel, effectList, uploadPicturePreview} from './const';
+import {
+  effectLevelSlider,
+  effectLevelValue,
+  effectList,
+  imgUploadEffectLevel,
+  uploadPicturePreview,
+} from './const';
 
 export const effectPicture = function () {
   /**

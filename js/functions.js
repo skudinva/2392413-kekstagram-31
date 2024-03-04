@@ -39,33 +39,32 @@ console.debug(recognizeNum(2023)); // 2023
 console.debug(recognizeNum(-1)); // 2023
 console.debug(recognizeNum(1.5)); // 2023
 
-
-function timeToDateTime(time){
+function timeToDateTime(time) {
   const dateTime = new Date();
   const [hh, mi] = String(time).split(':');
   return new Date(dateTime.setHours(+hh + 7, +mi, 0, 0));
 }
 
-function validMeetTime(
-  startWorkTime, finishWorkTime,
-  startMeetTime, duration
-) {
+function validMeetTime(startWorkTime, finishWorkTime, startMeetTime, duration) {
   const startWorkDateTime = timeToDateTime(startWorkTime);
   const finishWorkDateTime = timeToDateTime(finishWorkTime);
   const startMeetDateTime = timeToDateTime(startMeetTime);
   const finishMeetDateTime = new Date(startMeetDateTime);
-  finishMeetDateTime.setTime(finishMeetDateTime.getTime() + (duration * 60 * 1000));
+  finishMeetDateTime.setTime(
+    finishMeetDateTime.getTime() + duration * 60 * 1000
+  );
 
-  if (startMeetDateTime >= startWorkDateTime
-    && startMeetDateTime <= finishWorkDateTime
-    && finishMeetDateTime >= startWorkDateTime
-    && finishMeetDateTime <= finishWorkDateTime
+  if (
+    startMeetDateTime >= startWorkDateTime &&
+    startMeetDateTime <= finishWorkDateTime &&
+    finishMeetDateTime >= startWorkDateTime &&
+    finishMeetDateTime <= finishWorkDateTime
   ) {
     return true;
   }
   return false;
 }
-console.debug(validMeetTime('08:00', '17:30', '14:00', 90));//true
+console.debug(validMeetTime('08:00', '17:30', '14:00', 90)); //true
 
 /*
 console.log(validMeetTime('08:00', '17:30', '14:00', 90));//true

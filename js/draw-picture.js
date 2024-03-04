@@ -1,3 +1,4 @@
+
 import { bigPicture, img, likes, commentsShowCount, commentsTotalCount, pictureDescription, pictureComments, commentCount, commentLoader, bigPictureCancel } from './const';
 
 const COMMENT_COUNT = 5;

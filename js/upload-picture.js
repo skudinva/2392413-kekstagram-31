@@ -13,6 +13,7 @@ import {
 } from './const';
 import { effectPicture } from './effect-picture';
 import { scalePicture } from './scale-picture';
+import { showSuccess } from './success';
 
 export const initUploadPicture = function () {
   /**
@@ -156,7 +157,7 @@ export const initUploadPicture = function () {
     blockSubmitButton();
 
     sendData(new FormData(evt.target))
-      .then(onClickClose(evt))
+      .then(showSuccess)
       .catch((err) => {
         showAlert(err.message);
       })

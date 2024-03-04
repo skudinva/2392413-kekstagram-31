@@ -10,7 +10,7 @@ alertContainer.classList.add('hidden');
 
 document.body.appendChild(alertContainer);
 
-const showAlert = (alertText) => {
+const showAlert = function (alertText) {
   errorTitle.textContent = alertText;
   alertContainer.classList.remove('hidden');
   setTimeout(() => {

@@ -17,8 +17,8 @@ export const commentsShowCount = bigPicture.querySelector('.social__comment-show
 export const commentsTotalCount = bigPicture.querySelector('.social__comment-total-count');
 export const pictureDescription = bigPicture.querySelector('.social__caption');
 export const pictureComments = bigPicture.querySelector('.social__comments');
-export const commentBlock = bigPicture.querySelector('.social__comment-count');
-export const newComment = bigPicture.querySelector('.comments-loader');
+export const commentCount = bigPicture.querySelector('.social__comment-count');
+export const commentLoader = bigPicture.querySelector('.comments-loader');
 
 export const uploadPicturePreview = document.querySelector('.img-upload__preview');
 export const scaleControlSmaller = document.querySelector('.scale__control--smaller');

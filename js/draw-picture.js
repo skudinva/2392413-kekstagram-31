@@ -1,4 +1,15 @@
-import { bigPicture, img, likes, commentsShowCount, commentsTotalCount, pictureDescription, pictureComments, commentCount, commentLoader, bigPictureCancel } from './const';
+import {
+  bigPicture,
+  bigPictureCancel,
+  commentCount,
+  commentLoader,
+  commentsShowCount,
+  commentsTotalCount,
+  img,
+  likes,
+  pictureComments,
+  pictureDescription,
+} from './const';
 
 const COMMENT_COUNT = 5;
 let HandlerCommentLoaderClick;

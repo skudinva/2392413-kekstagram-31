@@ -15,7 +15,39 @@ import { effectPicture } from './effect-picture';
 import { scalePicture } from './scale-picture';
 import { showSuccess } from './success';
 
-export const initUploadPicture = function () {
+/**
+ * Обработчик события закрытия формы. Срабатывает на Esc и Click
+ * по иконке на форме.
+ * Необходимо:
+ * - вернуть класс hidden;
+ * - у элемента body удаляется класс modal-open;
+ * - у элемента с выбранным файлом необходимо сбросить value чтобы повторно можно
+ * было загрузить одит и тот же файл.
+ *
+ * Нюанс: если фокус находится в поле ввода хэштега или комментария, нажатие на
+ * Esc не должно приводить к закрытию формы редактирования изображения.
+ *
+ *
+ * Проблема: определить что фокус находится в элементах ввода смог опредлелить только
+ * через evt.target. Мне кажется можно как-то по другому.
+ */
+const onClickUploadClose = function (evt) {
+  if (
+    (evt.type === 'keydown' &&
+      evt.key === 'Escape' &&
+      evt.target !== hashtagInput &&
+      evt.target !== descriptionInput) ||
+    evt.type === 'click' ||
+    evt.type === 'submit'
+  ) {
+    uploadPictureOverlay.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    uploadPictureInput.value = '';
+    document.removeEventListener('keydown', onClickUploadClose);
+  }
+};
+
+const initUploadPicture = function () {
   /**
    * Инициализация Pristine для валидации формы ввода.
    * Дока: https://pristine.js.org/
@@ -97,38 +129,6 @@ export const initUploadPicture = function () {
   );
 
   /**
-   * Обработчик события закрытия формы. Срабатывает на Esc и Click
-   * по иконке на форме.
-   * Необходимо:
-   * - вернуть класс hidden;
-   * - у элемента body удаляется класс modal-open;
-   * - у элемента с выбранным файлом необходимо сбросить value чтобы повторно можно
-   * было загрузить одит и тот же файл.
-   *
-   * Нюанс: если фокус находится в поле ввода хэштега или комментария, нажатие на
-   * Esc не должно приводить к закрытию формы редактирования изображения.
-   *
-   *
-   * Проблема: определить что фокус находится в элементах ввода смог опредлелить только
-   * через evt.target. Мне кажется можно как-то по другому.
-   */
-  const onClickClose = function (evt) {
-    if (
-      (evt.type === 'keydown' &&
-        evt.key === 'Escape' &&
-        evt.target !== hashtagInput &&
-        evt.target !== descriptionInput) ||
-      evt.type === 'click' ||
-      evt.type === 'submit'
-    ) {
-      uploadPictureOverlay.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-      uploadPictureInput.value = '';
-      document.removeEventListener('keydown', onClickClose);
-    }
-  };
-
-  /**
    * Блокировка кнопки отправки формы
    */
   const blockSubmitButton = function () {
@@ -197,8 +197,8 @@ export const initUploadPicture = function () {
     uploadPictureOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    document.addEventListener('keydown', onClickClose);
-    uploadPictureFormCancel.addEventListener('click', onClickClose);
+    document.addEventListener('keydown', onClickUploadClose);
+    uploadPictureFormCancel.addEventListener('click', onClickUploadClose);
   });
 
   /**
@@ -209,3 +209,5 @@ export const initUploadPicture = function () {
   scalePicture();
   effectPicture();
 };
+
+export { initUploadPicture, onClickUploadClose };

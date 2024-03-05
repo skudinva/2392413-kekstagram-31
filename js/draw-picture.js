@@ -1,5 +1,15 @@
-
-import { bigPicture, img, likes, commentsShowCount, commentsTotalCount, pictureDescription, pictureComments, commentCount, commentLoader, bigPictureCancel } from './const';
+import {
+  bigPicture,
+  bigPictureCancel,
+  bigPictureImgTag,
+  commentCount,
+  commentLoader,
+  commentsShowCount,
+  commentsTotalCount,
+  likesCount,
+  pictureComments,
+  pictureDescription,
+} from './const';
 
 const COMMENT_COUNT = 5;
 let HandlerCommentLoaderClick;
@@ -21,14 +31,14 @@ const prepareComment = function (comment) {
   return userComment;
 };
 
-const onClickClose = function (evt) {
+const onClickPictureClose = function (evt) {
   if (
     (evt.type === 'keydown' && evt.key === 'Escape') ||
     evt.type === 'click'
   ) {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onClickClose);
+    document.removeEventListener('keydown', onClickPictureClose);
     commentLoader.removeEventListener('click', HandlerCommentLoaderClick);
   }
 };
@@ -65,13 +75,15 @@ const initCommentBlock = function (comments) {
   commentLoader.dispatchEvent(new Event('click'));
 };
 
-export const onClickPicture = function (picture) {
-  img.src = picture.url;
-  likes.textContent = picture.likes;
+const onClickPicture = function (picture) {
+  bigPictureImgTag.src = picture.url;
+  likesCount.textContent = picture.likes;
   pictureDescription.textContent = picture.description;
   initCommentBlock(picture.comments);
   bigPicture.classList.remove('hidden');
-  bigPictureCancel.addEventListener('click', onClickClose);
-  document.addEventListener('keydown', onClickClose);
+  bigPictureCancel.addEventListener('click', onClickPictureClose);
+  document.addEventListener('keydown', onClickPictureClose);
   document.body.classList.add('modal-open');
 };
+
+export { onClickPicture };

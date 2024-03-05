@@ -1,4 +1,4 @@
-// const ALERT_SHOW_TIME = 5000;
+import { onClickUploadClose } from './upload-picture';
 
 const templateSuccess = document.querySelector('#success').content;
 const successContainer = templateSuccess
@@ -13,10 +13,18 @@ const showSuccess = function () {
   successContainer.classList.remove('hidden');
 };
 
-const onClickSuccessButton = function () {
-  successContainer.classList.add('hidden');
+const onKeyDownSuccessButton = function (evt) {
+  if (
+    (evt.type === 'keydown' && evt.key === 'Escape') ||
+    evt.type === 'click'
+  ) {
+    successContainer.classList.add('hidden');
+    successButton.removeEventListener('keydown', onKeyDownSuccessButton);
+    onClickUploadClose(evt);
+  }
 };
 
-successButton.addEventListener('click', onClickSuccessButton);
+successButton.addEventListener('click', onKeyDownSuccessButton);
+document.addEventListener('keydown', onKeyDownSuccessButton);
 
 export { showSuccess };

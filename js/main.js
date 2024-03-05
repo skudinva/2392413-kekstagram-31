@@ -4,8 +4,8 @@ import { drawThumbnails } from './draw-thumbnails';
 import { initUploadPicture } from './upload-picture';
 
 getData()
-  .then((posts) => {
-    drawThumbnails(posts);
+  .then((pictures) => {
+    drawThumbnails(pictures);
   })
   .catch((err) => {
     showAlert(err.message);

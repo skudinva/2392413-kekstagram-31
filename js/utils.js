@@ -14,10 +14,13 @@ const allowHashtagChar = (char) => /[#a-zа-яё0-9 ]/.test(char);
 
 const validateStringLen = (str, len) => str.length <= len;
 
+const strLenCheck = (str, len) => str.length <= len;
+
 export {
+  allowHashtagChar,
   getRandomArrayElement,
   getRandomInteger,
+  strLenCheck,
   validateHashtag,
-  allowHashtagChar,
   validateStringLen,
 };

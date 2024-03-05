@@ -1,14 +1,57 @@
+import { allowHashtagChar, validateHashtag, validateStringLen } from './utils';
+
+import { showAlert } from './alert';
+import { sendData } from './api';
 import {
-  allowHashtagChar,
-  validateHashtag,
-  validateStringLen,
-} from './utils';
+  descriptionInput,
+  hashtagInput,
+  submitButton,
+  uploadPictureForm,
+  uploadPictureFormCancel,
+  uploadPictureInput,
+  uploadPictureOverlay,
+} from './const';
+import { initEffectPicture } from './effect-picture';
+import { initScalePicture } from './scale-picture';
+import { showSuccess } from './success';
 
-import { effectPicture } from './effect-picture';
-import { scalePicture } from './scale-picture';
-import { descriptionInput, hashtagInput, uploadPictureForm, uploadPictureFormCancel, uploadPictureInput, uploadPictureOverlay } from './const';
+/**
+ * Обработчик события закрытия формы. Срабатывает на Esc и Click
+ * по иконке на форме.
+ * Необходимо:
+ * - вернуть класс hidden;
+ * - у элемента body удаляется класс modal-open;
+ * - у элемента с выбранным файлом необходимо сбросить value чтобы повторно можно
+ * было загрузить одит и тот же файл.
+ *
+ * Нюанс: если фокус находится в поле ввода хэштега или комментария, нажатие на
+ * Esc не должно приводить к закрытию формы редактирования изображения.
+ *
+ *
+ * Проблема: определить что фокус находится в элементах ввода смог опредлелить только
+ * через evt.target. Мне кажется можно как-то по другому.
+ */
+const onClickUploadClose = function (evt) {
+  if (
+    (evt.type === 'keydown' &&
+      evt.key === 'Escape' &&
+      evt.target !== hashtagInput &&
+      evt.target !== descriptionInput) ||
+    evt.type === 'click' ||
+    evt.type === 'submit'
+  ) {
+    uploadPictureOverlay.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    uploadPictureInput.value = '';
+    descriptionInput.value = '';
+    hashtagInput.value = '';
+    initScalePicture();
+    initEffectPicture();
+    document.removeEventListener('keydown', onClickUploadClose);
+  }
+};
 
-export const initUploadPicture = function () {
+const initUploadPicture = function () {
   /**
    * Инициализация Pristine для валидации формы ввода.
    * Дока: https://pristine.js.org/
@@ -90,46 +133,40 @@ export const initUploadPicture = function () {
   );
 
   /**
+   * Блокировка кнопки отправки формы
+   */
+  const blockSubmitButton = function () {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Публикация изображения...';
+  };
+
+  /**
+   * Разблокировка кнопки отправки формы
+   */
+  const unblockSubmitButton = function () {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Опубликовать';
+  };
+
+  /**
    * Добавляем слушателя на событие submit (отправка формы).
    * Если Pristine возвращает false, значит где-то есть ошибка и
    * необходимо прервать поводение браузера по умолчанию.
    */
   uploadPictureForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
     if (!pristine.validate()) {
-      evt.preventDefault();
+      return;
     }
-  });
+    blockSubmitButton();
 
-  /**
-   * Обработчик события закрытия формы. Срабатывает на Esc и Click
-   * по иконке на форме.
-   * Необходимо:
-   * - вернуть класс hidden;
-   * - у элемента body удаляется класс modal-open;
-   * - у элемента с выбранным файлом необходимо сбросить value чтобы повторно можно
-   * было загрузить одит и тот же файл.
-   *
-   * Нюанс: если фокус находится в поле ввода хэштега или комментария, нажатие на
-   * Esc не должно приводить к закрытию формы редактирования изображения.
-   *
-   *
-   * Проблема: определить что фокус находится в элементах ввода смог опредлелить только
-   * через evt.target. Мне кажется можно как-то по другому.
-   */
-  const onClickClose = function (evt) {
-    if (
-      (evt.type === 'keydown' &&
-        evt.key === 'Escape' &&
-        evt.target !== hashtagInput &&
-        evt.target !== descriptionInput) ||
-      evt.type === 'click'
-    ) {
-      uploadPictureOverlay.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-      uploadPictureInput.value = '';
-      document.removeEventListener('keydown', onClickClose);
-    }
-  };
+    sendData(new FormData(evt.target))
+      .then(showSuccess)
+      .catch((err) => {
+        showAlert(err.message);
+      })
+      .finally(unblockSubmitButton);
+  });
 
   /**
    * Дополнительные правила для хештега:
@@ -161,18 +198,19 @@ export const initUploadPicture = function () {
    * keydown на документ и событие click на иконку.
    */
   uploadPictureInput.addEventListener('change', () => {
+    initScalePicture();
+    initEffectPicture();
     uploadPictureOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    document.addEventListener('keydown', onClickClose);
-    uploadPictureFormCancel.addEventListener('click', onClickClose);
+    document.addEventListener('keydown', onClickUploadClose);
+    uploadPictureFormCancel.addEventListener('click', onClickUploadClose);
   });
 
   /**
    * Добавляем слушателя на событие keydown на поле ввода хэштега
    */
   hashtagInput.addEventListener('keydown', onKeyDownHashtagInput);
-
-  scalePicture();
-  effectPicture();
 };
+
+export { initUploadPicture, onClickUploadClose };

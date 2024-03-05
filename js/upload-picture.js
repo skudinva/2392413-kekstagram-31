@@ -11,8 +11,8 @@ import {
   uploadPictureInput,
   uploadPictureOverlay,
 } from './const';
-import { effectPicture } from './effect-picture';
-import { scalePicture } from './scale-picture';
+import { initEffectPicture } from './effect-picture';
+import { initScalePicture } from './scale-picture';
 import { showSuccess } from './success';
 
 /**
@@ -43,6 +43,10 @@ const onClickUploadClose = function (evt) {
     uploadPictureOverlay.classList.add('hidden');
     document.body.classList.remove('modal-open');
     uploadPictureInput.value = '';
+    descriptionInput.value = '';
+    hashtagInput.value = '';
+    initScalePicture();
+    initEffectPicture();
     document.removeEventListener('keydown', onClickUploadClose);
   }
 };
@@ -194,6 +198,8 @@ const initUploadPicture = function () {
    * keydown на документ и событие click на иконку.
    */
   uploadPictureInput.addEventListener('change', () => {
+    initScalePicture();
+    initEffectPicture();
     uploadPictureOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
@@ -205,9 +211,6 @@ const initUploadPicture = function () {
    * Добавляем слушателя на событие keydown на поле ввода хэштега
    */
   hashtagInput.addEventListener('keydown', onKeyDownHashtagInput);
-
-  scalePicture();
-  effectPicture();
 };
 
 export { initUploadPicture, onClickUploadClose };

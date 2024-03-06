@@ -1,20 +1,24 @@
 import { picturePool, templatePicture } from './const';
 import { renderBigPicture } from './draw-picture';
+import { getPictures, setSelectedPicture } from './picture-state';
 
-const drawThumbnails = function (pictures) {
-  pictures.forEach((element) => {
-    const picture = templatePicture.cloneNode(true);
-    const link = picture.querySelector('a');
-    const img = picture.querySelector('.picture__img');
-    const like = picture.querySelector('.picture__likes');
-    const comment = picture.querySelector('.picture__comments');
-    img.src = element.url;
-    img.alt = element.description;
-    like.textContent = element.likes;
-    comment.textContent = element.comments.length;
-    picturePool.appendChild(picture);
-    link.addEventListener('click', () => {
-      renderBigPicture(element);
+const drawThumbnails = function () {
+  const pictures = getPictures();
+  pictures.forEach((picture) => {
+    const pictureElement = templatePicture.cloneNode(true);
+    const link = pictureElement.querySelector('a');
+    const img = pictureElement.querySelector('.picture__img');
+    const like = pictureElement.querySelector('.picture__likes');
+    const comment = pictureElement.querySelector('.picture__comments');
+    img.src = picture.url;
+    img.alt = picture.description;
+    like.textContent = picture.likes;
+    comment.textContent = picture.comments.length;
+    picturePool.appendChild(pictureElement);
+    link.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      setSelectedPicture(picture.id);
+      renderBigPicture();
     });
   });
 };

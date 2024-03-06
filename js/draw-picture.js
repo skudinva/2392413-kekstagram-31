@@ -31,17 +31,22 @@ const prepareComment = function (comment) {
   return userComment;
 };
 
-const onPictureCloseClick = function (evt) {
-  if (
-    (evt.type === 'keydown' && evt.key === 'Escape') ||
-    evt.type === 'click'
-  ) {
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onPictureCloseClick);
-    commentLoader.removeEventListener('click', onCommentLoaderClick);
+const onPictureCloseClick = function () {
+  formClose();
+};
+
+const onPictureCloseKeydown = function (evt) {
+  if (evt.key === 'Escape') {
+    formClose();
   }
 };
+
+function formClose() {
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onPictureCloseKeydown);
+  commentLoader.removeEventListener('click', onCommentLoaderClick);
+}
 
 const initCommentBlock = function (comments) {
   commentsTotalCount.textContent = comments.length;
@@ -82,7 +87,7 @@ const renderBigPicture = function (picture) {
   initCommentBlock(picture.comments);
   bigPicture.classList.remove('hidden');
   bigPictureCancel.addEventListener('click', onPictureCloseClick);
-  document.addEventListener('keydown', onPictureCloseClick);
+  document.addEventListener('keydown', onPictureCloseKeydown);
   document.body.classList.add('modal-open');
 };
 

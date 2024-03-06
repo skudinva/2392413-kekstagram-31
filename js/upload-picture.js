@@ -15,6 +15,20 @@ import { initEffectPicture } from './effect-picture';
 import { initScalePicture } from './scale-picture';
 import { showSuccess } from './success';
 
+const onUploadFormKeydown = function (evt) {
+  if (
+    evt.key === 'Escape' &&
+    evt.target !== hashtagInput &&
+    evt.target !== descriptionInput
+  ) {
+    uploadFormClose();
+  }
+};
+
+const onUploadCloseClick = function () {
+  uploadFormClose();
+};
+
 /**
  * Обработчик события закрытия формы. Срабатывает на Esc и Click
  * по иконке на форме.
@@ -31,25 +45,16 @@ import { showSuccess } from './success';
  * Проблема: определить что фокус находится в элементах ввода смог опредлелить только
  * через evt.target. Мне кажется можно как-то по другому.
  */
-const onUploadCloseClick = function (evt) {
-  if (
-    (evt.type === 'keydown' &&
-      evt.key === 'Escape' &&
-      evt.target !== hashtagInput &&
-      evt.target !== descriptionInput) ||
-    evt.type === 'click' ||
-    evt.type === 'submit'
-  ) {
-    uploadPictureOverlay.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    uploadPictureInput.value = '';
-    descriptionInput.value = '';
-    hashtagInput.value = '';
-    initScalePicture();
-    initEffectPicture();
-    document.removeEventListener('keydown', onUploadCloseClick);
-  }
-};
+function uploadFormClose() {
+  uploadPictureOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  uploadPictureInput.value = '';
+  descriptionInput.value = '';
+  hashtagInput.value = '';
+  initScalePicture();
+  initEffectPicture();
+  document.removeEventListener('keydown', onUploadFormKeydown);
+}
 
 const initUploadPicture = function () {
   /**
@@ -181,7 +186,7 @@ const initUploadPicture = function () {
     uploadPictureOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    document.addEventListener('keydown', onUploadCloseClick);
+    document.addEventListener('keydown', onUploadFormKeydown);
     uploadPictureFormCancel.addEventListener('click', onUploadCloseClick);
   });
 
@@ -212,4 +217,4 @@ const initUploadPicture = function () {
   hashtagInput.addEventListener('keydown', onHashtagInputKeyDown);
 };
 
-export { initUploadPicture, onUploadCloseClick };
+export { initUploadPicture, uploadFormClose };

@@ -21,11 +21,9 @@ const getScaleValue = function () {
  * лиснер. Ну опять же вдруг readonly уберут у scaleControlValue и тогда с клавиатуры
  * все будет работать.
  */
-const onScaleButtonClick = function (evt) {
+const setScaleValue = function (changeValue) {
   const currentScaleValue = getScaleValue();
-  const newScaleValue =
-    currentScaleValue +
-    SCALE_STEP * (evt.target === scaleControlSmaller ? -1 : 1);
+  const newScaleValue = currentScaleValue + changeValue;
 
   if (newScaleValue < 0 || newScaleValue > 100) {
     return;
@@ -33,6 +31,14 @@ const onScaleButtonClick = function (evt) {
   scaleControlValue.value = `${newScaleValue}%`;
 
   scaleControlValue.dispatchEvent(new Event('change'));
+};
+
+const onScaleControlSmallerClick = function () {
+  setScaleValue(SCALE_STEP * -1);
+};
+
+const onScaleControlBiggerClick = function () {
+  setScaleValue(SCALE_STEP);
 };
 
 /**
@@ -44,8 +50,8 @@ const onScaleValueChange = function () {
   uploadPicturePreview.style.cssText += `transform: scale(${currentScaleValue})`;
 };
 
-scaleControlSmaller.addEventListener('click', onScaleButtonClick);
-scaleControlBigger.addEventListener('click', onScaleButtonClick);
+scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
+scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
 scaleControlValue.addEventListener('change', onScaleValueChange);
 
 const initScalePicture = function () {

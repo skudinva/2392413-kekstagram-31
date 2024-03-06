@@ -10,9 +10,15 @@ import {
   pictureComments,
   pictureDescription,
 } from './const';
+import {
+  getComments,
+  getLastCommentShowItem,
+  getSelectedPicture,
+  resetSelectedPicture,
+  setLastCommentShowItem,
+} from './picture-state';
 
 const COMMENT_COUNT = 5;
-let HandlerCommentLoaderClick;
 
 const prepareComment = function (comment) {
   const userComment = document.createElement('li');
@@ -31,19 +37,49 @@ const prepareComment = function (comment) {
   return userComment;
 };
 
-const onClickPictureClose = function (evt) {
-  if (
-    (evt.type === 'keydown' && evt.key === 'Escape') ||
-    evt.type === 'click'
-  ) {
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onClickPictureClose);
-    commentLoader.removeEventListener('click', HandlerCommentLoaderClick);
+const onPictureCloseClick = function () {
+  formClose();
+};
+
+const onPictureCloseKeydown = function (evt) {
+  if (evt.key === 'Escape') {
+    formClose();
   }
 };
 
-const initCommentBlock = function (comments) {
+const onCommentLoaderClick = function () {
+  const comments = getComments();
+
+  const lastCommentShowItem = Math.max(getLastCommentShowItem(), 0);
+  const newLastCommentShowItem = Math.min(
+    lastCommentShowItem + COMMENT_COUNT,
+    comments.length
+  );
+
+  comments
+    .slice(lastCommentShowItem, newLastCommentShowItem)
+    .forEach((comment) => {
+      pictureComments.appendChild(prepareComment(comment));
+    });
+
+  commentsShowCount.textContent = newLastCommentShowItem;
+  setLastCommentShowItem(newLastCommentShowItem);
+
+  if (newLastCommentShowItem >= comments.length) {
+    commentLoader.classList.add('hidden');
+  }
+};
+
+function formClose() {
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onPictureCloseKeydown);
+  commentLoader.removeEventListener('click', onCommentLoaderClick);
+  resetSelectedPicture();
+}
+
+const initCommentBlock = function () {
+  const comments = getComments();
   commentsTotalCount.textContent = comments.length;
   commentCount.classList.remove('hidden');
   if (comments.length > 0) {
@@ -52,38 +88,20 @@ const initCommentBlock = function (comments) {
     commentLoader.classList.add('hidden');
   }
   pictureComments.replaceChildren();
-  let lastCommentShowItem = 0;
-
-  HandlerCommentLoaderClick = function () {
-    for (let i = 0; i < COMMENT_COUNT; i++) {
-      if (!comments[lastCommentShowItem]) {
-        break;
-      }
-
-      pictureComments.appendChild(
-        prepareComment(comments[lastCommentShowItem])
-      );
-      lastCommentShowItem++;
-    }
-    commentsShowCount.textContent = lastCommentShowItem;
-
-    if (lastCommentShowItem >= comments.length) {
-      commentLoader.classList.add('hidden');
-    }
-  };
-  commentLoader.addEventListener('click', HandlerCommentLoaderClick);
+  commentLoader.addEventListener('click', onCommentLoaderClick);
   commentLoader.dispatchEvent(new Event('click'));
 };
 
-const onClickPicture = function (picture) {
+const renderBigPicture = function () {
+  const picture = getSelectedPicture();
   bigPictureImgTag.src = picture.url;
   likesCount.textContent = picture.likes;
   pictureDescription.textContent = picture.description;
   initCommentBlock(picture.comments);
   bigPicture.classList.remove('hidden');
-  bigPictureCancel.addEventListener('click', onClickPictureClose);
-  document.addEventListener('keydown', onClickPictureClose);
+  bigPictureCancel.addEventListener('click', onPictureCloseClick);
+  document.addEventListener('keydown', onPictureCloseKeydown);
   document.body.classList.add('modal-open');
 };
 
-export { onClickPicture };
+export { renderBigPicture };

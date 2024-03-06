@@ -1,4 +1,4 @@
-import { onClickUploadClose } from './upload-picture';
+import { uploadFormClose } from './upload-picture';
 
 const templateSuccess = document.querySelector('#success').content;
 const successContainer = templateSuccess
@@ -9,22 +9,27 @@ const successButton = successContainer.querySelector('.success__button');
 
 document.body.appendChild(successContainer);
 
-const onKeyDownSuccessButton = function (evt) {
-  if (
-    (evt.type === 'keydown' && evt.key === 'Escape') ||
-    evt.type === 'click'
-  ) {
-    successContainer.classList.add('hidden');
-    document.removeEventListener('keydown', onKeyDownSuccessButton);
-    onClickUploadClose(evt);
+const onSuccessButtonKeyDown = function (evt) {
+  if (evt.key === 'Escape') {
+    successFormClose(evt);
   }
 };
 
-const showSuccess = function () {
-  document.addEventListener('keydown', onKeyDownSuccessButton);
-  successContainer.classList.remove('hidden');
+const onSuccessButtonClick = function (evt) {
+  successFormClose(evt);
 };
 
-successButton.addEventListener('click', onKeyDownSuccessButton);
+function successFormClose(evt) {
+  successContainer.classList.add('hidden');
+  document.removeEventListener('keydown', onSuccessButtonKeyDown);
+  uploadFormClose(evt);
+}
+
+successButton.addEventListener('click', onSuccessButtonClick);
+
+const showSuccess = function () {
+  document.addEventListener('keydown', onSuccessButtonKeyDown);
+  successContainer.classList.remove('hidden');
+};
 
 export { showSuccess };

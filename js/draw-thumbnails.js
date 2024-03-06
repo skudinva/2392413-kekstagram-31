@@ -1,7 +1,7 @@
 import { picturePool, templatePicture } from './const';
-import { onClickPicture } from './draw-picture';
+import { renderBigPicture } from './draw-picture';
 
-export const drawThumbnails = function (pictures) {
+const drawThumbnails = function (pictures) {
   pictures.forEach((element) => {
     const picture = templatePicture.cloneNode(true);
     const link = picture.querySelector('a');
@@ -14,7 +14,9 @@ export const drawThumbnails = function (pictures) {
     comment.textContent = element.comments.length;
     picturePool.appendChild(picture);
     link.addEventListener('click', () => {
-      onClickPicture(element);
+      renderBigPicture(element);
     });
   });
 };
+
+export { drawThumbnails };

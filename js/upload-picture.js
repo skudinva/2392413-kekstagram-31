@@ -31,7 +31,7 @@ import { showSuccess } from './success';
  * Проблема: определить что фокус находится в элементах ввода смог опредлелить только
  * через evt.target. Мне кажется можно как-то по другому.
  */
-const onClickUploadClose = function (evt) {
+const onUploadCloseClick = function (evt) {
   if (
     (evt.type === 'keydown' &&
       evt.key === 'Escape' &&
@@ -47,7 +47,7 @@ const onClickUploadClose = function (evt) {
     hashtagInput.value = '';
     initScalePicture();
     initEffectPicture();
-    document.removeEventListener('keydown', onClickUploadClose);
+    document.removeEventListener('keydown', onUploadCloseClick);
   }
 };
 
@@ -169,13 +169,30 @@ const initUploadPicture = function () {
   });
 
   /**
+   * Добавляем слушателя на событие change поля выбора файла.
+   * После выбора файла должна появиться модальная форма. Для этого
+   * удаляется класс hidden, а для body задаётся класс modal-open.
+   * Для закрытия формы добавляем слушателя на событие
+   * keydown на документ и событие click на иконку.
+   */
+  uploadPictureInput.addEventListener('change', () => {
+    initScalePicture();
+    initEffectPicture();
+    uploadPictureOverlay.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+
+    document.addEventListener('keydown', onUploadCloseClick);
+    uploadPictureFormCancel.addEventListener('click', onUploadCloseClick);
+  });
+
+  /**
    * Дополнительные правила для хештега:
    *  - запретил двойной пробел;
    *  - вводить можно только буквы/цифры и #.
    *
    * Проблемы: не удалось сделать автоподстановку # если последний символ пробел
    */
-  const onKeyDownHashtagInput = function (evt) {
+  const onHashtagInputKeyDown = function (evt) {
     const elementValue = evt.target.value;
     const lastChar = elementValue[elementValue.length - 1];
     const charEnter = evt.key;
@@ -189,28 +206,10 @@ const initUploadPicture = function () {
       evt.preventDefault();
     }
   };
-
-  /**
-   * Добавляем слушателя на событие change поля выбора файла.
-   * После выбора файла должна появиться модальная форма. Для этого
-   * удаляется класс hidden, а для body задаётся класс modal-open.
-   * Для закрытия формы добавляем слушателя на событие
-   * keydown на документ и событие click на иконку.
-   */
-  uploadPictureInput.addEventListener('change', () => {
-    initScalePicture();
-    initEffectPicture();
-    uploadPictureOverlay.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-
-    document.addEventListener('keydown', onClickUploadClose);
-    uploadPictureFormCancel.addEventListener('click', onClickUploadClose);
-  });
-
   /**
    * Добавляем слушателя на событие keydown на поле ввода хэштега
    */
-  hashtagInput.addEventListener('keydown', onKeyDownHashtagInput);
+  hashtagInput.addEventListener('keydown', onHashtagInputKeyDown);
 };
 
-export { initUploadPicture, onClickUploadClose };
+export { initUploadPicture, onUploadCloseClick };

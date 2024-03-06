@@ -12,7 +12,7 @@ import {
 } from './const';
 
 const COMMENT_COUNT = 5;
-let HandlerCommentLoaderClick;
+let onCommentLoaderClick;
 
 const prepareComment = function (comment) {
   const userComment = document.createElement('li');
@@ -31,15 +31,15 @@ const prepareComment = function (comment) {
   return userComment;
 };
 
-const onClickPictureClose = function (evt) {
+const onPictureCloseClick = function (evt) {
   if (
     (evt.type === 'keydown' && evt.key === 'Escape') ||
     evt.type === 'click'
   ) {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onClickPictureClose);
-    commentLoader.removeEventListener('click', HandlerCommentLoaderClick);
+    document.removeEventListener('keydown', onPictureCloseClick);
+    commentLoader.removeEventListener('click', onCommentLoaderClick);
   }
 };
 
@@ -54,7 +54,7 @@ const initCommentBlock = function (comments) {
   pictureComments.replaceChildren();
   let lastCommentShowItem = 0;
 
-  HandlerCommentLoaderClick = function () {
+  onCommentLoaderClick = function () {
     for (let i = 0; i < COMMENT_COUNT; i++) {
       if (!comments[lastCommentShowItem]) {
         break;
@@ -71,19 +71,19 @@ const initCommentBlock = function (comments) {
       commentLoader.classList.add('hidden');
     }
   };
-  commentLoader.addEventListener('click', HandlerCommentLoaderClick);
+  commentLoader.addEventListener('click', onCommentLoaderClick);
   commentLoader.dispatchEvent(new Event('click'));
 };
 
-const onClickPicture = function (picture) {
+const renderBigPicture = function (picture) {
   bigPictureImgTag.src = picture.url;
   likesCount.textContent = picture.likes;
   pictureDescription.textContent = picture.description;
   initCommentBlock(picture.comments);
   bigPicture.classList.remove('hidden');
-  bigPictureCancel.addEventListener('click', onClickPictureClose);
-  document.addEventListener('keydown', onClickPictureClose);
+  bigPictureCancel.addEventListener('click', onPictureCloseClick);
+  document.addEventListener('keydown', onPictureCloseClick);
   document.body.classList.add('modal-open');
 };
 
-export { onClickPicture };
+export { renderBigPicture };

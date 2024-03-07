@@ -41,6 +41,10 @@ const imgUploadEffectLevel = document.querySelector(
 );
 const effectList = document.querySelector('.effects__list');
 
+const filterContainer = document.querySelector('.img-filters');
+const filterForm = filterContainer.querySelector('.img-filters__form');
+const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
+
 export {
   bigPicture,
   bigPictureCancel,
@@ -53,6 +57,9 @@ export {
   effectLevelSlider,
   effectLevelValue,
   effectList,
+  filterButtons,
+  filterContainer,
+  filterForm,
   hashtagInput,
   imgUploadEffectLevel,
   likesCount,

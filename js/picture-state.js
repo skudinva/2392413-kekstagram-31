@@ -1,3 +1,4 @@
+import { PICTURE_RANDOM_COUNT } from './const';
 import { getUniqueRandomArrayElement } from './utils';
 
 const pictureState = {
@@ -5,22 +6,21 @@ const pictureState = {
   selectedPicture: null,
   lastCommentShowItem: -1,
   selectedFilter: null,
+  filters: {
+    'filter-default': (pictures) => pictures,
+    'filter-random': (pictures) =>
+      getUniqueRandomArrayElement(pictures, PICTURE_RANDOM_COUNT),
+    'filter-discussed': (pictures) =>
+      pictures.slice().sort((a, b) => b.comments.length - a.comments.length),
+  },
 };
 
 const defaultPictureState = { ...pictureState };
 
 const getPictures = function () {
   const currentFilter = pictureState.selectedFilter.id;
-  if (currentFilter === 'filter-default') {
-    return pictureState.pictures;
-  } else if (currentFilter === 'filter-random') {
-    return getUniqueRandomArrayElement(pictureState.pictures, 10);
-  } else if (currentFilter === 'filter-discussed') {
-    return pictureState.pictures
-      .slice()
-      .sort((a, b) => b.comments.length - a.comments.length);
-  }
-  return pictureState.pictures;
+  const filterResult = pictureState.filters[currentFilter];
+  return filterResult(pictureState.pictures);
 };
 
 const setPictures = function (value) {

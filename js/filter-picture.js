@@ -1,6 +1,12 @@
-import { filterButtons, filterContainer, filterForm } from './const';
+import {
+  DEBOUNCE_TIMEOUT,
+  filterButtons,
+  filterContainer,
+  filterForm,
+} from './const';
 import { drawThumbnails } from './draw-thumbnails';
 import { getSelectedFilter, setSelectedFilter } from './picture-state';
+import { debounce } from './utils';
 
 const resetAllFilters = function () {
   filterButtons.forEach((element) => {
@@ -8,11 +14,13 @@ const resetAllFilters = function () {
   });
 };
 
+const drawThumbnailsDebounce = debounce(drawThumbnails, DEBOUNCE_TIMEOUT);
+
 const setActiveFilter = function () {
   resetAllFilters();
   const currentFilter = getSelectedFilter();
   currentFilter.classList.add('img-filters__button--active');
-  drawThumbnails();
+  drawThumbnailsDebounce();
 };
 
 const onFilterClick = function (evt) {

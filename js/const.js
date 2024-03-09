@@ -41,7 +41,17 @@ const imgUploadEffectLevel = document.querySelector(
 );
 const effectList = document.querySelector('.effects__list');
 
+const filterContainer = document.querySelector('.img-filters');
+const filterForm = filterContainer.querySelector('.img-filters__form');
+const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
+
+const DEBOUNCE_TIMEOUT = 500;
+
+const PICTURE_RANDOM_COUNT = 10;
+
 export {
+  DEBOUNCE_TIMEOUT,
+  PICTURE_RANDOM_COUNT,
   bigPicture,
   bigPictureCancel,
   bigPictureImgTag,
@@ -53,6 +63,9 @@ export {
   effectLevelSlider,
   effectLevelValue,
   effectList,
+  filterButtons,
+  filterContainer,
+  filterForm,
   hashtagInput,
   imgUploadEffectLevel,
   likesCount,

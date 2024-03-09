@@ -3,6 +3,7 @@ import { allowHashtagChar, validateHashtag, validateStringLen } from './utils';
 import { showAlert } from './alert';
 import { sendData } from './api';
 import {
+  FILE_TYPES,
   descriptionInput,
   hashtagInput,
   submitButton,
@@ -10,6 +11,7 @@ import {
   uploadPictureFormCancel,
   uploadPictureInput,
   uploadPictureOverlay,
+  uploadPicturePreviewImg,
 } from './const';
 import { initEffectPicture } from './effect-picture';
 import { initScalePicture } from './scale-picture';
@@ -57,6 +59,11 @@ function uploadFormClose() {
 }
 
 const initUploadPicture = function () {
+  uploadPictureInput.setAttribute(
+    'accept',
+    `image/${FILE_TYPES.join(', image/')}`
+  );
+
   /**
    * Инициализация Pristine для валидации формы ввода.
    * Дока: https://pristine.js.org/
@@ -181,6 +188,15 @@ const initUploadPicture = function () {
    * keydown на документ и событие click на иконку.
    */
   uploadPictureInput.addEventListener('change', () => {
+    const file = uploadPictureInput.files[0];
+    const fileName = file.name.toLowerCase();
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    if (!matches) {
+      showAlert('Формат файла не поддерживается.');
+      return;
+    }
+    uploadPicturePreviewImg.src = URL.createObjectURL(file);
+
     initScalePicture();
     initEffectPicture();
     uploadPictureOverlay.classList.remove('hidden');

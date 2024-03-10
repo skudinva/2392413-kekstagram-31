@@ -1,4 +1,4 @@
-import { allowHashtagChar, validateHashtag, validateStringLen } from './utils';
+import { validateHashtag, validateStringLen } from './utils';
 
 import { showAlert } from './alert';
 import { sendData } from './api';
@@ -32,6 +32,21 @@ const onUploadCloseClick = function () {
 };
 
 /**
+ * Инициализация Pristine для валидации формы ввода.
+ * Дока: https://pristine.js.org/
+ */
+const pristine = new Pristine(
+  uploadPictureForm,
+  {
+    classTo: 'img-upload__field-wrapper',
+    errorTextParent: 'img-upload__field-wrapper',
+    errorTextTag: 'div',
+    errorTextClass: 'img-upload__field-wrapper--error',
+  },
+  true
+);
+
+/**
  * Обработчик события закрытия формы. Срабатывает на Esc и Click
  * по иконке на форме.
  * Необходимо:
@@ -53,6 +68,7 @@ function uploadFormClose() {
   uploadPictureInput.value = '';
   descriptionInput.value = '';
   hashtagInput.value = '';
+  pristine.reset();
   initScalePicture();
   initEffectPicture();
   document.removeEventListener('keydown', onUploadFormKeydown);
@@ -62,21 +78,6 @@ const initUploadPicture = function () {
   uploadPictureInput.setAttribute(
     'accept',
     `image/${FILE_TYPES.join(', image/')}`
-  );
-
-  /**
-   * Инициализация Pristine для валидации формы ввода.
-   * Дока: https://pristine.js.org/
-   */
-  const pristine = new Pristine(
-    uploadPictureForm,
-    {
-      classTo: 'img-upload__field-wrapper',
-      errorTextParent: 'img-upload__field-wrapper',
-      errorTextTag: 'div',
-      errorTextClass: 'img-upload__field-wrapper--error',
-    },
-    true
   );
 
   /**
@@ -95,7 +96,8 @@ const initUploadPicture = function () {
    * - хэштеги необязательны.
    */
   const getHashtagErrorMessage = function (hashtag) {
-    const hashtagNormalize = hashtag.trim();
+    const hashtagNormalize = hashtag.trim().toLowerCase().replace(/\s+/g, ' ');
+
     if (hashtagNormalize === '') {
       return '';
     }
@@ -170,11 +172,16 @@ const initUploadPicture = function () {
     if (!pristine.validate()) {
       return;
     }
+    uploadPictureOverlay.classList.add('hidden');
     blockSubmitButton();
 
     sendData(new FormData(evt.target))
-      .then(showSuccess)
+      .then(() => {
+        uploadFormClose();
+        showSuccess();
+      })
       .catch((err) => {
+        uploadPictureOverlay.classList.remove('hidden');
         showAlert(err.message);
       })
       .finally(unblockSubmitButton);
@@ -213,6 +220,7 @@ const initUploadPicture = function () {
    *
    * Проблемы: не удалось сделать автоподстановку # если последний символ пробел
    */
+  /*
   const onHashtagInputKeyDown = function (evt) {
     const elementValue = evt.target.value;
     const lastChar = elementValue[elementValue.length - 1];
@@ -227,10 +235,11 @@ const initUploadPicture = function () {
       evt.preventDefault();
     }
   };
+*/
   /**
    * Добавляем слушателя на событие keydown на поле ввода хэштега
    */
-  hashtagInput.addEventListener('keydown', onHashtagInputKeyDown);
+  //  hashtagInput.addEventListener('keydown', onHashtagInputKeyDown);
 };
 
 export { initUploadPicture, uploadFormClose };

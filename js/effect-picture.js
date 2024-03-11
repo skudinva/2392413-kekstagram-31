@@ -3,7 +3,7 @@ import {
   effectLevelValue,
   effectList,
   imgUploadEffectLevel,
-  uploadPicturePreview,
+  uploadPicturePreviewImg,
 } from './const';
 
 /**
@@ -96,11 +96,11 @@ const setSelectedEffect = function (value) {
  * следующим образом (см. effectStyle).
  */
 effectLevelSlider.noUiSlider.on('update', () => {
-  effectLevelValue.value = effectLevelSlider.noUiSlider.get();
+  effectLevelValue.value = +effectLevelSlider.noUiSlider.get();
   const curentEffect = getSelectedEffect();
   const newStyleEffect = effectStyle[curentEffect]?.css(effectLevelValue.value);
 
-  uploadPicturePreview.style.cssText += newStyleEffect;
+  uploadPicturePreviewImg.style.cssText += newStyleEffect;
 });
 
 /**
@@ -121,7 +121,7 @@ const onEffectItemClick = function (evt) {
   const filterStyle = effectStyle[curentEffect];
 
   effectLevelSlider.noUiSlider.updateOptions(filterStyle.slider);
-  effectLevelSlider.noUiSlider.set(0);
+  effectLevelSlider.noUiSlider.set(filterStyle.slider.range.max);
 
   if (curentEffect === 'none') {
     imgUploadEffectLevel.classList.add('hidden');

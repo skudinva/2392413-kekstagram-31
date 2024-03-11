@@ -31,6 +31,7 @@ const commentCount = bigPicture.querySelector('.social__comment-count');
 const commentLoader = bigPicture.querySelector('.comments-loader');
 
 const uploadPicturePreview = document.querySelector('.img-upload__preview');
+const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
@@ -49,8 +50,11 @@ const DEBOUNCE_TIMEOUT = 500;
 
 const PICTURE_RANDOM_COUNT = 10;
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 export {
   DEBOUNCE_TIMEOUT,
+  FILE_TYPES,
   PICTURE_RANDOM_COUNT,
   bigPicture,
   bigPictureCancel,
@@ -82,4 +86,5 @@ export {
   uploadPictureInput,
   uploadPictureOverlay,
   uploadPicturePreview,
+  uploadPicturePreviewImg,
 };

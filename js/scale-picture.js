@@ -2,7 +2,7 @@ import {
   scaleControlBigger,
   scaleControlSmaller,
   scaleControlValue,
-  uploadPicturePreview,
+  uploadPicturePreviewImg,
 } from './const';
 
 const SCALE_STEP = 25;
@@ -25,7 +25,7 @@ const setScaleValue = function (changeValue) {
   const currentScaleValue = getScaleValue();
   const newScaleValue = currentScaleValue + changeValue;
 
-  if (newScaleValue < 0 || newScaleValue > 100) {
+  if (newScaleValue < 25 || newScaleValue > 100) {
     return;
   }
   scaleControlValue.value = `${newScaleValue}%`;
@@ -47,7 +47,7 @@ const onScaleControlBiggerClick = function () {
  */
 const onScaleValueChange = function () {
   const currentScaleValue = getScaleValue() / 100;
-  uploadPicturePreview.style.cssText += `transform: scale(${currentScaleValue})`;
+  uploadPicturePreviewImg.style.cssText += `transform: scale(${currentScaleValue})`;
 };
 
 scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
@@ -55,7 +55,7 @@ scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
 scaleControlValue.addEventListener('change', onScaleValueChange);
 
 const initScalePicture = function () {
-  scaleControlValue.value = 100;
+  setScaleValue(100);
   onScaleValueChange();
 };
 

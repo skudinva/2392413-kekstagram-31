@@ -1,5 +1,3 @@
-import { uploadFormClose } from './upload-picture';
-
 const templateSuccess = document.querySelector('#success').content;
 const successContainer = templateSuccess
   .querySelector('.success')
@@ -19,10 +17,9 @@ const onSuccessButtonClick = function (evt) {
   successFormClose(evt);
 };
 
-function successFormClose(evt) {
+function successFormClose() {
   successContainer.classList.add('hidden');
   document.removeEventListener('keydown', onSuccessButtonKeyDown);
-  uploadFormClose(evt);
 }
 
 successButton.addEventListener('click', onSuccessButtonClick);

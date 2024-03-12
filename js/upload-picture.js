@@ -14,6 +14,7 @@ import {
   uploadPicturePreviewImg,
 } from './const';
 import { initEffectPicture } from './effect-picture';
+import { showError } from './error';
 import { initScalePicture } from './scale-picture';
 import { showSuccess } from './success';
 
@@ -172,7 +173,6 @@ const initUploadPicture = function () {
     if (!pristine.validate()) {
       return;
     }
-    uploadPictureOverlay.classList.add('hidden');
     blockSubmitButton();
 
     sendData(new FormData(evt.target))
@@ -180,9 +180,8 @@ const initUploadPicture = function () {
         uploadFormClose();
         showSuccess();
       })
-      .catch((err) => {
-        uploadPictureOverlay.classList.remove('hidden');
-        showAlert(err.message);
+      .catch(() => {
+        showError([{ type: 'keydown', cb: onUploadFormKeydown }]);
       })
       .finally(unblockSubmitButton);
   });

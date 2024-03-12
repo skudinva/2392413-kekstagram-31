@@ -15,39 +15,45 @@ const getScaleValue = function () {
 };
 
 /**
- * Обработчик клика на +/- масштаба
- * dispatchEvent тут вызываю т.к. value у scaleControlValue изменяю программно и
- * события change|input не отрабатывают. Решил искусственно вызвать чтобы отработал
- * лиснер. Ну опять же вдруг readonly уберут у scaleControlValue и тогда с клавиатуры
- * все будет работать.
- */
-const setScaleValue = function (changeValue) {
-  const currentScaleValue = getScaleValue();
-  const newScaleValue = currentScaleValue + changeValue;
-
-  if (newScaleValue < 25 || newScaleValue > 100) {
-    return;
-  }
-  scaleControlValue.value = `${newScaleValue}%`;
-
-  scaleControlValue.dispatchEvent(new Event('change'));
-};
-
-const onScaleControlSmallerClick = function () {
-  setScaleValue(SCALE_STEP * -1);
-};
-
-const onScaleControlBiggerClick = function () {
-  setScaleValue(SCALE_STEP);
-};
-
-/**
  * Обработчик изменения значения масштаба.
  * Тут просто стиль надо допнуть
  */
 const onScaleValueChange = function () {
   const currentScaleValue = getScaleValue() / 100;
   uploadPicturePreviewImg.style.cssText += `transform: scale(${currentScaleValue})`;
+};
+
+/**
+ * Записать новое значение в поле с масштабом
+ */
+const setScaleValue = function (value) {
+  scaleControlValue.value = `${value}%`;
+  onScaleValueChange();
+};
+
+/**
+ * Обработчик клика на +/- масштаба
+ * dispatchEvent тут вызываю т.к. value у scaleControlValue изменяю программно и
+ * события change|input не отрабатывают. Решил искусственно вызвать чтобы отработал
+ * лиснер. Ну опять же вдруг readonly уберут у scaleControlValue и тогда с клавиатуры
+ * все будет работать.
+ */
+const changeScaleValue = function (changeValue) {
+  const currentScaleValue = getScaleValue();
+  const newScaleValue = currentScaleValue + changeValue;
+
+  if (newScaleValue < 25 || newScaleValue > 100) {
+    return;
+  }
+  setScaleValue(newScaleValue);
+};
+
+const onScaleControlSmallerClick = function () {
+  changeScaleValue(SCALE_STEP * -1);
+};
+
+const onScaleControlBiggerClick = function () {
+  changeScaleValue(SCALE_STEP);
 };
 
 scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);

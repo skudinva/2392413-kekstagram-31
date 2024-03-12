@@ -36,12 +36,20 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
+const renderTemplate = (templateId, selector) => {
+  const template = document.querySelector(templateId).content;
+  return (selector ? template.querySelector(selector) : template).cloneNode(
+    true
+  );
+};
+
 export {
   allowHashtagChar,
   debounce,
   getRandomArrayElement,
   getRandomInteger,
   getUniqueRandomArrayElement,
+  renderTemplate,
   strLenCheck,
   validateHashtag,
   validateStringLen,

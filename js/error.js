@@ -1,12 +1,9 @@
+import { errorButton, errorContainer } from './const';
 import {
   recoverPreventEvents,
   resetPreventEvents,
   setPreventEvents,
 } from './error-state';
-
-const errorTemplate = document.querySelector('#error').content;
-const errorContainer = errorTemplate.querySelector('.error').cloneNode(true);
-const errorButton = errorContainer.querySelector('.error__button');
 
 const onErrorButtonKeyDown = function (evt) {
   if (evt.key === 'Escape') {

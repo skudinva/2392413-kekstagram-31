@@ -1,8 +1,4 @@
-const templateSuccess = document.querySelector('#success').content;
-const successContainer = templateSuccess
-  .querySelector('.success')
-  .cloneNode(true);
-const successButton = successContainer.querySelector('.success__button');
+import { successButton, successContainer } from './const';
 
 const onSuccessButtonKeyDown = function (evt) {
   if (evt.key === 'Escape') {

@@ -14,17 +14,19 @@ const onThumbnailsClick = function (evt, pictureId) {
   renderBigPicture();
 };
 
-const createThumbnail = function (picture) {
+const createThumbnail = function ({ id, url, description, likes, comments }) {
   const pictureElement = templatePicture.cloneNode(true);
   const link = pictureElement.querySelector('a');
   const img = pictureElement.querySelector('.picture__img');
   const like = pictureElement.querySelector('.picture__likes');
   const comment = pictureElement.querySelector('.picture__comments');
-  img.src = picture.url;
-  img.alt = picture.description;
-  like.textContent = picture.likes;
-  comment.textContent = picture.comments.length;
-  link.addEventListener('click', (evt) => onThumbnailsClick(evt, picture.id));
+
+  img.src = url;
+  img.alt = description;
+  like.textContent = likes;
+  comment.textContent = comments.length;
+
+  link.addEventListener('click', (evt) => onThumbnailsClick(evt, id));
   return pictureElement;
 };
 

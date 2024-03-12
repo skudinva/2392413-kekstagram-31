@@ -1,10 +1,4 @@
-const ALERT_SHOW_TIME = 5000;
-
-const alertTemplate = document.querySelector('#data-error').content;
-const alertContainer = alertTemplate
-  .querySelector('.data-error')
-  .cloneNode(true);
-const errorTitle = alertContainer.querySelector('.data-error__title');
+import { ALERT_SHOW_TIME, alertContainer, errorTitle } from './const';
 
 const showAlert = function (alertText) {
   if (alertText) {

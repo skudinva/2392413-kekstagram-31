@@ -2,7 +2,7 @@ import { PICTURE_RANDOM_COUNT } from './const';
 import { getUniqueRandomArrayElement } from './utils';
 
 const pictureState = {
-  pictures: null,
+  pictures: [],
   selectedPicture: null,
   lastCommentShowItem: -1,
   selectedFilter: null,
@@ -17,6 +17,10 @@ const pictureState = {
 
 const defaultPictureState = { ...pictureState };
 
+const getPictureCount = function () {
+  return pictureState.pictures.length;
+};
+
 const getPictures = function () {
   const currentFilter = pictureState.selectedFilter.id;
   const filterResult = pictureState.filters[currentFilter];
@@ -24,7 +28,7 @@ const getPictures = function () {
 };
 
 const setPictures = function (value) {
-  pictureState.pictures = value;
+  pictureState.pictures = value ? value : [];
 };
 
 const getPictureById = function (pictureId) {
@@ -67,6 +71,7 @@ const setSelectedFilter = function (value) {
 export {
   getComments,
   getLastCommentShowItem,
+  getPictureCount,
   getPictures,
   getSelectedFilter,
   getSelectedPicture,

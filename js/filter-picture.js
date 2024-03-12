@@ -4,35 +4,58 @@ import {
   filterContainer,
   filterForm,
 } from './const';
-import { drawThumbnails } from './draw-thumbnails';
-import { getSelectedFilter, setSelectedFilter } from './picture-state';
-import { debounce } from './utils';
+import { createThumbnails } from './draw-thumbnails';
+import {
+  getPictureCount,
+  getSelectedFilter,
+  setSelectedFilter,
+} from './picture-state';
+import { addOrRemoveClass, debounce } from './utils';
 
-const resetAllFilters = function () {
-  filterButtons.forEach((element) => {
-    element.classList.remove('img-filters__button--active');
-  });
-};
+/**
+ * Устранение дребезга. Перерисовываем фото только через DEBOUNCE_TIMEOUT
+ */
+const drawThumbnailsDebounce = debounce(createThumbnails, DEBOUNCE_TIMEOUT);
 
-const drawThumbnailsDebounce = debounce(drawThumbnails, DEBOUNCE_TIMEOUT);
-
-const setActiveFilter = function () {
-  resetAllFilters();
+/**
+ * Отрисовка выбранного фильтра
+ */
+const renderActiveFilter = function () {
   const currentFilter = getSelectedFilter();
-  currentFilter.classList.add('img-filters__button--active');
+  filterButtons.forEach((element) => {
+    addOrRemoveClass(
+      element,
+      'img-filters__button--active',
+      element === currentFilter
+    );
+  });
+
   drawThumbnailsDebounce();
 };
 
+/**
+ * Применение выбранного фильтра
+ */
+const applyFilter = function (target) {
+  setSelectedFilter(target);
+  renderActiveFilter();
+};
+
+/**
+ * Обработчик события клик по фильтру
+ */
 const onFilterClick = function (evt) {
-  evt.preventDefault();
-  setSelectedFilter(evt.target);
-  setActiveFilter();
+  applyFilter(evt.target);
 };
 
 const initFilters = function () {
-  filterContainer.classList.remove('img-filters--inactive');
-  setSelectedFilter(filterForm.querySelector('.img-filters__button--active'));
+  applyFilter(filterForm.querySelector('.img-filters__button--active'));
   filterForm.addEventListener('click', onFilterClick);
+  addOrRemoveClass(
+    filterContainer,
+    'img-filters--inactive',
+    getPictureCount() === 0
+  );
 };
 
 export { initFilters };

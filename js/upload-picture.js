@@ -1,10 +1,11 @@
-import { validateHashtag, validateStringLen } from './utils';
+import { isEscapeKey, validateHashtag, validateStringLen } from './utils';
 
 import { showAlert } from './alert';
 import { sendData } from './api';
 import {
   FILE_TYPES,
   descriptionInput,
+  effectsPreview,
   hashtagInput,
   submitButton,
   uploadPictureForm,
@@ -14,12 +15,13 @@ import {
   uploadPicturePreviewImg,
 } from './const';
 import { initEffectPicture } from './effect-picture';
+import { showError } from './error';
 import { initScalePicture } from './scale-picture';
 import { showSuccess } from './success';
 
 const onUploadFormKeydown = function (evt) {
   if (
-    evt.key === 'Escape' &&
+    isEscapeKey(evt) &&
     evt.target !== hashtagInput &&
     evt.target !== descriptionInput
   ) {
@@ -63,6 +65,7 @@ const pristine = new Pristine(
  * через evt.target. Мне кажется можно как-то по другому.
  */
 function uploadFormClose() {
+  document.removeEventListener('keydown', onUploadFormKeydown);
   uploadPictureOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadPictureInput.value = '';
@@ -71,7 +74,6 @@ function uploadFormClose() {
   pristine.reset();
   initScalePicture();
   initEffectPicture();
-  document.removeEventListener('keydown', onUploadFormKeydown);
 }
 
 const initUploadPicture = function () {
@@ -172,7 +174,6 @@ const initUploadPicture = function () {
     if (!pristine.validate()) {
       return;
     }
-    uploadPictureOverlay.classList.add('hidden');
     blockSubmitButton();
 
     sendData(new FormData(evt.target))
@@ -180,9 +181,8 @@ const initUploadPicture = function () {
         uploadFormClose();
         showSuccess();
       })
-      .catch((err) => {
-        uploadPictureOverlay.classList.remove('hidden');
-        showAlert(err.message);
+      .catch(() => {
+        showError([{ type: 'keydown', cb: onUploadFormKeydown }]);
       })
       .finally(unblockSubmitButton);
   });
@@ -202,7 +202,11 @@ const initUploadPicture = function () {
       showAlert('Формат файла не поддерживается.');
       return;
     }
-    uploadPicturePreviewImg.src = URL.createObjectURL(file);
+    const blobURL = URL.createObjectURL(file);
+    uploadPicturePreviewImg.src = blobURL;
+    effectsPreview.forEach(
+      (element) => (element.style.backgroundImage = `url(${blobURL})`)
+    );
 
     initScalePicture();
     initEffectPicture();

@@ -1,6 +1,5 @@
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
-// const makeRequest = (route, method, errorText, body = null) =>
 const makeRequest = function (route, method, errorText, body = null) {
   return fetch(`${BASE_URL}${route}`, { method, body })
     .then((response) => {

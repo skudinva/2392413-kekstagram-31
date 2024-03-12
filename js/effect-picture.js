@@ -5,6 +5,7 @@ import {
   imgUploadEffectLevel,
   uploadPicturePreviewImg,
 } from './const';
+import { addOrRemoveClass } from './utils';
 
 /**
  * В объекте хранится для каждого эффекта параметры слайдера и стиля.
@@ -123,11 +124,7 @@ const onEffectItemClick = function (evt) {
   effectLevelSlider.noUiSlider.updateOptions(filterStyle.slider);
   effectLevelSlider.noUiSlider.set(filterStyle.slider.range.max);
 
-  if (curentEffect === 'none') {
-    imgUploadEffectLevel.classList.add('hidden');
-  } else {
-    imgUploadEffectLevel.classList.remove('hidden');
-  }
+  addOrRemoveClass(imgUploadEffectLevel, 'hidden', curentEffect === 'none');
 };
 
 //Навешиваем событие на весь список. В обработчике будем ловить evt.target.

@@ -1,3 +1,5 @@
+import { renderTemplate } from './utils';
+
 const templatePicture = document.querySelector('#picture').content;
 const picturePool = document.querySelector('.pictures');
 
@@ -18,7 +20,7 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImgTag = bigPictureImg.querySelector('img');
-const likesCount = bigPicture.querySelector('.social__likes');
+const likesCount = bigPicture.querySelector('.likes-count');
 const commentsShowCount = bigPicture.querySelector(
   '.social__comment-shown-count'
 );
@@ -41,21 +43,41 @@ const imgUploadEffectLevel = document.querySelector(
   '.img-upload__effect-level'
 );
 const effectList = document.querySelector('.effects__list');
+const effectsPreview = effectList.querySelectorAll('.effects__preview');
 
 const filterContainer = document.querySelector('.img-filters');
 const filterForm = filterContainer.querySelector('.img-filters__form');
 const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
 
+const alertContainer = renderTemplate('#data-error', '.data-error');
+const errorTitle = alertContainer.querySelector('.data-error__title');
+
+const errorContainer = renderTemplate('#error', '.error');
+const errorButton = errorContainer.querySelector('.error__button');
+
+const successContainer = renderTemplate('#success', '.success');
+const successButton = successContainer.querySelector('.success__button');
+
+const ALERT_SHOW_TIME = 5000;
 const DEBOUNCE_TIMEOUT = 500;
-
 const PICTURE_RANDOM_COUNT = 10;
-
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const COMMENT_LOADING_COUNT = 5;
+
+const SCALE_STEP = 25;
+const SCALE_MAX_VALUE = 100;
+const SCALE_DEFAULT_VALUE = 100;
 
 export {
+  ALERT_SHOW_TIME,
+  COMMENT_LOADING_COUNT,
   DEBOUNCE_TIMEOUT,
   FILE_TYPES,
   PICTURE_RANDOM_COUNT,
+  SCALE_DEFAULT_VALUE,
+  SCALE_MAX_VALUE,
+  SCALE_STEP,
+  alertContainer,
   bigPicture,
   bigPictureCancel,
   bigPictureImgTag,
@@ -67,6 +89,10 @@ export {
   effectLevelSlider,
   effectLevelValue,
   effectList,
+  effectsPreview,
+  errorButton,
+  errorContainer,
+  errorTitle,
   filterButtons,
   filterContainer,
   filterForm,
@@ -80,6 +106,8 @@ export {
   scaleControlSmaller,
   scaleControlValue,
   submitButton,
+  successButton,
+  successContainer,
   templatePicture,
   uploadPictureForm,
   uploadPictureFormCancel,

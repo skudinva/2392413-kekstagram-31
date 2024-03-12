@@ -29,19 +29,41 @@ const validateStringLen = (str, len) => str.length <= len;
 const strLenCheck = (str, len) => str.length <= len;
 
 const debounce = (callback, timeoutDelay) => {
-  let timeoutId;
+  let timeoutId = 0;
   return (...rest) => {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+    timeoutId = setTimeout(() => {
+      callback.apply(this, rest);
+    }, timeoutDelay);
   };
 };
 
+const renderTemplate = (templateId, selector) => {
+  const template = document.querySelector(templateId).content;
+  return (selector ? template.querySelector(selector) : template).cloneNode(
+    true
+  );
+};
+
+const addOrRemoveClass = (element, className, condition) => {
+  if (condition) {
+    element.classList.add(className);
+  } else {
+    element.classList.remove(className);
+  }
+};
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 export {
+  addOrRemoveClass,
   allowHashtagChar,
   debounce,
   getRandomArrayElement,
   getRandomInteger,
   getUniqueRandomArrayElement,
+  isEscapeKey,
+  renderTemplate,
   strLenCheck,
   validateHashtag,
   validateStringLen,

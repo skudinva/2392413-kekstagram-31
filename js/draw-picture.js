@@ -18,6 +18,7 @@ import {
   resetSelectedPicture,
   setLastCommentShowItem,
 } from './picture-state';
+import { addOrRemoveClass } from './utils';
 
 /**
  * Создание иконци аватара в списке с комментариями
@@ -118,11 +119,7 @@ const initCommentBlock = function () {
   const comments = getComments();
   commentsTotalCount.textContent = comments.length;
   commentCount.classList.remove('hidden');
-  if (comments.length > 0) {
-    commentLoader.classList.remove('hidden');
-  } else {
-    commentLoader.classList.add('hidden');
-  }
+  addOrRemoveClass(commentLoader, 'hidden', comments.length === 0);
   pictureComments.replaceChildren();
   commentLoader.addEventListener('click', onCommentLoaderClick);
   onCommentLoaderClick();

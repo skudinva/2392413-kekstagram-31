@@ -65,6 +65,7 @@ const pristine = new Pristine(
  * через evt.target. Мне кажется можно как-то по другому.
  */
 function uploadFormClose() {
+  document.removeEventListener('keydown', onUploadFormKeydown);
   uploadPictureOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadPictureInput.value = '';
@@ -73,7 +74,6 @@ function uploadFormClose() {
   pristine.reset();
   initScalePicture();
   initEffectPicture();
-  document.removeEventListener('keydown', onUploadFormKeydown);
 }
 
 const initUploadPicture = function () {

@@ -43,7 +43,16 @@ const renderTemplate = (templateId, selector) => {
   );
 };
 
+const addOrRemoveClass = (element, className, condition) => {
+  if (condition) {
+    element.classList.add(className);
+  } else {
+    element.classList.remove(className);
+  }
+};
+
 export {
+  addOrRemoveClass,
   allowHashtagChar,
   debounce,
   getRandomArrayElement,

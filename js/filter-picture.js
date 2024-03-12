@@ -6,28 +6,40 @@ import {
 } from './const';
 import { createThumbnails } from './draw-thumbnails';
 import { getSelectedFilter, setSelectedFilter } from './picture-state';
-import { debounce } from './utils';
+import { addOrRemoveClass, debounce } from './utils';
 
+/**
+ * Устранение дребезга. Перерисовываем фото только через DEBOUNCE_TIMEOUT
+ */
 const drawThumbnailsDebounce = debounce(createThumbnails, DEBOUNCE_TIMEOUT);
 
-const setActiveFilter = function () {
+/**
+ * Отрисовка выбранного фильтра
+ */
+const renderActiveFilter = function () {
   const currentFilter = getSelectedFilter();
   filterButtons.forEach((element) => {
-    if (element === currentFilter) {
-      currentFilter.classList.add('img-filters__button--active');
-    } else {
-      element.classList.remove('img-filters__button--active');
-    }
+    addOrRemoveClass(
+      element,
+      'img-filters__button--active',
+      element === currentFilter
+    );
   });
 
   drawThumbnailsDebounce();
 };
 
+/**
+ * Применение выбранного фильтра
+ */
 const applyFilter = function (target) {
   setSelectedFilter(target);
-  setActiveFilter();
+  renderActiveFilter();
 };
 
+/**
+ * Обработчик события клик по фильтру
+ */
 const onFilterClick = function (evt) {
   evt.preventDefault();
   applyFilter(evt.target);

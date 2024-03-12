@@ -5,6 +5,7 @@ import { sendData } from './api';
 import {
   FILE_TYPES,
   descriptionInput,
+  effectsPreview,
   hashtagInput,
   submitButton,
   uploadPictureForm,
@@ -201,7 +202,11 @@ const initUploadPicture = function () {
       showAlert('Формат файла не поддерживается.');
       return;
     }
-    uploadPicturePreviewImg.src = URL.createObjectURL(file);
+    const blobURL = URL.createObjectURL(file);
+    uploadPicturePreviewImg.src = blobURL;
+    effectsPreview.forEach(
+      (element) => (element.style.backgroundImage = `url(${blobURL})`)
+    );
 
     initScalePicture();
     initEffectPicture();

@@ -41,6 +41,7 @@ const imgUploadEffectLevel = document.querySelector(
   '.img-upload__effect-level'
 );
 const effectList = document.querySelector('.effects__list');
+const effectsPreview = effectList.querySelectorAll('.effects__preview');
 
 const filterContainer = document.querySelector('.img-filters');
 const filterForm = filterContainer.querySelector('.img-filters__form');
@@ -67,6 +68,7 @@ export {
   effectLevelSlider,
   effectLevelValue,
   effectList,
+  effectsPreview,
   filterButtons,
   filterContainer,
   filterForm,

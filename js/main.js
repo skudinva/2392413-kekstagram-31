@@ -1,6 +1,6 @@
 import { showAlert } from './alert';
 import { getData } from './api';
-import { drawThumbnails } from './draw-thumbnails';
+import { createThumbnails } from './draw-thumbnails';
 import { initFilters } from './filter-picture';
 import { setPictures } from './picture-state';
 import { initUploadPicture } from './upload-picture';
@@ -9,7 +9,7 @@ getData()
   .then((pictures) => {
     setPictures(pictures);
     initFilters();
-    drawThumbnails();
+    createThumbnails();
   })
   .catch((err) => {
     showAlert(err.message);

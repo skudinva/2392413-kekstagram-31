@@ -4,11 +4,11 @@ import {
   filterContainer,
   filterForm,
 } from './const';
-import { drawThumbnails } from './draw-thumbnails';
+import { createThumbnails } from './draw-thumbnails';
 import { getSelectedFilter, setSelectedFilter } from './picture-state';
 import { debounce } from './utils';
 
-const drawThumbnailsDebounce = debounce(drawThumbnails, DEBOUNCE_TIMEOUT);
+const drawThumbnailsDebounce = debounce(createThumbnails, DEBOUNCE_TIMEOUT);
 
 const setActiveFilter = function () {
   const currentFilter = getSelectedFilter();

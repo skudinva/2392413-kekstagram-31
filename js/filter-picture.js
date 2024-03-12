@@ -5,7 +5,11 @@ import {
   filterForm,
 } from './const';
 import { createThumbnails } from './draw-thumbnails';
-import { getSelectedFilter, setSelectedFilter } from './picture-state';
+import {
+  getPictureCount,
+  getSelectedFilter,
+  setSelectedFilter,
+} from './picture-state';
 import { addOrRemoveClass, debounce } from './utils';
 
 /**
@@ -41,14 +45,17 @@ const applyFilter = function (target) {
  * Обработчик события клик по фильтру
  */
 const onFilterClick = function (evt) {
-  evt.preventDefault();
   applyFilter(evt.target);
 };
 
 const initFilters = function () {
-  filterContainer.classList.remove('img-filters--inactive');
   applyFilter(filterForm.querySelector('.img-filters__button--active'));
   filterForm.addEventListener('click', onFilterClick);
+  addOrRemoveClass(
+    filterContainer,
+    'img-filters--inactive',
+    getPictureCount() === 0
+  );
 };
 
 export { initFilters };

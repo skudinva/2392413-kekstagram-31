@@ -7,10 +7,10 @@ import { initUploadPicture } from './upload-picture';
 getData()
   .then((pictures) => {
     setPictures(pictures);
-    initFilters();
   })
   .catch((err) => {
     showAlert(err.message);
-  });
+  })
+  .finally(initFilters);
 
 initUploadPicture();

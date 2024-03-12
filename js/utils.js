@@ -29,10 +29,12 @@ const validateStringLen = (str, len) => str.length <= len;
 const strLenCheck = (str, len) => str.length <= len;
 
 const debounce = (callback, timeoutDelay) => {
-  let timeoutId;
+  let timeoutId = 0;
   return (...rest) => {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+    timeoutId = setTimeout(() => {
+      callback.apply(this, rest);
+    }, timeoutDelay);
   };
 };
 

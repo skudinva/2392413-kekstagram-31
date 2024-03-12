@@ -6,15 +6,13 @@ const alertContainer = alertTemplate
   .cloneNode(true);
 const errorTitle = alertContainer.querySelector('.data-error__title');
 
-alertContainer.classList.add('hidden');
-
-document.body.appendChild(alertContainer);
-
 const showAlert = function (alertText) {
-  errorTitle.textContent = alertText;
-  alertContainer.classList.remove('hidden');
+  if (alertText) {
+    errorTitle.textContent = alertText;
+  }
+  document.body.appendChild(alertContainer);
   setTimeout(() => {
-    alertContainer.classList.add('hidden');
+    alertContainer.remove();
   }, ALERT_SHOW_TIME);
 };
 

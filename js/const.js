@@ -18,7 +18,7 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImgTag = bigPictureImg.querySelector('img');
-const likesCount = bigPicture.querySelector('.social__likes');
+const likesCount = bigPicture.querySelector('.likes-count');
 const commentsShowCount = bigPicture.querySelector(
   '.social__comment-shown-count'
 );

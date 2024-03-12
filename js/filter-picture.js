@@ -8,18 +8,18 @@ import { drawThumbnails } from './draw-thumbnails';
 import { getSelectedFilter, setSelectedFilter } from './picture-state';
 import { debounce } from './utils';
 
-const resetAllFilters = function () {
-  filterButtons.forEach((element) => {
-    element.classList.remove('img-filters__button--active');
-  });
-};
-
 const drawThumbnailsDebounce = debounce(drawThumbnails, DEBOUNCE_TIMEOUT);
 
 const setActiveFilter = function () {
-  resetAllFilters();
   const currentFilter = getSelectedFilter();
-  currentFilter.classList.add('img-filters__button--active');
+  filterButtons.forEach((element) => {
+    if (element === currentFilter) {
+      currentFilter.classList.add('img-filters__button--active');
+    } else {
+      element.classList.remove('img-filters__button--active');
+    }
+  });
+
   drawThumbnailsDebounce();
 };
 

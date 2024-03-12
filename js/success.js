@@ -1,7 +1,8 @@
 import { successButton, successContainer } from './const';
+import { isEscapeKey } from './utils';
 
 const onSuccessButtonKeyDown = function (evt) {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     successFormClose(evt);
   }
 };

@@ -53,6 +53,8 @@ const addOrRemoveClass = (element, className, condition) => {
   }
 };
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 export {
   addOrRemoveClass,
   allowHashtagChar,
@@ -60,6 +62,7 @@ export {
   getRandomArrayElement,
   getRandomInteger,
   getUniqueRandomArrayElement,
+  isEscapeKey,
   renderTemplate,
   strLenCheck,
   validateHashtag,

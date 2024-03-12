@@ -64,12 +64,19 @@ const PICTURE_RANDOM_COUNT = 10;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const COMMENT_LOADING_COUNT = 5;
 
+const SCALE_STEP = 25;
+const SCALE_MAX_VALUE = 100;
+const SCALE_DEFAULT_VALUE = 100;
+
 export {
   ALERT_SHOW_TIME,
   COMMENT_LOADING_COUNT,
   DEBOUNCE_TIMEOUT,
   FILE_TYPES,
   PICTURE_RANDOM_COUNT,
+  SCALE_DEFAULT_VALUE,
+  SCALE_MAX_VALUE,
+  SCALE_STEP,
   alertContainer,
   bigPicture,
   bigPictureCancel,

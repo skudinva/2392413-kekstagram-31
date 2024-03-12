@@ -4,9 +4,10 @@ import {
   resetPreventEvents,
   setPreventEvents,
 } from './error-state';
+import { isEscapeKey } from './utils';
 
 const onErrorButtonKeyDown = function (evt) {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     errorFormClose();
   }
 };

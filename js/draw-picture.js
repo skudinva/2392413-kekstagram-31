@@ -18,7 +18,7 @@ import {
   resetSelectedPicture,
   setLastCommentShowItem,
 } from './picture-state';
-import { addOrRemoveClass } from './utils';
+import { addOrRemoveClass, isEscapeKey } from './utils';
 
 /**
  * Создание иконци аватара в списке с комментариями
@@ -67,7 +67,7 @@ const onPictureCloseClick = function () {
  * Просто закрываем формыу
  */
 const onPictureCloseKeydown = function (evt) {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     formClose();
   }
 };

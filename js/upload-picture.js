@@ -1,4 +1,4 @@
-import { validateHashtag, validateStringLen } from './utils';
+import { isEscapeKey, validateHashtag, validateStringLen } from './utils';
 
 import { showAlert } from './alert';
 import { sendData } from './api';
@@ -21,7 +21,7 @@ import { showSuccess } from './success';
 
 const onUploadFormKeydown = function (evt) {
   if (
-    evt.key === 'Escape' &&
+    isEscapeKey(evt) &&
     evt.target !== hashtagInput &&
     evt.target !== descriptionInput
   ) {

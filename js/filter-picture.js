@@ -23,15 +23,19 @@ const setActiveFilter = function () {
   drawThumbnailsDebounce();
 };
 
+const applyFilter = function (target) {
+  setSelectedFilter(target);
+  setActiveFilter();
+};
+
 const onFilterClick = function (evt) {
   evt.preventDefault();
-  setSelectedFilter(evt.target);
-  setActiveFilter();
+  applyFilter(evt.target);
 };
 
 const initFilters = function () {
   filterContainer.classList.remove('img-filters--inactive');
-  setSelectedFilter(filterForm.querySelector('.img-filters__button--active'));
+  applyFilter(filterForm.querySelector('.img-filters__button--active'));
   filterForm.addEventListener('click', onFilterClick);
 };
 

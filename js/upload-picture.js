@@ -216,34 +216,6 @@ const initUploadPicture = function () {
     document.addEventListener('keydown', onUploadFormKeydown);
     uploadPictureFormCancel.addEventListener('click', onUploadCloseClick);
   });
-
-  /**
-   * Дополнительные правила для хештега:
-   *  - запретил двойной пробел;
-   *  - вводить можно только буквы/цифры и #.
-   *
-   * Проблемы: не удалось сделать автоподстановку # если последний символ пробел
-   */
-  /*
-  const onHashtagInputKeyDown = function (evt) {
-    const elementValue = evt.target.value;
-    const lastChar = elementValue[elementValue.length - 1];
-    const charEnter = evt.key;
-
-    if (!allowHashtagChar(charEnter)) {
-      evt.preventDefault();
-    } else if (
-      charEnter === ' ' &&
-      (lastChar === charEnter || lastChar === undefined)
-    ) {
-      evt.preventDefault();
-    }
-  };
-*/
-  /**
-   * Добавляем слушателя на событие keydown на поле ввода хэштега
-   */
-  //  hashtagInput.addEventListener('keydown', onHashtagInputKeyDown);
 };
 
 export { initUploadPicture, uploadFormClose };

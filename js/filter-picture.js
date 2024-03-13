@@ -8,6 +8,8 @@ import { createThumbnails } from './draw-thumbnails';
 import {
   getPictureCount,
   getSelectedFilter,
+  isInitComplete,
+  setInitComplete,
   setSelectedFilter,
 } from './picture-state';
 import { addOrRemoveClass, debounce } from './utils';
@@ -15,7 +17,7 @@ import { addOrRemoveClass, debounce } from './utils';
 /**
  * Устранение дребезга. Перерисовываем фото только через DEBOUNCE_TIMEOUT
  */
-const drawThumbnailsDebounce = debounce(createThumbnails, DEBOUNCE_TIMEOUT);
+const createThumbnailsDebounce = debounce(createThumbnails, DEBOUNCE_TIMEOUT);
 
 /**
  * Отрисовка выбранного фильтра
@@ -30,7 +32,12 @@ const renderActiveFilter = function () {
     );
   });
 
-  drawThumbnailsDebounce();
+  if (isInitComplete()) {
+    createThumbnailsDebounce();
+  } else {
+    createThumbnails();
+    setInitComplete(true);
+  }
 };
 
 /**
@@ -48,14 +55,15 @@ const onFilterClick = function (evt) {
   applyFilter(evt.target);
 };
 
-const initFilters = function () {
-  applyFilter(filterForm.querySelector('.img-filters__button--active'));
+const initFilters = async function () {
   filterForm.addEventListener('click', onFilterClick);
   addOrRemoveClass(
     filterContainer,
     'img-filters--inactive',
     getPictureCount() === 0
   );
+
+  applyFilter(filterForm.querySelector('.img-filters__button--active'));
 };
 
 export { initFilters };

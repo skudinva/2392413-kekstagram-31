@@ -23,42 +23,42 @@ const effectStyle = {
       range: { min: 0, max: 0 },
       step: 0.1,
     },
-    css: () => 'filter: none',
+    css: () => ({ filter: 'none' }),
   },
   chrome: {
     slider: {
       range: { min: 0, max: 1 },
       step: 0.1,
     },
-    css: (value) => `filter: grayscale(${value})`,
+    css: (value) => ({ filter: `grayscale(${value})` }),
   },
   sepia: {
     slider: {
       range: { min: 0, max: 1 },
       step: 0.1,
     },
-    css: (value) => `filter: sepia(${value})`,
+    css: (value) => ({ filter: `sepia(${value})` }),
   },
   marvin: {
     slider: {
       range: { min: 0, max: 100 },
       step: 1,
     },
-    css: (value) => `filter: invert(${value}%)`,
+    css: (value) => ({ filter: `invert(${value}%)` }),
   },
   phobos: {
     slider: {
       range: { min: 0, max: 3 },
       step: 0.1,
     },
-    css: (value) => `filter: blur(${value}px)`,
+    css: (value) => ({ filter: `blur(${value}px)` }),
   },
   heat: {
     slider: {
       range: { min: 1, max: 3 },
       step: 0.1,
     },
-    css: (value) => `filter: brightness(${value})`,
+    css: (value) => ({ filter: `brightness(${value})` }),
   },
 };
 
@@ -100,8 +100,7 @@ effectLevelSlider.noUiSlider.on('update', () => {
   effectLevelValue.value = +effectLevelSlider.noUiSlider.get();
   const curentEffect = getSelectedEffect();
   const newStyleEffect = effectStyle[curentEffect]?.css(effectLevelValue.value);
-
-  uploadPicturePreviewImg.style.cssText += newStyleEffect;
+  Object.assign(uploadPicturePreviewImg.style, newStyleEffect);
 });
 
 /**

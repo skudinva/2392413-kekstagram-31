@@ -21,7 +21,7 @@ const getScaleValue = function () {
  */
 const onScaleValueChange = function () {
   const currentScaleValue = getScaleValue() / 100;
-  uploadPicturePreviewImg.style.cssText += `transform: scale(${currentScaleValue})`;
+  uploadPicturePreviewImg.style.transform = `scale(${currentScaleValue})`;
 };
 
 /**

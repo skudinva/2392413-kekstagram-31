@@ -1,7 +1,5 @@
+import { SCALE_DEFAULT_VALUE, SCALE_MAX_VALUE, SCALE_STEP } from './config';
 import {
-  SCALE_DEFAULT_VALUE,
-  SCALE_MAX_VALUE,
-  SCALE_STEP,
   scaleControlBigger,
   scaleControlSmaller,
   scaleControlValue,

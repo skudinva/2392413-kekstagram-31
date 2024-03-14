@@ -1,8 +1,8 @@
+import { effectStyle } from './config';
 import {
   effectLevelSlider,
   effectLevelValue,
   effectList,
-  effectStyle,
   imgUploadEffectLevel,
   uploadPicturePreviewImg,
 } from './const';

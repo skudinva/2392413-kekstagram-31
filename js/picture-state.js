@@ -1,4 +1,4 @@
-import { PICTURE_RANDOM_COUNT } from './const';
+import { PICTURE_RANDOM_COUNT } from './config';
 import { getUniqueRandomArrayElement } from './utils';
 
 const pictureState = {

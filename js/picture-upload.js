@@ -2,8 +2,8 @@ import { isEscapeKey, validateHashtag, validateStringLen } from './utils';
 
 import { showAlert } from './alert';
 import { sendData } from './api';
+import { FILE_TYPES } from './config';
 import {
-  FILE_TYPES,
   descriptionInput,
   effectsPreview,
   hashtagInput,

@@ -1,4 +1,5 @@
-import { ALERT_SHOW_TIME, alertContainer, errorTitle } from './const';
+import { ALERT_SHOW_TIME } from './config';
+import { alertContainer, errorTitle } from './const';
 
 const showAlert = function (alertText) {
   if (alertText) {

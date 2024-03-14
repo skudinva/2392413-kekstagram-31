@@ -1,5 +1,5 @@
+import { COMMENT_LOADING_COUNT } from './config';
 import {
-  COMMENT_LOADING_COUNT,
   bigPicture,
   bigPictureCancel,
   bigPictureImgTag,

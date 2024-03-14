@@ -30,13 +30,12 @@ function errorFormClose() {
   setPreventEvents([]);
 }
 
-errorButton.addEventListener('click', onErrorButtonClick);
-
 const showError = function (preventEvents) {
   setPreventEvents(preventEvents);
   resetPreventEvents();
   document.addEventListener('keydown', onErrorButtonKeyDown);
   document.addEventListener('click', onOutsideContainerClick);
+  errorButton.addEventListener('click', onErrorButtonClick);
   document.body.appendChild(errorContainer);
 };
 

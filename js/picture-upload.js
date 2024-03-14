@@ -139,20 +139,16 @@ const onUploadPictureFormSubmit = function (evt) {
     .finally(unblockSubmitButton);
 };
 
+/**
+ * Инициализация формы загрузки фото.
+ */
 const initUploadPicture = function () {
   uploadPictureInput.setAttribute(
     'accept',
     `image/${FILE_TYPES.join(', image/')}`
   );
 
-  /**
-   * Добавляем слушателя на событие submit (отправка формы).
-   */
   uploadPictureForm.addEventListener('submit', onUploadPictureFormSubmit);
-
-  /**
-   * Добавляем слушателя на событие change поля выбора файла.
-   */
   uploadPictureInput.addEventListener('change', onPictureInputChange);
 };
 

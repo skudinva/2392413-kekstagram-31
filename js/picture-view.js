@@ -30,20 +30,6 @@ const onPictureCloseKeydown = function (evt) {
 };
 
 /**
- * Функция добавляет фрагмент с пачкой комментариев на форму
- */
-const appendNewComments = function (commentFragment) {
-  pictureComments.appendChild(commentFragment);
-};
-
-/**
- * Добавляем событие клик на ссылку подгрузки комментариев
- */
-commentLoader.addEventListener('click', (evt) => {
-  onCommentLoaderClick(evt.target, appendNewComments);
-});
-
-/**
  * Закрытие формы просмотра фото.
  */
 function formClose() {
@@ -52,6 +38,13 @@ function formClose() {
   document.removeEventListener('keydown', onPictureCloseKeydown);
   resetSelectedPicture();
 }
+
+/**
+ * Функция добавляет фрагмент с пачкой комментариев на форму
+ */
+const appendNewComments = function (commentFragment) {
+  pictureComments.appendChild(commentFragment);
+};
 
 /**
  * Отрисовка фото
@@ -65,9 +58,20 @@ const renderBigPicture = function () {
   initCommentBlock();
   onCommentLoaderClick(commentLoader, appendNewComments);
   bigPicture.classList.remove('hidden');
-  bigPictureCancel.addEventListener('click', onPictureCloseClick);
+
   document.addEventListener('keydown', onPictureCloseKeydown);
   document.body.classList.add('modal-open');
 };
 
-export { renderBigPicture };
+/**
+ * Инициализация формы просмотра фото
+ */
+const initPictureView = function () {
+  bigPictureCancel.addEventListener('click', onPictureCloseClick);
+
+  commentLoader.addEventListener('click', (evt) => {
+    onCommentLoaderClick(evt.target, appendNewComments);
+  });
+};
+
+export { initPictureView, renderBigPicture };

@@ -55,11 +55,10 @@ const onScaleControlBiggerClick = function () {
   changeScaleValue(SCALE_STEP);
 };
 
-scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
-scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
-scaleControlValue.addEventListener('change', onScaleValueChange);
-
 const initScalePicture = function () {
+  scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
+  scaleControlValue.addEventListener('change', onScaleValueChange);
   setScaleValue(SCALE_DEFAULT_VALUE);
   onScaleValueChange();
 };

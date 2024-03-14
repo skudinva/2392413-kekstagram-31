@@ -1,5 +1,3 @@
-import { isEscapeKey, validateHashtag, validateStringLen } from './utils';
-
 import { showAlert } from './alert';
 import { sendData } from './api';
 import { FILE_TYPES } from './config';
@@ -17,7 +15,21 @@ import {
 } from './page-elements';
 import { initEffectPicture } from './picture-effect';
 import { initScalePicture } from './picture-scale';
+import { getPristine, setPristine } from './picture-upload-state';
+import { pristineInit } from './picture-upload-validate';
 import { showSuccess } from './success';
+import { isEscapeKey } from './utils';
+
+const getBlobURL = function (fileElement) {
+  const file = fileElement.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (!matches) {
+    showAlert('Формат файла не поддерживается.');
+    return;
+  }
+  return URL.createObjectURL(file);
+};
 
 const onUploadFormKeydown = function (evt) {
   if (
@@ -32,21 +44,6 @@ const onUploadFormKeydown = function (evt) {
 const onUploadCloseClick = function () {
   uploadFormClose();
 };
-
-/**
- * Инициализация Pristine для валидации формы ввода.
- * Дока: https://pristine.js.org/
- */
-const pristine = new Pristine(
-  uploadPictureForm,
-  {
-    classTo: 'img-upload__field-wrapper',
-    errorTextParent: 'img-upload__field-wrapper',
-    errorTextTag: 'div',
-    errorTextClass: 'img-upload__field-wrapper--error',
-  },
-  true
-);
 
 /**
  * Обработчик события закрытия формы. Срабатывает на Esc и Click
@@ -71,10 +68,72 @@ function uploadFormClose() {
   uploadPictureInput.value = '';
   descriptionInput.value = '';
   hashtagInput.value = '';
-  pristine.reset();
+  getPristine().reset();
   initScalePicture();
   initEffectPicture();
 }
+
+/**
+ * Обработчик собития change поля с выбором файла.
+ * После выбора файла должна появиться модальная форма. Для этого
+ * удаляется класс hidden, а для body задаётся класс modal-open.
+ * Для закрытия формы добавляем слушателя на событие
+ * keydown на документ и событие click на иконку.
+ */
+const onPictureInputChange = function () {
+  const blobURL = getBlobURL(uploadPictureInput);
+
+  uploadPicturePreviewImg.src = blobURL;
+  effectsPreview.forEach(
+    (element) => (element.style.backgroundImage = `url(${blobURL})`)
+  );
+
+  initScalePicture();
+  initEffectPicture();
+  uploadPictureOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  document.addEventListener('keydown', onUploadFormKeydown);
+  uploadPictureFormCancel.addEventListener('click', onUploadCloseClick);
+};
+
+/**
+ * Блокировка кнопки отправки формы
+ */
+const blockSubmitButton = function () {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикация изображения...';
+};
+
+/**
+ * Разблокировка кнопки отправки формы
+ */
+const unblockSubmitButton = function () {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+/**
+ * Обработчик события submit (отправка формы).
+ * Если Pristine возвращает false, значит где-то есть ошибка.
+ */
+const onUploadPictureFormSubmit = function (evt) {
+  evt.preventDefault();
+  if (!getPristine().validate()) {
+    return;
+  }
+  blockSubmitButton();
+
+  sendData(new FormData(evt.target))
+    .then(() => {
+      uploadFormClose();
+      showSuccess();
+    })
+    .catch(() => {
+      showError([{ type: 'keydown', cb: onUploadFormKeydown }]);
+    })
+    .finally(unblockSubmitButton);
+};
 
 const initUploadPicture = function () {
   uploadPictureInput.setAttribute(
@@ -82,140 +141,17 @@ const initUploadPicture = function () {
     `image/${FILE_TYPES.join(', image/')}`
   );
 
-  /**
-   * Функция для валидации Hashtag.
-   * Если вернуло не пустую строку - ошибка.
-   *
-   * Правила:
-   * - хэштег начинается с символа # (решётка);
-   * - строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;
-   * - хеш-тег не может состоять только из одной решётки;
-   * - максимальная длина одного хэштега 20 символов, включая решётку;
-   * - хэштеги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом;
-   * - хэштеги разделяются пробелами;
-   * - один и тот же хэштег не может быть использован дважды;
-   * - нельзя указать больше пяти хэштегов;
-   * - хэштеги необязательны.
-   */
-  const getHashtagErrorMessage = function (hashtag) {
-    const hashtagNormalize = hashtag.trim().toLowerCase().replace(/\s+/g, ' ');
-
-    if (hashtagNormalize === '') {
-      return '';
-    }
-
-    const hashtagArray = hashtagNormalize.split(' ');
-    if (hashtagArray.length === 0) {
-      return '';
-    }
-
-    if (!hashtagArray.every(validateHashtag)) {
-      return 'Начинается с #, до 19 символов и цифр';
-    }
-
-    if (new Set(hashtagArray).size !== hashtagArray.length) {
-      return 'Есть дублирующие хэштеги';
-    }
-
-    if (hashtagArray.length > 5) {
-      return 'Нельзя указать больше пяти хэштегов';
-    }
-
-    return '';
-  };
-
-  /**
-   * Добавляем валидатор для поля с HashTag.
-   *
-   * Проблема: не понятно как можно обойтись одним вызовом getHashtagErrorMessage!!!
-   */
-  pristine.addValidator(
-    hashtagInput,
-    (hashtag) => getHashtagErrorMessage(hashtag) === '',
-    getHashtagErrorMessage
-  );
-
-  /**
-   * Добавляем валидатор для поля с комментарием.
-   *
-   * Правила:
-   * - комментарий не обязателен;
-   * - длина комментария не может составлять больше 140 символов;
-   */
-  pristine.addValidator(
-    descriptionInput,
-    (description) => validateStringLen(description, 140),
-    'не более 140 символов'
-  );
-
-  /**
-   * Блокировка кнопки отправки формы
-   */
-  const blockSubmitButton = function () {
-    submitButton.disabled = true;
-    submitButton.textContent = 'Публикация изображения...';
-  };
-
-  /**
-   * Разблокировка кнопки отправки формы
-   */
-  const unblockSubmitButton = function () {
-    submitButton.disabled = false;
-    submitButton.textContent = 'Опубликовать';
-  };
+  setPristine(pristineInit());
 
   /**
    * Добавляем слушателя на событие submit (отправка формы).
-   * Если Pristine возвращает false, значит где-то есть ошибка и
-   * необходимо прервать поводение браузера по умолчанию.
    */
-  uploadPictureForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    if (!pristine.validate()) {
-      return;
-    }
-    blockSubmitButton();
-
-    sendData(new FormData(evt.target))
-      .then(() => {
-        uploadFormClose();
-        showSuccess();
-      })
-      .catch(() => {
-        showError([{ type: 'keydown', cb: onUploadFormKeydown }]);
-      })
-      .finally(unblockSubmitButton);
-  });
+  uploadPictureForm.addEventListener('submit', onUploadPictureFormSubmit);
 
   /**
    * Добавляем слушателя на событие change поля выбора файла.
-   * После выбора файла должна появиться модальная форма. Для этого
-   * удаляется класс hidden, а для body задаётся класс modal-open.
-   * Для закрытия формы добавляем слушателя на событие
-   * keydown на документ и событие click на иконку.
    */
-  uploadPictureInput.addEventListener('change', () => {
-    const file = uploadPictureInput.files[0];
-    const fileName = file.name.toLowerCase();
-    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-    if (!matches) {
-      showAlert('Формат файла не поддерживается.');
-      return;
-    }
-    const blobURL = URL.createObjectURL(file);
-    uploadPicturePreviewImg.src = blobURL;
-    effectsPreview.forEach(
-      (element) => (element.style.backgroundImage = `url(${blobURL})`)
-    );
-
-    initScalePicture();
-    initEffectPicture();
-    uploadPictureOverlay.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-
-    document.addEventListener('keydown', onUploadFormKeydown);
-    uploadPictureFormCancel.addEventListener('click', onUploadCloseClick);
-  });
+  uploadPictureInput.addEventListener('change', onPictureInputChange);
 };
 
-export { initUploadPicture, uploadFormClose };
+export { initUploadPicture };

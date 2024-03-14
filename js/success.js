@@ -23,11 +23,10 @@ function successFormClose() {
   document.removeEventListener('click', onOutsideContainerClick);
 }
 
-successButton.addEventListener('click', onSuccessButtonClick);
-
 const showSuccess = function () {
   document.addEventListener('keydown', onSuccessButtonKeyDown);
   document.addEventListener('click', onOutsideContainerClick);
+  successButton.addEventListener('click', onSuccessButtonClick);
   document.body.appendChild(successContainer);
 };
 

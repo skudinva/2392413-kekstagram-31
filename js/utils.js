@@ -1,6 +1,6 @@
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+const getRandomInteger = (firstNumber, secondNumber) => {
+  const lower = Math.ceil(Math.min(firstNumber, secondNumber));
+  const upper = Math.floor(Math.max(firstNumber, secondNumber));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };

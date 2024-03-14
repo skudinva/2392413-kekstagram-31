@@ -55,19 +55,11 @@ const initUISlider = function () {
 };
 
 /**
- * Обработчик переключателя эффекта.
+ * Сброс состояния эффектов.
  * При переключении эффектов, уровень насыщенности сбрасывается до начального значения (100%):
  * слайдер, CSS-стиль изображения и значение поля должны обновляться.
- *
- * Проблема: точно сбрасывать до 100%? Страшно же.
  */
-const onEffectItemClick = function (evt) {
-  if (
-    evt.target !== effectList &&
-    !evt.target.classList.contains('effects__radio')
-  ) {
-    return;
-  }
+const resetEffect = function () {
   const curentEffect = getSelectedEffect();
   const filterStyle = effectStyle[curentEffect];
 
@@ -78,15 +70,28 @@ const onEffectItemClick = function (evt) {
 };
 
 /**
- * Это для того чтобы при открытии формы слайдер и его контейнер (элемент
- * .img-upload__effect-level) скрывались.
+ * Обработчик переключателя эффекта.
  */
-const initEffectPicture = function () {
-  effectList.addEventListener('click', onEffectItemClick);
-  setSelectedEffect('none');
-  effectList.dispatchEvent(new Event('click'));
+const onEffectItemClick = function (evt) {
+  if (
+    evt.target !== effectList &&
+    !evt.target.classList.contains('effects__radio')
+  ) {
+    return;
+  }
+  resetEffect();
 };
 
-initUISlider();
+/**
+ * Инициализация эффектов.
+ */
+const initEffectPicture = function () {
+  if (!effectLevelSlider.noUiSlider) {
+    initUISlider();
+  }
+  effectList.addEventListener('click', onEffectItemClick);
+  setSelectedEffect('none');
+  resetEffect();
+};
 
-export { initEffectPicture };
+export { initEffectPicture, resetEffect };

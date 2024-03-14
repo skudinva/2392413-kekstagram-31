@@ -3,9 +3,9 @@ import { filterButtons, filterContainer, filterForm } from './page-elements';
 import {
   getPictureCount,
   getSelectedFilter,
-  isInitComplete,
-  setInitComplete,
   setSelectedFilter,
+  setUseDebaunce,
+  useDebaunce,
 } from './picture-state';
 import { createThumbnails } from './thumbnails';
 import { addOrRemoveClass, debounce } from './utils';
@@ -28,11 +28,11 @@ const renderActiveFilter = function () {
     );
   });
 
-  if (isInitComplete()) {
+  if (useDebaunce()) {
     createThumbnailsDebounce();
   } else {
     createThumbnails();
-    setInitComplete(true);
+    setUseDebaunce(true);
   }
 };
 

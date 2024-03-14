@@ -8,6 +8,9 @@ const SCALE_STEP = 25;
 const SCALE_MAX_VALUE = 100;
 const SCALE_DEFAULT_VALUE = 100;
 
+const DESCRIPTION_MAX_LENGTH = 140;
+const HASHTAG_MAX_COUNT = 5;
+
 /**
  * В объекте хранится для каждого эффекта параметры слайдера и стиля.
  * CSS-стили картинки внутри .img-upload__preview обновляются следующим образом:
@@ -67,7 +70,9 @@ export {
   ALERT_SHOW_TIME,
   COMMENT_LOADING_COUNT,
   DEBOUNCE_TIMEOUT,
+  DESCRIPTION_MAX_LENGTH,
   FILE_TYPES,
+  HASHTAG_MAX_COUNT,
   PICTURE_RANDOM_COUNT,
   SCALE_DEFAULT_VALUE,
   SCALE_MAX_VALUE,

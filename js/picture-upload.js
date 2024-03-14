@@ -81,6 +81,10 @@ function uploadFormClose() {
  * keydown на документ и событие click на иконку.
  */
 const onPictureInputChange = function () {
+  if (!getPristine()) {
+    setPristine(pristineInit());
+  }
+
   const blobURL = getBlobURL(uploadPictureInput);
 
   uploadPicturePreviewImg.src = blobURL;
@@ -122,8 +126,8 @@ const onUploadPictureFormSubmit = function (evt) {
   if (!getPristine().validate()) {
     return;
   }
-  blockSubmitButton();
 
+  blockSubmitButton();
   sendData(new FormData(evt.target))
     .then(() => {
       uploadFormClose();
@@ -140,8 +144,6 @@ const initUploadPicture = function () {
     'accept',
     `image/${FILE_TYPES.join(', image/')}`
   );
-
-  setPristine(pristineInit());
 
   /**
    * Добавляем слушателя на событие submit (отправка формы).

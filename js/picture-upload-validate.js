@@ -1,3 +1,4 @@
+import { DESCRIPTION_MAX_LENGTH, HASHTAG_MAX_COUNT } from './config';
 import {
   descriptionInput,
   hashtagInput,
@@ -56,8 +57,8 @@ const pristineInit = function () {
       return 'Есть дублирующие хэштеги';
     }
 
-    if (hashtagArray.length > 5) {
-      return 'Нельзя указать больше пяти хэштегов';
+    if (hashtagArray.length > HASHTAG_MAX_COUNT) {
+      return `Нельзя указать больше ${HASHTAG_MAX_COUNT} хэштегов`;
     }
 
     return '';
@@ -79,12 +80,12 @@ const pristineInit = function () {
    *
    * Правила:
    * - комментарий не обязателен;
-   * - длина комментария не может составлять больше 140 символов;
+   * - длина комментария не может составлять больше DESCRIPTION_MAX_LENGTH символов;
    */
   pristine.addValidator(
     descriptionInput,
-    (description) => validateStringLen(description, 140),
-    'не более 140 символов'
+    (description) => validateStringLen(description, DESCRIPTION_MAX_LENGTH),
+    `не более ${DESCRIPTION_MAX_LENGTH} символов`
   );
 
   return pristine;

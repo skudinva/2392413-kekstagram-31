@@ -4,7 +4,6 @@ import {
   filterContainer,
   filterForm,
 } from './const';
-import { createThumbnails } from './draw-thumbnails';
 import {
   getPictureCount,
   getSelectedFilter,
@@ -12,6 +11,7 @@ import {
   setInitComplete,
   setSelectedFilter,
 } from './picture-state';
+import { createThumbnails } from './thumbnails';
 import { addOrRemoveClass, debounce } from './utils';
 
 /**

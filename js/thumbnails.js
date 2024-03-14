@@ -1,6 +1,6 @@
 import { picturePool, templatePicture } from './const';
-import { renderBigPicture } from './draw-picture';
 import { getPictures, setSelectedPicture } from './picture-state';
+import { renderBigPicture } from './picture-view';
 
 /**
  * Очистка миниатюр

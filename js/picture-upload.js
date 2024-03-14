@@ -14,9 +14,9 @@ import {
   uploadPictureOverlay,
   uploadPicturePreviewImg,
 } from './const';
-import { initEffectPicture } from './effect-picture';
 import { showError } from './error';
-import { initScalePicture } from './scale-picture';
+import { initEffectPicture } from './picture-effect';
+import { initScalePicture } from './picture-scale';
 import { showSuccess } from './success';
 
 const onUploadFormKeydown = function (evt) {

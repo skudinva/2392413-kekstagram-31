@@ -1,4 +1,4 @@
-import { successButton, successContainer } from './const';
+import { successButton, successContainer } from './page-elements';
 import { isEscapeKey } from './utils';
 
 const onSuccessButtonKeyDown = function (evt) {

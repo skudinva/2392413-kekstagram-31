@@ -1,5 +1,5 @@
 import { DEBOUNCE_TIMEOUT } from './config';
-import { filterButtons, filterContainer, filterForm } from './const';
+import { filterButtons, filterContainer, filterForm } from './page-elements';
 import {
   getPictureCount,
   getSelectedFilter,

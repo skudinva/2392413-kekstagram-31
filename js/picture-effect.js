@@ -5,7 +5,7 @@ import {
   effectList,
   imgUploadEffectLevel,
   uploadPicturePreviewImg,
-} from './const';
+} from './page-elements';
 import { addOrRemoveClass } from './utils';
 
 /**

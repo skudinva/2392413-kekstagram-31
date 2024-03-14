@@ -4,7 +4,7 @@ import {
   scaleControlSmaller,
   scaleControlValue,
   uploadPicturePreviewImg,
-} from './const';
+} from './page-elements';
 
 /**
  * Функция получения текущего значения масштаба в процентах

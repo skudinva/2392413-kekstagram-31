@@ -1,4 +1,4 @@
-import { picturePool, templatePicture } from './const';
+import { picturePool, templatePicture } from './page-elements';
 import { getPictures, setSelectedPicture } from './picture-state';
 import { renderBigPicture } from './picture-view';
 

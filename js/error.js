@@ -1,9 +1,9 @@
-import { errorButton, errorContainer } from './const';
 import {
   recoverPreventEvents,
   resetPreventEvents,
   setPreventEvents,
 } from './error-state';
+import { errorButton, errorContainer } from './page-elements';
 import { isEscapeKey } from './utils';
 
 const onErrorButtonKeyDown = function (evt) {

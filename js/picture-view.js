@@ -10,7 +10,7 @@ import {
   likesCount,
   pictureComments,
   pictureDescription,
-} from './const';
+} from './page-elements';
 import {
   getComments,
   getLastCommentShowItem,

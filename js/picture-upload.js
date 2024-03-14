@@ -3,6 +3,7 @@ import { isEscapeKey, validateHashtag, validateStringLen } from './utils';
 import { showAlert } from './alert';
 import { sendData } from './api';
 import { FILE_TYPES } from './config';
+import { showError } from './error';
 import {
   descriptionInput,
   effectsPreview,
@@ -13,8 +14,7 @@ import {
   uploadPictureInput,
   uploadPictureOverlay,
   uploadPicturePreviewImg,
-} from './const';
-import { showError } from './error';
+} from './page-elements';
 import { initEffectPicture } from './picture-effect';
 import { initScalePicture } from './picture-scale';
 import { showSuccess } from './success';

@@ -15,6 +15,8 @@ const uploadPictureFormCancel = uploadPictureForm.querySelector(
 const hashtagInput = uploadPictureForm.querySelector('.text__hashtags');
 const descriptionInput = uploadPictureForm.querySelector('.text__description');
 const submitButton = uploadPictureForm.querySelector('.img-upload__submit');
+const inputFieldContainer =
+  uploadPictureForm.querySelector('.img-upload__text');
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img');
@@ -85,6 +87,7 @@ export {
   filterForm,
   hashtagInput,
   imgUploadEffectLevel,
+  inputFieldContainer,
   picturePool,
   scaleControlBigger,
   scaleControlSmaller,

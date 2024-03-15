@@ -6,6 +6,7 @@ import {
   descriptionInput,
   effectsPreview,
   hashtagInput,
+  inputFieldContainer,
   submitButton,
   uploadPictureForm,
   uploadPictureFormCancel,
@@ -31,11 +32,7 @@ const getBlobURL = function (fileElement) {
 };
 
 const onUploadFormKeydown = function (evt) {
-  if (
-    isEscapeKey(evt) &&
-    evt.target !== hashtagInput &&
-    evt.target !== descriptionInput
-  ) {
+  if (isEscapeKey(evt)) {
     uploadFormClose();
   }
 };
@@ -55,10 +52,6 @@ const onUploadCloseClick = function () {
  *
  * Нюанс: если фокус находится в поле ввода хэштега или комментария, нажатие на
  * Esc не должно приводить к закрытию формы редактирования изображения.
- *
- *
- * Проблема: определить что фокус находится в элементах ввода смог опредлелить только
- * через evt.target. Мне кажется можно как-то по другому.
  */
 function uploadFormClose() {
   document.removeEventListener('keydown', onUploadFormKeydown);
@@ -146,9 +139,11 @@ const initUploadPicture = function () {
     'accept',
     `image/${FILE_TYPES.join(', image/')}`
   );
-
   uploadPictureForm.addEventListener('submit', onUploadPictureFormSubmit);
   uploadPictureInput.addEventListener('change', onPictureInputChange);
+  inputFieldContainer.addEventListener('keydown', (evt) =>
+    evt.stopPropagation()
+  );
 };
 
 export { initUploadPicture };

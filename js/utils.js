@@ -14,7 +14,6 @@ const getUniqueRandomArrayElement = (elements, maxCount) => {
     uniqueueIndex.add(getRandomInteger(0, elements.length - 1));
   }
 
-  // return elements.filter((element, index) => uniqueueIndex.has(index));
   const result = [];
   uniqueueIndex.forEach((value) => result.push(elements[value]));
   return result;

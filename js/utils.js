@@ -24,9 +24,8 @@ const validateHashtag = (hashtag) => /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
 
 const allowHashtagChar = (char) => /[#a-zа-яё0-9 ]/.test(char);
 
-const validateStringLen = (str, len) => str.length <= len;
-
-const strLenCheck = (str, len) => str.length <= len;
+const validateStringLen = (stringValue, maxLength) =>
+  stringValue.length <= maxLength;
 
 const debounce = (callback, timeoutDelay) => {
   let timeoutId = 0;
@@ -64,7 +63,6 @@ export {
   getUniqueRandomArrayElement,
   isEscapeKey,
   renderTemplate,
-  strLenCheck,
   validateHashtag,
   validateStringLen,
 };

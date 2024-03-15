@@ -20,17 +20,19 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImgTag = bigPictureImg.querySelector('img');
-const likesCount = bigPicture.querySelector('.likes-count');
-const commentsShowCount = bigPicture.querySelector(
+const bigPictureLikesCount = bigPicture.querySelector('.likes-count');
+const bigPictureCommentsShowCount = bigPicture.querySelector(
   '.social__comment-shown-count'
 );
-const commentsTotalCount = bigPicture.querySelector(
+const bigPictureCommentsTotalCount = bigPicture.querySelector(
   '.social__comment-total-count'
 );
-const pictureDescription = bigPicture.querySelector('.social__caption');
-const pictureComments = bigPicture.querySelector('.social__comments');
-const commentCount = bigPicture.querySelector('.social__comment-count');
-const commentLoader = bigPicture.querySelector('.comments-loader');
+const bigPictureDescription = bigPicture.querySelector('.social__caption');
+const bigPictureComments = bigPicture.querySelector('.social__comments');
+const bigPictureCommentCount = bigPicture.querySelector(
+  '.social__comment-count'
+);
+const bigPictureCommentLoader = bigPicture.querySelector('.comments-loader');
 
 const uploadPicturePreview = document.querySelector('.img-upload__preview');
 const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
@@ -62,11 +64,14 @@ export {
   alertContainer,
   bigPicture,
   bigPictureCancel,
+  bigPictureCommentCount,
+  bigPictureCommentLoader,
+  bigPictureComments,
+  bigPictureCommentsShowCount,
+  bigPictureCommentsTotalCount,
+  bigPictureDescription,
   bigPictureImgTag,
-  commentCount,
-  commentLoader,
-  commentsShowCount,
-  commentsTotalCount,
+  bigPictureLikesCount,
   descriptionInput,
   effectLevelSlider,
   effectLevelValue,
@@ -80,9 +85,6 @@ export {
   filterForm,
   hashtagInput,
   imgUploadEffectLevel,
-  likesCount,
-  pictureComments,
-  pictureDescription,
   picturePool,
   scaleControlBigger,
   scaleControlSmaller,

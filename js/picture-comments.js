@@ -1,8 +1,8 @@
 import { COMMENT_LOADING_COUNT } from './config';
 import {
-  commentCount,
-  commentsShowCount,
-  commentsTotalCount,
+  bigPictureCommentCount,
+  bigPictureCommentsShowCount,
+  bigPictureCommentsTotalCount,
 } from './page-elements';
 import {
   getComments,
@@ -76,7 +76,7 @@ const onCommentLoaderClick = function (loaderButton, cbPushComment) {
     getNextCommentFragment(lastCommentShowItem, newLastCommentShowItem)
   );
 
-  commentsShowCount.textContent = newLastCommentShowItem;
+  bigPictureCommentsShowCount.textContent = newLastCommentShowItem;
   setLastCommentShowItem(newLastCommentShowItem);
   addOrRemoveClass(
     loaderButton,
@@ -89,8 +89,8 @@ const onCommentLoaderClick = function (loaderButton, cbPushComment) {
  */
 const initCommentBlock = function () {
   const comments = getComments();
-  commentsTotalCount.textContent = comments.length;
-  commentCount.classList.remove('hidden');
+  bigPictureCommentsTotalCount.textContent = comments.length;
+  bigPictureCommentCount.classList.remove('hidden');
 };
 
 export { initCommentBlock, onCommentLoaderClick };

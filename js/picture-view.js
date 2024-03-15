@@ -1,11 +1,11 @@
 import {
   bigPicture,
   bigPictureCancel,
+  bigPictureCommentLoader,
+  bigPictureComments,
+  bigPictureDescription,
   bigPictureImgTag,
-  commentLoader,
-  likesCount,
-  pictureComments,
-  pictureDescription,
+  bigPictureLikesCount,
 } from './page-elements';
 import { initCommentBlock, onCommentLoaderClick } from './picture-comments';
 import { getSelectedPicture, resetSelectedPicture } from './picture-state';
@@ -43,7 +43,7 @@ function formClose() {
  * Функция добавляет фрагмент с пачкой комментариев на форму
  */
 const appendNewComments = function (commentFragment) {
-  pictureComments.appendChild(commentFragment);
+  bigPictureComments.appendChild(commentFragment);
 };
 
 /**
@@ -52,11 +52,11 @@ const appendNewComments = function (commentFragment) {
 const renderBigPicture = function () {
   const { url, likes, description } = getSelectedPicture();
   bigPictureImgTag.src = url;
-  likesCount.textContent = likes;
-  pictureDescription.textContent = description;
-  pictureComments.replaceChildren();
+  bigPictureLikesCount.textContent = likes;
+  bigPictureDescription.textContent = description;
+  bigPictureComments.replaceChildren();
   initCommentBlock();
-  onCommentLoaderClick(commentLoader, appendNewComments);
+  onCommentLoaderClick(bigPictureCommentLoader, appendNewComments);
   bigPicture.classList.remove('hidden');
 
   document.addEventListener('keydown', onPictureCloseKeydown);
@@ -69,7 +69,7 @@ const renderBigPicture = function () {
 const initPictureView = function () {
   bigPictureCancel.addEventListener('click', onPictureCloseClick);
 
-  commentLoader.addEventListener('click', (evt) => {
+  bigPictureCommentLoader.addEventListener('click', (evt) => {
     onCommentLoaderClick(evt.target, appendNewComments);
   });
 };

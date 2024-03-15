@@ -1,7 +1,7 @@
 import { showAlert } from './alert';
 import { sendData } from './api';
 import { FILE_TYPES } from './config';
-import { showError } from './error';
+import { showError, showSuccess } from './message';
 import {
   descriptionInput,
   effectsPreview,
@@ -17,7 +17,6 @@ import { initEffectPicture } from './picture-effect';
 import { initScalePicture } from './picture-scale';
 import { getPristine, setPristine } from './picture-upload-state';
 import { pristineInit } from './picture-upload-validate';
-import { showSuccess } from './success';
 import { isEscapeKey } from './utils';
 
 const getBlobURL = function (fileElement) {

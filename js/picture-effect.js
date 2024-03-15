@@ -73,6 +73,7 @@ const resetEffect = function () {
  * Обработчик переключателя эффекта.
  */
 const onEffectItemClick = function (evt) {
+  evt.preventDefault();
   if (
     evt.target !== effectList &&
     !evt.target.classList.contains('effects__radio')
@@ -89,7 +90,7 @@ const initEffectPicture = function () {
   if (!effectLevelSlider.noUiSlider) {
     initUISlider();
   }
-  effectList.addEventListener('click', onEffectItemClick);
+  effectList.addEventListener('change', onEffectItemClick);
   setSelectedEffect('none');
   resetEffect();
 };

@@ -32,10 +32,6 @@ const setScaleValue = function (value) {
 
 /**
  * Обработчик клика на +/- масштаба
- * dispatchEvent тут вызываю т.к. value у scaleControlValue изменяю программно и
- * события change|input не отрабатывают. Решил искусственно вызвать чтобы отработал
- * лиснер. Ну опять же вдруг readonly уберут у scaleControlValue и тогда с клавиатуры
- * все будет работать.
  */
 const changeScaleValue = function (changeValue) {
   const currentScaleValue = getScaleValue();

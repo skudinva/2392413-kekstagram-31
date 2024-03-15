@@ -1,12 +1,10 @@
+import { SCALE_DEFAULT_VALUE, SCALE_MAX_VALUE, SCALE_STEP } from './config';
 import {
-  SCALE_DEFAULT_VALUE,
-  SCALE_MAX_VALUE,
-  SCALE_STEP,
   scaleControlBigger,
   scaleControlSmaller,
   scaleControlValue,
   uploadPicturePreviewImg,
-} from './const';
+} from './page-elements';
 
 /**
  * Функция получения текущего значения масштаба в процентах
@@ -21,7 +19,7 @@ const getScaleValue = function () {
  */
 const onScaleValueChange = function () {
   const currentScaleValue = getScaleValue() / 100;
-  uploadPicturePreviewImg.style.cssText += `transform: scale(${currentScaleValue})`;
+  uploadPicturePreviewImg.style.transform = `scale(${currentScaleValue})`;
 };
 
 /**
@@ -34,10 +32,6 @@ const setScaleValue = function (value) {
 
 /**
  * Обработчик клика на +/- масштаба
- * dispatchEvent тут вызываю т.к. value у scaleControlValue изменяю программно и
- * события change|input не отрабатывают. Решил искусственно вызвать чтобы отработал
- * лиснер. Ну опять же вдруг readonly уберут у scaleControlValue и тогда с клавиатуры
- * все будет работать.
  */
 const changeScaleValue = function (changeValue) {
   const currentScaleValue = getScaleValue();
@@ -57,11 +51,10 @@ const onScaleControlBiggerClick = function () {
   changeScaleValue(SCALE_STEP);
 };
 
-scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
-scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
-scaleControlValue.addEventListener('change', onScaleValueChange);
-
 const initScalePicture = function () {
+  scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
+  scaleControlValue.addEventListener('change', onScaleValueChange);
   setScaleValue(SCALE_DEFAULT_VALUE);
   onScaleValueChange();
 };

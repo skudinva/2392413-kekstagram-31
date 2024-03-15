@@ -1,6 +1,7 @@
 import { renderTemplate } from './utils';
 
 const templatePicture = document.querySelector('#picture').content;
+
 const picturePool = document.querySelector('.pictures');
 
 const uploadPictureForm = document.querySelector('.img-upload__form');
@@ -15,22 +16,26 @@ const uploadPictureFormCancel = uploadPictureForm.querySelector(
 const hashtagInput = uploadPictureForm.querySelector('.text__hashtags');
 const descriptionInput = uploadPictureForm.querySelector('.text__description');
 const submitButton = uploadPictureForm.querySelector('.img-upload__submit');
+const inputFieldContainer =
+  uploadPictureForm.querySelector('.img-upload__text');
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const bigPictureImgTag = bigPictureImg.querySelector('img');
-const likesCount = bigPicture.querySelector('.likes-count');
-const commentsShowCount = bigPicture.querySelector(
+const bigPictureLikesCount = bigPicture.querySelector('.likes-count');
+const bigPictureCommentsShowCount = bigPicture.querySelector(
   '.social__comment-shown-count'
 );
-const commentsTotalCount = bigPicture.querySelector(
+const bigPictureCommentsTotalCount = bigPicture.querySelector(
   '.social__comment-total-count'
 );
-const pictureDescription = bigPicture.querySelector('.social__caption');
-const pictureComments = bigPicture.querySelector('.social__comments');
-const commentCount = bigPicture.querySelector('.social__comment-count');
-const commentLoader = bigPicture.querySelector('.comments-loader');
+const bigPictureDescription = bigPicture.querySelector('.social__caption');
+const bigPictureComments = bigPicture.querySelector('.social__comments');
+const bigPictureCommentCount = bigPicture.querySelector(
+  '.social__comment-count'
+);
+const bigPictureCommentLoader = bigPicture.querySelector('.comments-loader');
 
 const uploadPicturePreview = document.querySelector('.img-upload__preview');
 const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
@@ -58,33 +63,18 @@ const errorButton = errorContainer.querySelector('.error__button');
 const successContainer = renderTemplate('#success', '.success');
 const successButton = successContainer.querySelector('.success__button');
 
-const ALERT_SHOW_TIME = 5000;
-const DEBOUNCE_TIMEOUT = 500;
-const PICTURE_RANDOM_COUNT = 10;
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
-const COMMENT_LOADING_COUNT = 5;
-
-const SCALE_STEP = 25;
-const SCALE_MAX_VALUE = 100;
-const SCALE_DEFAULT_VALUE = 100;
-
 export {
-  ALERT_SHOW_TIME,
-  COMMENT_LOADING_COUNT,
-  DEBOUNCE_TIMEOUT,
-  FILE_TYPES,
-  PICTURE_RANDOM_COUNT,
-  SCALE_DEFAULT_VALUE,
-  SCALE_MAX_VALUE,
-  SCALE_STEP,
   alertContainer,
   bigPicture,
   bigPictureCancel,
+  bigPictureCommentCount,
+  bigPictureCommentLoader,
+  bigPictureComments,
+  bigPictureCommentsShowCount,
+  bigPictureCommentsTotalCount,
+  bigPictureDescription,
   bigPictureImgTag,
-  commentCount,
-  commentLoader,
-  commentsShowCount,
-  commentsTotalCount,
+  bigPictureLikesCount,
   descriptionInput,
   effectLevelSlider,
   effectLevelValue,
@@ -98,9 +88,7 @@ export {
   filterForm,
   hashtagInput,
   imgUploadEffectLevel,
-  likesCount,
-  pictureComments,
-  pictureDescription,
+  inputFieldContainer,
   picturePool,
   scaleControlBigger,
   scaleControlSmaller,

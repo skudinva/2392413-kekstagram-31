@@ -1,6 +1,6 @@
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+const getRandomInteger = (firstNumber, secondNumber) => {
+  const lower = Math.ceil(Math.min(firstNumber, secondNumber));
+  const upper = Math.floor(Math.max(firstNumber, secondNumber));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
@@ -14,7 +14,6 @@ const getUniqueRandomArrayElement = (elements, maxCount) => {
     uniqueueIndex.add(getRandomInteger(0, elements.length - 1));
   }
 
-  // return elements.filter((element, index) => uniqueueIndex.has(index));
   const result = [];
   uniqueueIndex.forEach((value) => result.push(elements[value]));
   return result;
@@ -24,9 +23,8 @@ const validateHashtag = (hashtag) => /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
 
 const allowHashtagChar = (char) => /[#a-zа-яё0-9 ]/.test(char);
 
-const validateStringLen = (str, len) => str.length <= len;
-
-const strLenCheck = (str, len) => str.length <= len;
+const validateStringLen = (stringValue, maxLength) =>
+  stringValue.length <= maxLength;
 
 const debounce = (callback, timeoutDelay) => {
   let timeoutId = 0;
@@ -64,7 +62,6 @@ export {
   getUniqueRandomArrayElement,
   isEscapeKey,
   renderTemplate,
-  strLenCheck,
   validateHashtag,
   validateStringLen,
 };

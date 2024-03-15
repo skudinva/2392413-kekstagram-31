@@ -1,8 +1,9 @@
 import { showAlert } from './alert';
 import { getData } from './api';
-import { initFilters } from './filter-picture';
+import { initFilters } from './picture-filter';
 import { setPictures } from './picture-state';
-import { initUploadPicture } from './upload-picture';
+import { initUploadPicture } from './picture-upload';
+import { initPictureView } from './picture-view';
 
 getData()
   .then((pictures) => {
@@ -14,3 +15,4 @@ getData()
   .finally(initFilters);
 
 initUploadPicture();
+initPictureView();

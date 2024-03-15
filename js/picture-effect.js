@@ -16,10 +16,23 @@ const getSelectedEffect = function () {
     .value;
 };
 
+/**
+ * Установить эффект
+ */
 const setSelectedEffect = function (value) {
   effectList.querySelector(
     `input[type="radio"][value="${value}"]`
   ).checked = true;
+};
+
+/**
+ * Применить эффект
+ */
+const applyEffect = function () {
+  effectLevelValue.value = +effectLevelSlider.noUiSlider.get();
+  const curentEffect = getSelectedEffect();
+  const newStyleEffect = effectStyle[curentEffect]?.css(effectLevelValue.value);
+  Object.assign(uploadPicturePreviewImg.style, newStyleEffect);
 };
 
 /**
@@ -44,14 +57,7 @@ const initUISlider = function () {
    * следующим образом (см. effectStyle).
    */
 
-  effectLevelSlider.noUiSlider.on('update', () => {
-    effectLevelValue.value = +effectLevelSlider.noUiSlider.get();
-    const curentEffect = getSelectedEffect();
-    const newStyleEffect = effectStyle[curentEffect]?.css(
-      effectLevelValue.value
-    );
-    Object.assign(uploadPicturePreviewImg.style, newStyleEffect);
-  });
+  effectLevelSlider.noUiSlider.on('slide', applyEffect);
 };
 
 /**
@@ -61,11 +67,10 @@ const initUISlider = function () {
  */
 const resetEffect = function () {
   const curentEffect = getSelectedEffect();
-  const filterStyle = effectStyle[curentEffect];
-
-  effectLevelSlider.noUiSlider.updateOptions(filterStyle.slider);
-  effectLevelSlider.noUiSlider.set(filterStyle.slider.range.max);
-
+  const sliderOption = effectStyle[curentEffect].slider;
+  effectLevelSlider.noUiSlider.updateOptions(sliderOption);
+  effectLevelSlider.noUiSlider.set(sliderOption.range.max);
+  applyEffect();
   addOrRemoveClass(imgUploadEffectLevel, 'hidden', curentEffect === 'none');
 };
 

@@ -1,6 +1,7 @@
 import { renderTemplate } from './utils';
 
 const templatePicture = document.querySelector('#picture').content;
+
 const picturePool = document.querySelector('.pictures');
 
 const uploadPictureForm = document.querySelector('.img-upload__form');

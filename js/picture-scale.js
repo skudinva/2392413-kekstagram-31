@@ -24,6 +24,7 @@ const onScaleValueChange = function () {
 
 /**
  * Записать новое значение в поле с масштабом
+ * @param {number} value значение масштаба 0..100
  */
 const setScaleValue = function (value) {
   scaleControlValue.value = `${value}%`;
@@ -32,6 +33,7 @@ const setScaleValue = function (value) {
 
 /**
  * Обработчик клика на +/- масштаба
+ * @param {number} changeValue на сколько изменить масштаб
  */
 const changeScaleValue = function (changeValue) {
   const currentScaleValue = getScaleValue();

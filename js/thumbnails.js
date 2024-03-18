@@ -27,6 +27,8 @@ const onThumbnailClick = function (evt) {
 
 /**
  * Создание одной миниатюры
+ * @param {{id: number, url: string, description: string, likes: number, comments: string}} данные миниатюры
+ * @returns {DocumentFragment}
  */
 const createThumbnail = function ({ id, url, description, likes, comments }) {
   const pictureElement = templatePicture.cloneNode(true);

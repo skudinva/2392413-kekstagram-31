@@ -36,6 +36,9 @@ const pristineInit = function () {
    * - один и тот же хэштег не может быть использован дважды;
    * - нельзя указать больше пяти хэштегов;
    * - хэштеги необязательны.
+   *
+   * @param {string} hashtag
+   * @returns {string}
    */
   const getHashtagErrorMessage = function (hashtag) {
     const hashtagNormalize = hashtag.trim().toLowerCase().replace(/\s+/g, ' ');

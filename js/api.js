@@ -1,5 +1,13 @@
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
+/**
+ * Выполнить запрос к серверу
+ * @param {string} route
+ * @param {string} method
+ * @param {string} errorText
+ * @param {FormData} body
+ * @returns {Promise<Response>}
+ */
 const makeRequest = function (route, method, errorText, body = null) {
   return fetch(`${BASE_URL}${route}`, { method, body })
     .then((response) => {
@@ -12,7 +20,10 @@ const makeRequest = function (route, method, errorText, body = null) {
       throw new Error(errorText);
     });
 };
-
+/**
+ * Получить данные от сервера
+ * @returns
+ */
 const getData = function () {
   return makeRequest(
     '/data',
@@ -21,6 +32,11 @@ const getData = function () {
   );
 };
 
+/**
+ * Отправить данные на сервер
+ * @param {FormData} body
+ * @returns
+ */
 const sendData = function (body) {
   return makeRequest(
     '/',

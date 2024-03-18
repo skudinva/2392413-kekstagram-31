@@ -13,6 +13,9 @@ import { addOrRemoveClass } from './utils';
 
 /**
  * Создание иконци аватара в списке с комментариями
+ * @param {string} avatar ссылка на картинку с аватар
+ * @param {string} name пользователь
+ * @returns {DocumentFragment}
  */
 const createAvatar = function (avatar, name) {
   const userAvatar = document.createElement('img');
@@ -26,6 +29,8 @@ const createAvatar = function (avatar, name) {
 
 /**
  * Создание текста коммментария
+ * @param {string} message текст комментария
+ * @returns {DocumentFragment}
  */
 const createMessage = function (message) {
   const userMessage = document.createElement('p');
@@ -36,6 +41,8 @@ const createMessage = function (message) {
 
 /**
  * Создание комментария
+ * @param {{avatar: string, name: string, message: string}} данные комментария
+ * @returns {DocumentFragment}
  */
 const createComment = function ({ avatar, name, message }) {
   const userComment = document.createElement('li');
@@ -47,6 +54,9 @@ const createComment = function ({ avatar, name, message }) {
 
 /**
  * Возвращает фрагмент с очередным блоком с комментариями
+ * @param {number} fromIndex с какого индекса взять комментарии
+ * @param {number} toIndex до какого индекса взять коммментарии
+ * @returns {DocumentFragment}
  */
 const getNextCommentFragment = function (fromIndex, toIndex) {
   const comments = getComments();
@@ -58,10 +68,19 @@ const getNextCommentFragment = function (fromIndex, toIndex) {
 };
 
 /**
+ * Callback для подгрузки комментариев
+ * @callback pushComments
+ * @param {DocumentFragment} fragment пулл комментариев
+ * @returns {void}
+ */
+
+/**
  * Обработчиск собития клик на ссылку "Загрузить еще".
  * Подгрузка комментариев. Количество комментариев для подгрузки в
  * константе COMMENT_LOADING_COUNT.
  * Если все комментарии подгружены, то скрываем ссылку.
+ * @param {Element} loaderButton указатель на ссылку подгрузки комментариев
+ * @param {pushComments} cbPushComment callback функция для добавления комментариев
  */
 const onCommentLoaderClick = function (loaderButton, cbPushComment) {
   const comments = getComments();
@@ -84,6 +103,7 @@ const onCommentLoaderClick = function (loaderButton, cbPushComment) {
     newLastCommentShowItem >= comments.length
   );
 };
+
 /**
  * Инициализация блока с комментариями.
  */

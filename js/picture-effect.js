@@ -18,6 +18,7 @@ const getSelectedEffect = function () {
 
 /**
  * Установить эффект
+ * @param {string} value код эффекта none|chrome|sepia|marvin|phobos|heat
  */
 const setSelectedEffect = function (value) {
   effectList.querySelector(

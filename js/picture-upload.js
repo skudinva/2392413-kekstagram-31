@@ -20,6 +20,11 @@ import { getPristine, setPristine } from './picture-upload-state';
 import { pristineInit } from './picture-upload-validate';
 import { isEscapeKey } from './utils';
 
+/**
+ * Возвращает ссылку на blob фото
+ * @param {Elemetn} fileElement указатель на input type="file"
+ * @returns {string|null}
+ */
 const getBlobURL = function (fileElement) {
   const file = fileElement.files[0];
   const fileName = file.name.toLowerCase();

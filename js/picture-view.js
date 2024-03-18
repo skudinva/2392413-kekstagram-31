@@ -40,7 +40,7 @@ function formClose() {
 }
 
 /**
- * Функция добавляет фрагмент с пачкой комментариев на форму
+ * Функция добавляет в DOM фрагмент с пачкой комментариев на форму
  */
 const appendNewComments = function (commentFragment) {
   bigPictureComments.appendChild(commentFragment);

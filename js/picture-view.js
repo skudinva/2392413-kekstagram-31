@@ -11,7 +11,7 @@ import {
   bigPictureImgTag,
   bigPictureLikesCount,
 } from './page-elements';
-import { getNextCommentFragment } from './picture-comments';
+import { renderNextComments } from './picture-comments';
 import {
   getComments,
   getLastCommentShowItem,
@@ -63,7 +63,8 @@ const onCommentLoaderClick = function () {
     lastCommentShowItem + COMMENT_LOADING_COUNT,
     comments.length
   );
-  const newComments = getNextCommentFragment(
+
+  const newComments = renderNextComments(
     lastCommentShowItem,
     newLastCommentShowItem
   );

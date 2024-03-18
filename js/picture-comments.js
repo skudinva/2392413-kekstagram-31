@@ -29,8 +29,13 @@ const createMessage = function (message) {
 };
 
 /**
+ * Комментарий
+ * @typedef {{avatar: string, name: string, message: string}} Comment
+ */
+
+/**
  * Создание комментария
- * @param {{avatar: string, name: string, message: string}} данные комментария
+ * @param {Comment} данные комментария
  * @returns {DocumentFragment}
  */
 const createComment = function ({ avatar, name, message }) {
@@ -42,18 +47,36 @@ const createComment = function ({ avatar, name, message }) {
 };
 
 /**
- * Возвращает фрагмент с очередным блоком с комментариями
+ * Возвращает объект с комментариями
  * @param {number} fromIndex с какого индекса взять комментарии
  * @param {number} toIndex до какого индекса взять коммментарии
+ * @returns {Comment[]}
+ */
+const getNextComments = function (fromIndex, toIndex) {
+  return getComments().slice(fromIndex, toIndex);
+};
+
+/**
+ * Возвращает фрагмент с очередным блоком с комментариями
+ * @param {Comment[]} comments с какого индекса взять комментарии
  * @returns {DocumentFragment}
  */
-const getNextCommentFragment = function (fromIndex, toIndex) {
-  const comments = getComments();
+const renderComments = function (comments) {
   const commentFragment = document.createDocumentFragment();
-  comments.slice(fromIndex, toIndex).forEach((comment) => {
+  comments.forEach((comment) => {
     commentFragment.appendChild(createComment(comment));
   });
   return commentFragment;
 };
 
-export { getNextCommentFragment };
+/**
+ * Возвращает объект с комментариями
+ * @param {number} fromIndex с какого индекса взять комментарии
+ * @param {number} toIndex до какого индекса взять коммментарии
+ * @returns {DocumentFragment}
+ */
+const renderNextComments = function (fromIndex, toIndex) {
+  return renderComments(getNextComments(fromIndex, toIndex));
+};
+
+export { getNextComments, renderComments, renderNextComments };

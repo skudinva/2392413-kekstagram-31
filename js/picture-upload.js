@@ -1,6 +1,6 @@
-import { showAlert } from './alert';
 import { sendData } from './api';
 import { FILE_TYPES } from './config';
+import { showErrorData } from './error-data';
 import { showError, showSuccess } from './message';
 import {
   descriptionInput,
@@ -20,12 +20,17 @@ import { getPristine, setPristine } from './picture-upload-state';
 import { pristineInit } from './picture-upload-validate';
 import { isEscapeKey } from './utils';
 
+/**
+ * Возвращает ссылку на blob фото
+ * @param {Elemetn} fileElement указатель на input type="file"
+ * @returns {string|null}
+ */
 const getBlobURL = function (fileElement) {
   const file = fileElement.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (!matches) {
-    showAlert('Формат файла не поддерживается.');
+    showErrorData('Формат файла не поддерживается.');
     return;
   }
   return URL.createObjectURL(file);

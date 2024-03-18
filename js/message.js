@@ -2,7 +2,7 @@ import {
   recoverPreventEvents,
   resetPreventEvents,
   setPreventEvents,
-} from './error-state';
+} from './message-state';
 import {
   errorButton,
   errorContainer,
@@ -11,6 +11,12 @@ import {
 } from './page-elements';
 import { isEscapeKey } from './utils';
 
+/**
+ * Создание формы сообщение
+ * @param {HTMLElement} messageButton указатель на кнопку закрытия формы
+ * @param {HTMLElement} messageContainer указатель на контейнер формы
+ * @returns {function} функция для отображения формы
+ */
 const message = function (messageButton, messageContainer) {
   const onMessageButtonKeyDown = function (evt) {
     if (isEscapeKey(evt)) {
@@ -36,6 +42,10 @@ const message = function (messageButton, messageContainer) {
     setPreventEvents([]);
   }
 
+  /**
+   * Показать форму
+   * @param {[{ type: string, cb: EventListenerOrEventListenerObject }]} preventEvents при отображения формы события удаляются и восстанавливаются в момент закрытия формы
+   */
   const showMessage = function (preventEvents = []) {
     setPreventEvents(preventEvents);
     resetPreventEvents();

@@ -38,6 +38,7 @@ const renderActiveFilter = function () {
 
 /**
  * Применение выбранного фильтра
+ * @param {EventTarget} target
  */
 const applyFilter = function (target) {
   setSelectedFilter(target);

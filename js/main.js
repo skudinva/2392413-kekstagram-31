@@ -1,5 +1,5 @@
-import { showAlert } from './alert';
 import { getData } from './api';
+import { showErrorData } from './error-data';
 import { initFilters } from './picture-filter';
 import { setPictures } from './picture-state';
 import { initUploadPicture } from './picture-upload';
@@ -10,7 +10,7 @@ getData()
     setPictures(pictures);
   })
   .catch((err) => {
-    showAlert(err.message);
+    showErrorData(err.message);
   })
   .finally(initFilters);
 

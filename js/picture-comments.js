@@ -1,15 +1,4 @@
-import { COMMENT_LOADING_COUNT } from './config';
-import {
-  bigPictureCommentCount,
-  bigPictureCommentsShowCount,
-  bigPictureCommentsTotalCount,
-} from './page-elements';
-import {
-  getComments,
-  getLastCommentShowItem,
-  setLastCommentShowItem,
-} from './picture-state';
-import { addOrRemoveClass } from './utils';
+import { getComments } from './picture-state';
 
 /**
  * Создание иконци аватара в списке с комментариями
@@ -67,50 +56,4 @@ const getNextCommentFragment = function (fromIndex, toIndex) {
   return commentFragment;
 };
 
-/**
- * Callback для подгрузки комментариев
- * @callback pushComments
- * @param {DocumentFragment} fragment пулл комментариев
- * @returns {void}
- */
-
-/**
- * Обработчиск собития клик на ссылку "Загрузить еще".
- * Подгрузка комментариев. Количество комментариев для подгрузки в
- * константе COMMENT_LOADING_COUNT.
- * Если все комментарии подгружены, то скрываем ссылку.
- * @param {Element} loaderButton указатель на ссылку подгрузки комментариев
- * @param {pushComments} cbPushComment callback функция для добавления комментариев
- */
-const onCommentLoaderClick = function (loaderButton, cbPushComment) {
-  const comments = getComments();
-
-  const lastCommentShowItem = Math.max(getLastCommentShowItem(), 0);
-  const newLastCommentShowItem = Math.min(
-    lastCommentShowItem + COMMENT_LOADING_COUNT,
-    comments.length
-  );
-
-  cbPushComment(
-    getNextCommentFragment(lastCommentShowItem, newLastCommentShowItem)
-  );
-
-  bigPictureCommentsShowCount.textContent = newLastCommentShowItem;
-  setLastCommentShowItem(newLastCommentShowItem);
-  addOrRemoveClass(
-    loaderButton,
-    'hidden',
-    newLastCommentShowItem >= comments.length
-  );
-};
-
-/**
- * Инициализация блока с комментариями.
- */
-const initCommentBlock = function () {
-  const comments = getComments();
-  bigPictureCommentsTotalCount.textContent = comments.length;
-  bigPictureCommentCount.classList.remove('hidden');
-};
-
-export { initCommentBlock, onCommentLoaderClick };
+export { getNextCommentFragment };

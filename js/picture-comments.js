@@ -1,15 +1,4 @@
-import { COMMENT_LOADING_COUNT } from './config';
-import {
-  bigPictureCommentCount,
-  bigPictureCommentsShowCount,
-  bigPictureCommentsTotalCount,
-} from './page-elements';
-import {
-  getComments,
-  getLastCommentShowItem,
-  setLastCommentShowItem,
-} from './picture-state';
-import { addOrRemoveClass } from './utils';
+import { getComments } from './picture-state';
 
 /**
  * Создание иконци аватара в списке с комментариями
@@ -40,8 +29,13 @@ const createMessage = function (message) {
 };
 
 /**
+ * Комментарий
+ * @typedef {{avatar: string, name: string, message: string}} Comment
+ */
+
+/**
  * Создание комментария
- * @param {{avatar: string, name: string, message: string}} данные комментария
+ * @param {Comment} данные комментария
  * @returns {DocumentFragment}
  */
 const createComment = function ({ avatar, name, message }) {
@@ -53,64 +47,36 @@ const createComment = function ({ avatar, name, message }) {
 };
 
 /**
- * Возвращает фрагмент с очередным блоком с комментариями
+ * Возвращает объект с комментариями
  * @param {number} fromIndex с какого индекса взять комментарии
  * @param {number} toIndex до какого индекса взять коммментарии
+ * @returns {Comment[]}
+ */
+const getNextComments = function (fromIndex, toIndex) {
+  return getComments().slice(fromIndex, toIndex);
+};
+
+/**
+ * Возвращает фрагмент с очередным блоком с комментариями
+ * @param {Comment[]} comments с какого индекса взять комментарии
  * @returns {DocumentFragment}
  */
-const getNextCommentFragment = function (fromIndex, toIndex) {
-  const comments = getComments();
+const renderComments = function (comments) {
   const commentFragment = document.createDocumentFragment();
-  comments.slice(fromIndex, toIndex).forEach((comment) => {
+  comments.forEach((comment) => {
     commentFragment.appendChild(createComment(comment));
   });
   return commentFragment;
 };
 
 /**
- * Callback для подгрузки комментариев
- * @callback pushComments
- * @param {DocumentFragment} fragment пулл комментариев
- * @returns {void}
+ * Возвращает объект с комментариями
+ * @param {number} fromIndex с какого индекса взять комментарии
+ * @param {number} toIndex до какого индекса взять коммментарии
+ * @returns {DocumentFragment}
  */
-
-/**
- * Обработчиск собития клик на ссылку "Загрузить еще".
- * Подгрузка комментариев. Количество комментариев для подгрузки в
- * константе COMMENT_LOADING_COUNT.
- * Если все комментарии подгружены, то скрываем ссылку.
- * @param {Element} loaderButton указатель на ссылку подгрузки комментариев
- * @param {pushComments} cbPushComment callback функция для добавления комментариев
- */
-const onCommentLoaderClick = function (loaderButton, cbPushComment) {
-  const comments = getComments();
-
-  const lastCommentShowItem = Math.max(getLastCommentShowItem(), 0);
-  const newLastCommentShowItem = Math.min(
-    lastCommentShowItem + COMMENT_LOADING_COUNT,
-    comments.length
-  );
-
-  cbPushComment(
-    getNextCommentFragment(lastCommentShowItem, newLastCommentShowItem)
-  );
-
-  bigPictureCommentsShowCount.textContent = newLastCommentShowItem;
-  setLastCommentShowItem(newLastCommentShowItem);
-  addOrRemoveClass(
-    loaderButton,
-    'hidden',
-    newLastCommentShowItem >= comments.length
-  );
+const renderNextComments = function (fromIndex, toIndex) {
+  return renderComments(getNextComments(fromIndex, toIndex));
 };
 
-/**
- * Инициализация блока с комментариями.
- */
-const initCommentBlock = function () {
-  const comments = getComments();
-  bigPictureCommentsTotalCount.textContent = comments.length;
-  bigPictureCommentCount.classList.remove('hidden');
-};
-
-export { initCommentBlock, onCommentLoaderClick };
+export { getNextComments, renderComments, renderNextComments };

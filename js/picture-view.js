@@ -1,15 +1,25 @@
+import { COMMENT_LOADING_COUNT } from './config';
 import {
   bigPicture,
   bigPictureCancel,
+  bigPictureCommentCount,
   bigPictureCommentLoader,
   bigPictureComments,
+  bigPictureCommentsShowCount,
+  bigPictureCommentsTotalCount,
   bigPictureDescription,
   bigPictureImgTag,
   bigPictureLikesCount,
 } from './page-elements';
-import { initCommentBlock, onCommentLoaderClick } from './picture-comments';
-import { getSelectedPicture, resetSelectedPicture } from './picture-state';
-import { isEscapeKey } from './utils';
+import { renderNextComments } from './picture-comments';
+import {
+  getComments,
+  getLastCommentShowItem,
+  getSelectedPicture,
+  resetSelectedPicture,
+  setLastCommentShowItem,
+} from './picture-state';
+import { addOrRemoveClass, isEscapeKey } from './utils';
 
 /**
  * Обработчик события клик на закрытие фото (крестик в правом углу)
@@ -40,10 +50,41 @@ function formClose() {
 }
 
 /**
- * Функция добавляет в DOM фрагмент с пачкой комментариев на форму
+ * Обработчиск собития клик на ссылку "Загрузить еще".
+ * Подгрузка комментариев. Количество комментариев для подгрузки в
+ * константе COMMENT_LOADING_COUNT.
+ * Если все комментарии подгружены, то скрываем ссылку.
  */
-const appendNewComments = function (commentFragment) {
-  bigPictureComments.appendChild(commentFragment);
+const onCommentLoaderClick = function () {
+  const comments = getComments();
+
+  const lastCommentShowItem = Math.max(getLastCommentShowItem(), 0);
+  const newLastCommentShowItem = Math.min(
+    lastCommentShowItem + COMMENT_LOADING_COUNT,
+    comments.length
+  );
+
+  const newComments = renderNextComments(
+    lastCommentShowItem,
+    newLastCommentShowItem
+  );
+  bigPictureComments.appendChild(newComments);
+
+  bigPictureCommentsShowCount.textContent = newLastCommentShowItem;
+  setLastCommentShowItem(newLastCommentShowItem);
+  addOrRemoveClass(
+    bigPictureCommentLoader,
+    'hidden',
+    newLastCommentShowItem >= comments.length
+  );
+};
+
+/**
+ * Инициализация блока с комментариями.
+ */
+const initCommentBlock = function () {
+  bigPictureCommentsTotalCount.textContent = getComments().length;
+  bigPictureCommentCount.classList.remove('hidden');
 };
 
 /**
@@ -56,7 +97,7 @@ const renderBigPicture = function () {
   bigPictureDescription.textContent = description;
   bigPictureComments.replaceChildren();
   initCommentBlock();
-  onCommentLoaderClick(bigPictureCommentLoader, appendNewComments);
+  onCommentLoaderClick();
   bigPicture.classList.remove('hidden');
 
   document.addEventListener('keydown', onPictureCloseKeydown);
@@ -68,10 +109,7 @@ const renderBigPicture = function () {
  */
 const initPictureView = function () {
   bigPictureCancel.addEventListener('click', onPictureCloseClick);
-
-  bigPictureCommentLoader.addEventListener('click', (evt) => {
-    onCommentLoaderClick(evt.target, appendNewComments);
-  });
+  bigPictureCommentLoader.addEventListener('click', onCommentLoaderClick);
 };
 
 export { initPictureView, renderBigPicture };

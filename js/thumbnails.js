@@ -15,7 +15,7 @@ const clearThumbnails = function () {
  * Обработчик события клик на миниатюре
  */
 const onThumbnailClick = function (evt) {
-  const picture = evt.target.closest('.picture__img');
+  const picture = evt.target.closest('.picture');
   if (!picture) {
     return;
   }
@@ -35,8 +35,9 @@ const createThumbnail = function ({ id, url, description, likes, comments }) {
   const img = pictureElement.querySelector('.picture__img');
   const like = pictureElement.querySelector('.picture__likes');
   const comment = pictureElement.querySelector('.picture__comments');
+  const link = pictureElement.querySelector('a');
 
-  img.dataset.pictureId = id;
+  link.dataset.pictureId = id;
   img.src = url;
   img.alt = description;
   like.textContent = likes;

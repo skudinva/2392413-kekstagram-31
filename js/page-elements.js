@@ -54,8 +54,8 @@ const filterContainer = document.querySelector('.img-filters');
 const filterForm = filterContainer.querySelector('.img-filters__form');
 const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
 
-const alertContainer = renderTemplate('#data-error', '.data-error');
-const errorTitle = alertContainer.querySelector('.data-error__title');
+const errorDataContainer = renderTemplate('#data-error', '.data-error');
+const errorDataTitle = errorDataContainer.querySelector('.data-error__title');
 
 const errorContainer = renderTemplate('#error', '.error');
 const errorButton = errorContainer.querySelector('.error__button');
@@ -64,7 +64,6 @@ const successContainer = renderTemplate('#success', '.success');
 const successButton = successContainer.querySelector('.success__button');
 
 export {
-  alertContainer,
   bigPicture,
   bigPictureCancel,
   bigPictureCommentCount,
@@ -82,7 +81,8 @@ export {
   effectsPreview,
   errorButton,
   errorContainer,
-  errorTitle,
+  errorDataContainer,
+  errorDataTitle,
   filterButtons,
   filterContainer,
   filterForm,

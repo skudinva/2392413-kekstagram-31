@@ -1,6 +1,6 @@
-import { showAlert } from './alert';
 import { sendData } from './api';
 import { FILE_TYPES } from './config';
+import { showErrorData } from './error-data';
 import { showError, showSuccess } from './message';
 import {
   descriptionInput,
@@ -30,7 +30,7 @@ const getBlobURL = function (fileElement) {
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (!matches) {
-    showAlert('Формат файла не поддерживается.');
+    showErrorData('Формат файла не поддерживается.');
     return;
   }
   return URL.createObjectURL(file);

@@ -1,13 +1,13 @@
-const errorState = {
+const messageState = {
   preventEvents: [],
 };
 
 const getPreventEvents = function () {
-  return errorState.preventEvents;
+  return messageState.preventEvents;
 };
 
 const setPreventEvents = function (value) {
-  errorState.preventEvents = value;
+  messageState.preventEvents = value;
 };
 
 const resetPreventEvents = function () {

@@ -2,7 +2,7 @@ import {
   recoverPreventEvents,
   resetPreventEvents,
   setPreventEvents,
-} from './error-state';
+} from './message-state';
 import {
   errorButton,
   errorContainer,

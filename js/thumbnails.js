@@ -1,4 +1,4 @@
-import { picturePool, templatePicture } from './page-elements';
+import { picturePoolElement, templatePictureElement } from './page-elements';
 import { getPictures, setSelectedPicture } from './picture-state';
 import { renderBigPicture } from './picture-view';
 
@@ -6,7 +6,7 @@ import { renderBigPicture } from './picture-view';
  * Очистка миниатюр
  */
 const clearThumbnails = function () {
-  picturePool.querySelectorAll('.picture').forEach((element) => {
+  picturePoolElement.querySelectorAll('.picture').forEach((element) => {
     element.remove();
   });
 };
@@ -31,7 +31,7 @@ const onThumbnailClick = function (evt) {
  * @returns {DocumentFragment}
  */
 const createThumbnail = function ({ id, url, description, likes, comments }) {
-  const pictureElement = templatePicture.cloneNode(true);
+  const pictureElement = templatePictureElement.cloneNode(true);
   const img = pictureElement.querySelector('.picture__img');
   const like = pictureElement.querySelector('.picture__likes');
   const comment = pictureElement.querySelector('.picture__comments');
@@ -53,9 +53,9 @@ const createThumbnails = function () {
   clearThumbnails();
   const pictures = getPictures();
   pictures.forEach((picture) =>
-    picturePool.appendChild(createThumbnail(picture))
+    picturePoolElement.appendChild(createThumbnail(picture))
   );
-  picturePool.addEventListener('click', onThumbnailClick);
+  picturePoolElement.addEventListener('click', onThumbnailClick);
 };
 
 export { createThumbnails };

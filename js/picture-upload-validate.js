@@ -1,8 +1,8 @@
 import { DESCRIPTION_MAX_LENGTH, HASHTAG_MAX_COUNT } from './config';
 import {
-  descriptionInput,
-  hashtagInput,
-  uploadPictureForm,
+  descriptionInputElement,
+  hashtagInputElement,
+  uploadPictureFormElement,
 } from './page-elements';
 import { validateHashtag, validateStringLen } from './utils';
 
@@ -12,7 +12,7 @@ const pristineInit = function () {
    * Дока: https://pristine.js.org/
    */
   const pristine = new Pristine(
-    uploadPictureForm,
+    uploadPictureFormElement,
     {
       classTo: 'img-upload__field-wrapper',
       errorTextParent: 'img-upload__field-wrapper',
@@ -73,7 +73,7 @@ const pristineInit = function () {
    * Проблема: не понятно как можно обойтись одним вызовом getHashtagErrorMessage!!!
    */
   pristine.addValidator(
-    hashtagInput,
+    hashtagInputElement,
     (hashtag) => getHashtagErrorMessage(hashtag) === '',
     getHashtagErrorMessage
   );
@@ -86,7 +86,7 @@ const pristineInit = function () {
    * - длина комментария не может составлять больше DESCRIPTION_MAX_LENGTH символов;
    */
   pristine.addValidator(
-    descriptionInput,
+    descriptionInputElement,
     (description) => validateStringLen(description, DESCRIPTION_MAX_LENGTH),
     `не более ${DESCRIPTION_MAX_LENGTH} символов`
   );

@@ -4,10 +4,10 @@ import {
   setPreventEvents,
 } from './message-state';
 import {
-  errorButton,
-  errorContainer,
-  successButton,
-  successContainer,
+  errorButtonElement,
+  errorContainerElement,
+  successButtonElement,
+  successContainerElement,
 } from './page-elements';
 import { isEscapeKey } from './utils';
 
@@ -57,7 +57,7 @@ const message = function (messageButton, messageContainer) {
   return showMessage;
 };
 
-const showError = message(errorButton, errorContainer);
-const showSuccess = message(successButton, successContainer);
+const showError = message(errorButtonElement, errorContainerElement);
+const showSuccess = message(successButtonElement, successContainerElement);
 
 export { showError, showSuccess };

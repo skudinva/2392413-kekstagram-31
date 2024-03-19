@@ -1,16 +1,16 @@
 import { SCALE_DEFAULT_VALUE, SCALE_MAX_VALUE, SCALE_STEP } from './config';
 import {
-  scaleControlBigger,
-  scaleControlSmaller,
-  scaleControlValue,
-  uploadPicturePreviewImg,
+  scaleControlBiggerElement,
+  scaleControlSmallerElement,
+  scaleControlValueElement,
+  uploadPicturePreviewImgElement,
 } from './page-elements';
 
 /**
  * Функция получения текущего значения масштаба в процентах
  */
 const getScaleValue = function () {
-  return +scaleControlValue.value.replace('%', '');
+  return +scaleControlValueElement.value.replace('%', '');
 };
 
 /**
@@ -19,7 +19,7 @@ const getScaleValue = function () {
  */
 const onScaleValueChange = function () {
   const currentScaleValue = getScaleValue() / 100;
-  uploadPicturePreviewImg.style.transform = `scale(${currentScaleValue})`;
+  uploadPicturePreviewImgElement.style.transform = `scale(${currentScaleValue})`;
 };
 
 /**
@@ -27,7 +27,7 @@ const onScaleValueChange = function () {
  * @param {number} value значение масштаба 0..100
  */
 const setScaleValue = function (value) {
-  scaleControlValue.value = `${value}%`;
+  scaleControlValueElement.value = `${value}%`;
   onScaleValueChange();
 };
 
@@ -54,9 +54,15 @@ const onScaleControlBiggerClick = function () {
 };
 
 const initScalePicture = function () {
-  scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
-  scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
-  scaleControlValue.addEventListener('change', onScaleValueChange);
+  scaleControlSmallerElement.addEventListener(
+    'click',
+    onScaleControlSmallerClick
+  );
+  scaleControlBiggerElement.addEventListener(
+    'click',
+    onScaleControlBiggerClick
+  );
+  scaleControlValueElement.addEventListener('change', onScaleValueChange);
   setScaleValue(SCALE_DEFAULT_VALUE);
   onScaleValueChange();
 };

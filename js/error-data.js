@@ -1,5 +1,8 @@
 import { ERROR_DATA_SHOW_TIME } from './config';
-import { errorDataContainer, errorDataTitle } from './page-elements';
+import {
+  errorDataContainerElement,
+  errorDataTitleElement,
+} from './page-elements';
 
 /**
  * Показать предупреждение
@@ -7,11 +10,11 @@ import { errorDataContainer, errorDataTitle } from './page-elements';
  */
 const showErrorData = function (errorText) {
   if (errorText) {
-    errorDataTitle.textContent = errorText;
+    errorDataTitleElement.textContent = errorText;
   }
-  document.body.appendChild(errorDataContainer);
+  document.body.appendChild(errorDataContainerElement);
   setTimeout(() => {
-    errorDataContainer.remove();
+    errorDataContainerElement.remove();
   }, ERROR_DATA_SHOW_TIME);
 };
 

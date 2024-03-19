@@ -3,16 +3,16 @@ import { FILE_TYPES } from './config';
 import { showErrorData } from './error-data';
 import { showError, showSuccess } from './message';
 import {
-  descriptionInput,
-  effectsPreview,
-  hashtagInput,
-  inputFieldContainer,
-  submitButton,
-  uploadPictureForm,
-  uploadPictureFormCancel,
-  uploadPictureInput,
-  uploadPictureOverlay,
-  uploadPicturePreviewImg,
+  descriptionInputElement,
+  effectsPreviewElement,
+  hashtagInputElement,
+  inputFieldContainerElement,
+  submitButtonElement,
+  uploadPictureFormCancelElement,
+  uploadPictureFormElement,
+  uploadPictureInputElement,
+  uploadPictureOverlayElement,
+  uploadPicturePreviewImgElement,
 } from './page-elements';
 import { initEffectPicture } from './picture-effect';
 import { initScalePicture } from './picture-scale';
@@ -60,11 +60,11 @@ const onUploadCloseClick = function () {
  */
 function uploadFormClose() {
   document.removeEventListener('keydown', onUploadFormKeydown);
-  uploadPictureOverlay.classList.add('hidden');
+  uploadPictureOverlayElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  uploadPictureInput.value = '';
-  descriptionInput.value = '';
-  hashtagInput.value = '';
+  uploadPictureInputElement.value = '';
+  descriptionInputElement.value = '';
+  hashtagInputElement.value = '';
   getPristine().reset();
   initScalePicture();
   initEffectPicture();
@@ -82,36 +82,36 @@ const onPictureInputChange = function () {
     setPristine(pristineInit());
   }
 
-  const blobURL = getBlobURL(uploadPictureInput);
+  const blobURL = getBlobURL(uploadPictureInputElement);
 
-  uploadPicturePreviewImg.src = blobURL;
-  effectsPreview.forEach(
+  uploadPicturePreviewImgElement.src = blobURL;
+  effectsPreviewElement.forEach(
     (element) => (element.style.backgroundImage = `url(${blobURL})`)
   );
 
   initScalePicture();
   initEffectPicture();
-  uploadPictureOverlay.classList.remove('hidden');
+  uploadPictureOverlayElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onUploadFormKeydown);
-  uploadPictureFormCancel.addEventListener('click', onUploadCloseClick);
+  uploadPictureFormCancelElement.addEventListener('click', onUploadCloseClick);
 };
 
 /**
  * Блокировка кнопки отправки формы
  */
 const blockSubmitButton = function () {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Публикация изображения...';
+  submitButtonElement.disabled = true;
+  submitButtonElement.textContent = 'Публикация изображения...';
 };
 
 /**
  * Разблокировка кнопки отправки формы
  */
 const unblockSubmitButton = function () {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
+  submitButtonElement.disabled = false;
+  submitButtonElement.textContent = 'Опубликовать';
 };
 
 /**
@@ -140,13 +140,16 @@ const onUploadPictureFormSubmit = function (evt) {
  * Инициализация формы загрузки фото.
  */
 const initUploadPicture = function () {
-  uploadPictureInput.setAttribute(
+  uploadPictureInputElement.setAttribute(
     'accept',
     `image/${FILE_TYPES.join(', image/')}`
   );
-  uploadPictureForm.addEventListener('submit', onUploadPictureFormSubmit);
-  uploadPictureInput.addEventListener('change', onPictureInputChange);
-  inputFieldContainer.addEventListener('keydown', (evt) =>
+  uploadPictureFormElement.addEventListener(
+    'submit',
+    onUploadPictureFormSubmit
+  );
+  uploadPictureInputElement.addEventListener('change', onPictureInputChange);
+  inputFieldContainerElement.addEventListener('keydown', (evt) =>
     evt.stopPropagation()
   );
 };

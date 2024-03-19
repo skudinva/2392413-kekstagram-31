@@ -1,10 +1,10 @@
 import { effectStyle } from './config';
 import {
-  effectLevelSlider,
-  effectLevelValue,
-  effectList,
-  imgUploadEffectLevel,
-  uploadPicturePreviewImg,
+  effectLevelSliderElement,
+  effectLevelValueElement,
+  effectsListElement,
+  imgUploadEffectLevelElement,
+  picturePreviewElement,
 } from './page-elements';
 import { addOrRemoveClass } from './utils';
 
@@ -12,8 +12,9 @@ import { addOrRemoveClass } from './utils';
  * Получение выбранного эффекта
  */
 const getSelectedEffect = function () {
-  return effectList.querySelector('input[type="radio"][name="effect"]:checked')
-    .value;
+  return effectsListElement.querySelector(
+    'input[type="radio"][name="effect"]:checked'
+  ).value;
 };
 
 /**
@@ -21,7 +22,7 @@ const getSelectedEffect = function () {
  * @param {string} value код эффекта none|chrome|sepia|marvin|phobos|heat
  */
 const setSelectedEffect = function (value) {
-  effectList.querySelector(
+  effectsListElement.querySelector(
     `input[type="radio"][value="${value}"]`
   ).checked = true;
 };
@@ -30,17 +31,19 @@ const setSelectedEffect = function (value) {
  * Применить эффект
  */
 const applyEffect = function () {
-  effectLevelValue.value = +effectLevelSlider.noUiSlider.get();
+  effectLevelValueElement.value = +effectLevelSliderElement.noUiSlider.get();
   const curentEffect = getSelectedEffect();
-  const newStyleEffect = effectStyle[curentEffect]?.css(effectLevelValue.value);
-  Object.assign(uploadPicturePreviewImg.style, newStyleEffect);
+  const newStyleEffect = effectStyle[curentEffect]?.css(
+    effectLevelValueElement.value
+  );
+  Object.assign(picturePreviewElement.style, newStyleEffect);
 };
 
 /**
  * Создание слайдера
  */
 const initUISlider = function () {
-  noUiSlider.create(effectLevelSlider, {
+  noUiSlider.create(effectLevelSliderElement, {
     range: {
       min: 0,
       max: 100,
@@ -58,7 +61,7 @@ const initUISlider = function () {
    * следующим образом (см. effectStyle).
    */
 
-  effectLevelSlider.noUiSlider.on('slide', applyEffect);
+  effectLevelSliderElement.noUiSlider.on('slide', applyEffect);
 };
 
 /**
@@ -69,10 +72,14 @@ const initUISlider = function () {
 const resetEffect = function () {
   const curentEffect = getSelectedEffect();
   const sliderOption = effectStyle[curentEffect].slider;
-  effectLevelSlider.noUiSlider.updateOptions(sliderOption);
-  effectLevelSlider.noUiSlider.set(sliderOption.range.max);
+  effectLevelSliderElement.noUiSlider.updateOptions(sliderOption);
+  effectLevelSliderElement.noUiSlider.set(sliderOption.range.max);
   applyEffect();
-  addOrRemoveClass(imgUploadEffectLevel, 'hidden', curentEffect === 'none');
+  addOrRemoveClass(
+    imgUploadEffectLevelElement,
+    'hidden',
+    curentEffect === 'none'
+  );
 };
 
 /**
@@ -81,7 +88,7 @@ const resetEffect = function () {
 const onEffectItemClick = function (evt) {
   evt.preventDefault();
   if (
-    evt.target !== effectList &&
+    evt.target !== effectsListElement &&
     !evt.target.classList.contains('effects__radio')
   ) {
     return;
@@ -93,10 +100,10 @@ const onEffectItemClick = function (evt) {
  * Инициализация эффектов.
  */
 const initEffectPicture = function () {
-  if (!effectLevelSlider.noUiSlider) {
+  if (!effectLevelSliderElement.noUiSlider) {
     initUISlider();
   }
-  effectList.addEventListener('change', onEffectItemClick);
+  effectsListElement.addEventListener('change', onEffectItemClick);
   setSelectedEffect('none');
   resetEffect();
 };

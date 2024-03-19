@@ -1,14 +1,15 @@
-const getRandomInteger = (firstNumber, secondNumber) => {
+const getRandomInteger = function (firstNumber, secondNumber) {
   const lower = Math.ceil(Math.min(firstNumber, secondNumber));
   const upper = Math.floor(Math.max(firstNumber, secondNumber));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
 
-const getRandomArrayElement = (elements) =>
-  elements[getRandomInteger(0, elements.length - 1)];
+const getRandomArrayElement = function (elements) {
+  return elements[getRandomInteger(0, elements.length - 1)];
+};
 
-const getUniqueRandomArrayElement = (elements, maxCount) => {
+const getUniqueRandomArrayElement = function (elements, maxCount) {
   const uniqueueIndex = new Set();
   while (uniqueueIndex.size !== Math.min(maxCount, elements.length)) {
     uniqueueIndex.add(getRandomInteger(0, elements.length - 1));
@@ -19,14 +20,19 @@ const getUniqueRandomArrayElement = (elements, maxCount) => {
   return result;
 };
 
-const validateHashtag = (hashtag) => /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
+const validateHashtag = function (hashtag) {
+  return /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
+};
 
-const allowHashtagChar = (char) => /[#a-zа-яё0-9 ]/.test(char);
+const allowHashtagChar = function (char) {
+  return /[#a-zа-яё0-9 ]/.test(char);
+};
 
-const validateStringLen = (stringValue, maxLength) =>
-  stringValue.length <= maxLength;
+const validateStringLen = function (stringValue, maxLength) {
+  return stringValue.length <= maxLength;
+};
 
-const debounce = (callback, timeoutDelay) => {
+const debounce = function (callback, timeoutDelay) {
   let timeoutId = 0;
   return (...rest) => {
     clearTimeout(timeoutId);
@@ -36,14 +42,14 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-const renderTemplate = (templateId, selector) => {
+const renderTemplate = function (templateId, selector) {
   const template = document.querySelector(templateId).content;
   return (selector ? template.querySelector(selector) : template).cloneNode(
     true
   );
 };
 
-const addOrRemoveClass = (element, className, condition) => {
+const addOrRemoveClass = function (element, className, condition) {
   if (condition) {
     element.classList.add(className);
   } else {
@@ -51,7 +57,9 @@ const addOrRemoveClass = (element, className, condition) => {
   }
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = function (evt) {
+  return evt.key === 'Escape';
+};
 
 export {
   addOrRemoveClass,

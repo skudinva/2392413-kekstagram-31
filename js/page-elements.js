@@ -1,106 +1,135 @@
 import { renderTemplate } from './utils';
 
-const templatePicture = document.querySelector('#picture').content;
+const templatePictureElement = document.querySelector('#picture').content;
 
-const picturePool = document.querySelector('.pictures');
+const picturePoolElement = document.querySelector('.pictures');
 
-const uploadPictureForm = document.querySelector('.img-upload__form');
-const uploadPictureInput =
-  uploadPictureForm.querySelector('.img-upload__input');
-const uploadPictureOverlay = uploadPictureForm.querySelector(
+const uploadPictureFormElement = document.querySelector('.img-upload__form');
+const uploadPictureInputElement =
+  uploadPictureFormElement.querySelector('.img-upload__input');
+const uploadPictureOverlayElement = uploadPictureFormElement.querySelector(
   '.img-upload__overlay'
 );
-const uploadPictureFormCancel = uploadPictureForm.querySelector(
+const uploadPictureCancelElement = uploadPictureFormElement.querySelector(
   '.img-upload__cancel'
 );
-const hashtagInput = uploadPictureForm.querySelector('.text__hashtags');
-const descriptionInput = uploadPictureForm.querySelector('.text__description');
-const submitButton = uploadPictureForm.querySelector('.img-upload__submit');
-const inputFieldContainer =
-  uploadPictureForm.querySelector('.img-upload__text');
+const hashtagInputElement =
+  uploadPictureFormElement.querySelector('.text__hashtags');
+const descriptionInputElement =
+  uploadPictureFormElement.querySelector('.text__description');
+const submitButtonElement = uploadPictureFormElement.querySelector(
+  '.img-upload__submit'
+);
+const inputFieldContainerElement =
+  uploadPictureFormElement.querySelector('.img-upload__text');
 
-const bigPicture = document.querySelector('.big-picture');
-const bigPictureImg = bigPicture.querySelector('.big-picture__img');
-const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-const bigPictureImgTag = bigPictureImg.querySelector('img');
-const bigPictureLikesCount = bigPicture.querySelector('.likes-count');
-const bigPictureCommentsShowCount = bigPicture.querySelector(
+//Форма просмотра фото
+const bigPictureContainerElement = document.querySelector('.big-picture');
+const bigPictureCancelElement = bigPictureContainerElement.querySelector(
+  '.big-picture__cancel'
+);
+const bigPictureImgElement = bigPictureContainerElement.querySelector(
+  '.big-picture__img img'
+);
+const likesCountElement =
+  bigPictureContainerElement.querySelector('.likes-count');
+const commentShowCountElement = bigPictureContainerElement.querySelector(
   '.social__comment-shown-count'
 );
-const bigPictureCommentsTotalCount = bigPicture.querySelector(
+const commentTotalCountElement = bigPictureContainerElement.querySelector(
   '.social__comment-total-count'
 );
-const bigPictureDescription = bigPicture.querySelector('.social__caption');
-const bigPictureComments = bigPicture.querySelector('.social__comments');
-const bigPictureCommentCount = bigPicture.querySelector(
+const descriptionElement =
+  bigPictureContainerElement.querySelector('.social__caption');
+const commentsContainerElement =
+  bigPictureContainerElement.querySelector('.social__comments');
+const commentCountContainerElement = bigPictureContainerElement.querySelector(
   '.social__comment-count'
 );
-const bigPictureCommentLoader = bigPicture.querySelector('.comments-loader');
+const commentsLoaderElement =
+  bigPictureContainerElement.querySelector('.comments-loader');
 
-const uploadPicturePreview = document.querySelector('.img-upload__preview');
-const uploadPicturePreviewImg = uploadPicturePreview.querySelector('img');
-const scaleControlSmaller = document.querySelector('.scale__control--smaller');
-const scaleControlBigger = document.querySelector('.scale__control--bigger');
-const scaleControlValue = document.querySelector('.scale__control--value');
-const effectLevelSlider = document.querySelector('.effect-level__slider');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const imgUploadEffectLevel = document.querySelector(
+//Эффекты и зумм фото
+const picturePreviewElement = document.querySelector(
+  '.img-upload__preview img'
+);
+const scaleControlSmallerElement = document.querySelector(
+  '.scale__control--smaller'
+);
+const scaleControlBiggerElement = document.querySelector(
+  '.scale__control--bigger'
+);
+const scaleControlValueElement = document.querySelector(
+  '.scale__control--value'
+);
+const effectLevelSliderElement = document.querySelector(
+  '.effect-level__slider'
+);
+const effectLevelValueElement = document.querySelector('.effect-level__value');
+const imgUploadEffectLevelElement = document.querySelector(
   '.img-upload__effect-level'
 );
-const effectList = document.querySelector('.effects__list');
-const effectsPreview = effectList.querySelectorAll('.effects__preview');
+const effectsListElement = document.querySelector('.effects__list');
+const effectsPreviewElement =
+  effectsListElement.querySelectorAll('.effects__preview');
 
-const filterContainer = document.querySelector('.img-filters');
-const filterForm = filterContainer.querySelector('.img-filters__form');
-const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
+const filtersContainerElement = document.querySelector('.img-filters');
+const filtersFormElement =
+  filtersContainerElement.querySelector('.img-filters__form');
+const filtersButtonElement = filtersContainerElement.querySelectorAll(
+  '.img-filters__button'
+);
 
-const errorDataContainer = renderTemplate('#data-error', '.data-error');
-const errorDataTitle = errorDataContainer.querySelector('.data-error__title');
+//Статусы получения/загрузки данных
+const errorDataContainerElement = renderTemplate('#data-error', '.data-error');
+const errorDataTitleElement =
+  errorDataContainerElement.querySelector('.data-error__title');
 
-const errorContainer = renderTemplate('#error', '.error');
-const errorButton = errorContainer.querySelector('.error__button');
+const errorContainerElement = renderTemplate('#error', '.error');
+const errorButtonElement =
+  errorContainerElement.querySelector('.error__button');
 
-const successContainer = renderTemplate('#success', '.success');
-const successButton = successContainer.querySelector('.success__button');
+const successContainerElement = renderTemplate('#success', '.success');
+const successButtonElement =
+  successContainerElement.querySelector('.success__button');
 
 export {
-  bigPicture,
-  bigPictureCancel,
-  bigPictureCommentCount,
-  bigPictureCommentLoader,
-  bigPictureComments,
-  bigPictureCommentsShowCount,
-  bigPictureCommentsTotalCount,
-  bigPictureDescription,
-  bigPictureImgTag,
-  bigPictureLikesCount,
-  descriptionInput,
-  effectLevelSlider,
-  effectLevelValue,
-  effectList,
-  effectsPreview,
-  errorButton,
-  errorContainer,
-  errorDataContainer,
-  errorDataTitle,
-  filterButtons,
-  filterContainer,
-  filterForm,
-  hashtagInput,
-  imgUploadEffectLevel,
-  inputFieldContainer,
-  picturePool,
-  scaleControlBigger,
-  scaleControlSmaller,
-  scaleControlValue,
-  submitButton,
-  successButton,
-  successContainer,
-  templatePicture,
-  uploadPictureForm,
-  uploadPictureFormCancel,
-  uploadPictureInput,
-  uploadPictureOverlay,
-  uploadPicturePreview,
-  uploadPicturePreviewImg,
+  bigPictureCancelElement,
+  bigPictureContainerElement,
+  bigPictureImgElement,
+  commentCountContainerElement,
+  commentShowCountElement,
+  commentTotalCountElement,
+  commentsContainerElement,
+  commentsLoaderElement,
+  descriptionElement,
+  descriptionInputElement,
+  effectLevelSliderElement,
+  effectLevelValueElement,
+  effectsListElement,
+  effectsPreviewElement,
+  errorButtonElement,
+  errorContainerElement,
+  errorDataContainerElement,
+  errorDataTitleElement,
+  filtersButtonElement,
+  filtersContainerElement,
+  filtersFormElement,
+  hashtagInputElement,
+  imgUploadEffectLevelElement,
+  inputFieldContainerElement,
+  likesCountElement,
+  picturePoolElement,
+  picturePreviewElement,
+  scaleControlBiggerElement,
+  scaleControlSmallerElement,
+  scaleControlValueElement,
+  submitButtonElement,
+  successButtonElement,
+  successContainerElement,
+  templatePictureElement,
+  uploadPictureCancelElement,
+  uploadPictureFormElement,
+  uploadPictureInputElement,
+  uploadPictureOverlayElement,
 };

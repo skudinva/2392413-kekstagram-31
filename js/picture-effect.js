@@ -2,9 +2,9 @@ import { effectStyle } from './config';
 import {
   effectLevelSliderElement,
   effectLevelValueElement,
-  effectListElement,
+  effectsListElement,
   imgUploadEffectLevelElement,
-  uploadPicturePreviewImgElement,
+  picturePreviewElement,
 } from './page-elements';
 import { addOrRemoveClass } from './utils';
 
@@ -12,7 +12,7 @@ import { addOrRemoveClass } from './utils';
  * Получение выбранного эффекта
  */
 const getSelectedEffect = function () {
-  return effectListElement.querySelector(
+  return effectsListElement.querySelector(
     'input[type="radio"][name="effect"]:checked'
   ).value;
 };
@@ -22,7 +22,7 @@ const getSelectedEffect = function () {
  * @param {string} value код эффекта none|chrome|sepia|marvin|phobos|heat
  */
 const setSelectedEffect = function (value) {
-  effectListElement.querySelector(
+  effectsListElement.querySelector(
     `input[type="radio"][value="${value}"]`
   ).checked = true;
 };
@@ -36,7 +36,7 @@ const applyEffect = function () {
   const newStyleEffect = effectStyle[curentEffect]?.css(
     effectLevelValueElement.value
   );
-  Object.assign(uploadPicturePreviewImgElement.style, newStyleEffect);
+  Object.assign(picturePreviewElement.style, newStyleEffect);
 };
 
 /**
@@ -88,7 +88,7 @@ const resetEffect = function () {
 const onEffectItemClick = function (evt) {
   evt.preventDefault();
   if (
-    evt.target !== effectListElement &&
+    evt.target !== effectsListElement &&
     !evt.target.classList.contains('effects__radio')
   ) {
     return;
@@ -103,7 +103,7 @@ const initEffectPicture = function () {
   if (!effectLevelSliderElement.noUiSlider) {
     initUISlider();
   }
-  effectListElement.addEventListener('change', onEffectItemClick);
+  effectsListElement.addEventListener('change', onEffectItemClick);
   setSelectedEffect('none');
   resetEffect();
 };

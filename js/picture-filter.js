@@ -1,8 +1,8 @@
 import { DEBOUNCE_TIMEOUT } from './config';
 import {
-  filterButtonsElement,
-  filterContainerElement,
-  filterFormElement,
+  filtersButtonElement,
+  filtersContainerElement,
+  filtersFormElement,
 } from './page-elements';
 import {
   getPictureCount,
@@ -24,7 +24,7 @@ const createThumbnailsDebounce = debounce(createThumbnails, DEBOUNCE_TIMEOUT);
  */
 const renderActiveFilter = function () {
   const currentFilter = getSelectedFilter();
-  filterButtonsElement.forEach((element) => {
+  filtersButtonElement.forEach((element) => {
     addOrRemoveClass(
       element,
       'img-filters__button--active',
@@ -57,14 +57,14 @@ const onFilterClick = function (evt) {
 };
 
 const initFilters = async function () {
-  filterFormElement.addEventListener('click', onFilterClick);
+  filtersFormElement.addEventListener('click', onFilterClick);
   addOrRemoveClass(
-    filterContainerElement,
+    filtersContainerElement,
     'img-filters--inactive',
     getPictureCount() === 0
   );
 
-  applyFilter(filterFormElement.querySelector('.img-filters__button--active'));
+  applyFilter(filtersFormElement.querySelector('.img-filters__button--active'));
 };
 
 export { initFilters };

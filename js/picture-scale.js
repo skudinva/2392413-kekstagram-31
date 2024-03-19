@@ -1,9 +1,9 @@
 import { SCALE_DEFAULT_VALUE, SCALE_MAX_VALUE, SCALE_STEP } from './config';
 import {
+  picturePreviewElement,
   scaleControlBiggerElement,
   scaleControlSmallerElement,
   scaleControlValueElement,
-  uploadPicturePreviewImgElement,
 } from './page-elements';
 
 /**
@@ -19,7 +19,7 @@ const getScaleValue = function () {
  */
 const onScaleValueChange = function () {
   const currentScaleValue = getScaleValue() / 100;
-  uploadPicturePreviewImgElement.style.transform = `scale(${currentScaleValue})`;
+  picturePreviewElement.style.transform = `scale(${currentScaleValue})`;
 };
 
 /**

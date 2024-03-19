@@ -7,12 +7,12 @@ import {
   effectsPreviewElement,
   hashtagInputElement,
   inputFieldContainerElement,
+  picturePreviewElement,
   submitButtonElement,
-  uploadPictureFormCancelElement,
+  uploadPictureCancelElement,
   uploadPictureFormElement,
   uploadPictureInputElement,
   uploadPictureOverlayElement,
-  uploadPicturePreviewImgElement,
 } from './page-elements';
 import { initEffectPicture } from './picture-effect';
 import { initScalePicture } from './picture-scale';
@@ -84,7 +84,7 @@ const onPictureInputChange = function () {
 
   const blobURL = getBlobURL(uploadPictureInputElement);
 
-  uploadPicturePreviewImgElement.src = blobURL;
+  picturePreviewElement.src = blobURL;
   effectsPreviewElement.forEach(
     (element) => (element.style.backgroundImage = `url(${blobURL})`)
   );
@@ -95,7 +95,7 @@ const onPictureInputChange = function () {
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onUploadFormKeydown);
-  uploadPictureFormCancelElement.addEventListener('click', onUploadCloseClick);
+  uploadPictureCancelElement.addEventListener('click', onUploadCloseClick);
 };
 
 /**

@@ -10,7 +10,7 @@ const uploadPictureInputElement =
 const uploadPictureOverlayElement = uploadPictureFormElement.querySelector(
   '.img-upload__overlay'
 );
-const uploadPictureFormCancelElement = uploadPictureFormElement.querySelector(
+const uploadPictureCancelElement = uploadPictureFormElement.querySelector(
   '.img-upload__cancel'
 );
 const hashtagInputElement =
@@ -23,36 +23,36 @@ const submitButtonElement = uploadPictureFormElement.querySelector(
 const inputFieldContainerElement =
   uploadPictureFormElement.querySelector('.img-upload__text');
 
-const bigPictureElement = document.querySelector('.big-picture');
-const bigPictureImgElement =
-  bigPictureElement.querySelector('.big-picture__img');
-const bigPictureCancelElement = bigPictureElement.querySelector(
+//Форма просмотра фото
+const bigPictureContainerElement = document.querySelector('.big-picture');
+const bigPictureCancelElement = bigPictureContainerElement.querySelector(
   '.big-picture__cancel'
 );
-const bigPictureImgTagElement = bigPictureImgElement.querySelector('img');
-const bigPictureLikesCountElement =
-  bigPictureElement.querySelector('.likes-count');
-const bigPictureCommentsShowCountElement = bigPictureElement.querySelector(
+const bigPictureImgElement = bigPictureContainerElement.querySelector(
+  '.big-picture__img img'
+);
+const likesCountElement =
+  bigPictureContainerElement.querySelector('.likes-count');
+const commentShowCountElement = bigPictureContainerElement.querySelector(
   '.social__comment-shown-count'
 );
-const bigPictureCommentsTotalCountElement = bigPictureElement.querySelector(
+const commentTotalCountElement = bigPictureContainerElement.querySelector(
   '.social__comment-total-count'
 );
-const bigPictureDescriptionElement =
-  bigPictureElement.querySelector('.social__caption');
-const bigPictureCommentsElement =
-  bigPictureElement.querySelector('.social__comments');
-const bigPictureCommentCountElement = bigPictureElement.querySelector(
+const descriptionElement =
+  bigPictureContainerElement.querySelector('.social__caption');
+const commentsContainerElement =
+  bigPictureContainerElement.querySelector('.social__comments');
+const commentCountContainerElement = bigPictureContainerElement.querySelector(
   '.social__comment-count'
 );
-const bigPictureCommentLoaderElement =
-  bigPictureElement.querySelector('.comments-loader');
+const commentsLoaderElement =
+  bigPictureContainerElement.querySelector('.comments-loader');
 
-const uploadPicturePreviewElement = document.querySelector(
-  '.img-upload__preview'
+//Эффекты и зумм фото
+const picturePreviewElement = document.querySelector(
+  '.img-upload__preview img'
 );
-const uploadPicturePreviewImgElement =
-  uploadPicturePreviewElement.querySelector('img');
 const scaleControlSmallerElement = document.querySelector(
   '.scale__control--smaller'
 );
@@ -69,17 +69,18 @@ const effectLevelValueElement = document.querySelector('.effect-level__value');
 const imgUploadEffectLevelElement = document.querySelector(
   '.img-upload__effect-level'
 );
-const effectListElement = document.querySelector('.effects__list');
+const effectsListElement = document.querySelector('.effects__list');
 const effectsPreviewElement =
-  effectListElement.querySelectorAll('.effects__preview');
+  effectsListElement.querySelectorAll('.effects__preview');
 
-const filterContainerElement = document.querySelector('.img-filters');
-const filterFormElement =
-  filterContainerElement.querySelector('.img-filters__form');
-const filterButtonsElement = filterContainerElement.querySelectorAll(
+const filtersContainerElement = document.querySelector('.img-filters');
+const filtersFormElement =
+  filtersContainerElement.querySelector('.img-filters__form');
+const filtersButtonElement = filtersContainerElement.querySelectorAll(
   '.img-filters__button'
 );
 
+//Статусы получения/загрузки данных
 const errorDataContainerElement = renderTemplate('#data-error', '.data-error');
 const errorDataTitleElement =
   errorDataContainerElement.querySelector('.data-error__title');
@@ -94,31 +95,32 @@ const successButtonElement =
 
 export {
   bigPictureCancelElement,
-  bigPictureCommentCountElement,
-  bigPictureCommentLoaderElement,
-  bigPictureCommentsElement,
-  bigPictureCommentsShowCountElement,
-  bigPictureCommentsTotalCountElement,
-  bigPictureDescriptionElement,
-  bigPictureElement,
-  bigPictureImgTagElement,
-  bigPictureLikesCountElement,
+  bigPictureContainerElement,
+  bigPictureImgElement,
+  commentCountContainerElement,
+  commentShowCountElement,
+  commentTotalCountElement,
+  commentsContainerElement,
+  commentsLoaderElement,
+  descriptionElement,
   descriptionInputElement,
   effectLevelSliderElement,
   effectLevelValueElement,
-  effectListElement,
+  effectsListElement,
   effectsPreviewElement,
   errorButtonElement,
   errorContainerElement,
   errorDataContainerElement,
   errorDataTitleElement,
-  filterButtonsElement,
-  filterContainerElement,
-  filterFormElement,
+  filtersButtonElement,
+  filtersContainerElement,
+  filtersFormElement,
   hashtagInputElement,
   imgUploadEffectLevelElement,
   inputFieldContainerElement,
+  likesCountElement,
   picturePoolElement,
+  picturePreviewElement,
   scaleControlBiggerElement,
   scaleControlSmallerElement,
   scaleControlValueElement,
@@ -126,10 +128,8 @@ export {
   successButtonElement,
   successContainerElement,
   templatePictureElement,
-  uploadPictureFormCancelElement,
+  uploadPictureCancelElement,
   uploadPictureFormElement,
   uploadPictureInputElement,
   uploadPictureOverlayElement,
-  uploadPicturePreviewElement,
-  uploadPicturePreviewImgElement,
 };

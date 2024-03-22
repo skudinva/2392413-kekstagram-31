@@ -6,7 +6,7 @@ import {
 } from './page-elements';
 import { validateHashtag, validateStringLen } from './utils';
 
-const pristineInit = function () {
+const pristineInit = () => {
   /**
    * Инициализация Pristine для валидации формы ввода.
    * Дока: https://pristine.js.org/
@@ -40,7 +40,7 @@ const pristineInit = function () {
    * @param {string} hashtag
    * @returns {string}
    */
-  const getHashtagErrorMessage = function (hashtag) {
+  const getHashtagErrorMessage = (hashtag) => {
     const hashtagNormalize = hashtag.trim().toLowerCase().replace(/\s+/g, ' ');
 
     if (hashtagNormalize === '') {

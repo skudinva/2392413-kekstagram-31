@@ -2,17 +2,17 @@ const messageState = {
   preventEvents: [],
 };
 
-const setPreventEvents = function (value) {
+const setPreventEvents = (value) => {
   messageState.preventEvents = value;
 };
 
-const resetPreventEvents = function () {
+const resetPreventEvents = () => {
   messageState.preventEvents.forEach((evt) => {
     document.removeEventListener(evt.type, evt.cb);
   });
 };
 
-const recoverPreventEvents = function () {
+const recoverPreventEvents = () => {
   messageState.preventEvents.forEach((evt) => {
     document.addEventListener(evt.type, evt.cb);
   });

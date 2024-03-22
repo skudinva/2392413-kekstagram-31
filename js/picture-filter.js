@@ -22,7 +22,7 @@ const createThumbnailsDebounce = debounce(createThumbnails, DEBOUNCE_TIMEOUT);
 /**
  * Отрисовка выбранного фильтра
  */
-const renderActiveFilter = function () {
+const renderActiveFilter = () => {
   const currentFilter = getSelectedFilter();
   filtersButtonElement.forEach((element) => {
     addOrRemoveClass(
@@ -44,7 +44,7 @@ const renderActiveFilter = function () {
  * Применение выбранного фильтра
  * @param {EventTarget} target
  */
-const applyFilter = function (target) {
+const applyFilter = (target) => {
   setSelectedFilter(target);
   renderActiveFilter();
 };
@@ -52,11 +52,11 @@ const applyFilter = function (target) {
 /**
  * Обработчик события клик по фильтру
  */
-const onFilterClick = function (evt) {
+const onFilterClick = (evt) => {
   applyFilter(evt.target);
 };
 
-const initFilters = async function () {
+const initFilters = () => {
   filtersFormElement.addEventListener('click', onFilterClick);
   addOrRemoveClass(
     filtersContainerElement,

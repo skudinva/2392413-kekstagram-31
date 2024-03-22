@@ -23,17 +23,15 @@ import { isEscapeKey } from './utils';
  * @param {Elemetn} fileElement указатель на input type="file"
  * @returns {string|null}
  */
-const getBlobURL = function (fileElement){
-  return URL.createObjectURL(fileElement.files[0]);
-};
+const getBlobURL = (fileElement) => URL.createObjectURL(fileElement.files[0]);
 
-const onUploadFormKeydown = function (evt) {
+const onUploadFormKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     closeUploadForm();
   }
 };
 
-const onUploadCloseClick = function () {
+const onUploadCloseClick = () => {
   closeUploadForm();
 };
 
@@ -68,7 +66,7 @@ function closeUploadForm() {
  * Для закрытия формы добавляем слушателя на событие
  * keydown на документ и событие click на иконку.
  */
-const onPictureInputChange = function () {
+const onPictureInputChange = () => {
   if (!getPristine()) {
     setPristine(pristineInit());
   }
@@ -92,7 +90,7 @@ const onPictureInputChange = function () {
 /**
  * Блокировка кнопки отправки формы
  */
-const blockSubmitButton = function () {
+const blockSubmitButton = () => {
   submitButtonElement.disabled = true;
   submitButtonElement.textContent = 'Публикация изображения...';
 };
@@ -100,7 +98,7 @@ const blockSubmitButton = function () {
 /**
  * Разблокировка кнопки отправки формы
  */
-const unblockSubmitButton = function () {
+const unblockSubmitButton = () => {
   submitButtonElement.disabled = false;
   submitButtonElement.textContent = 'Опубликовать';
 };
@@ -109,7 +107,7 @@ const unblockSubmitButton = function () {
  * Обработчик события submit (отправка формы).
  * Если Pristine возвращает false, значит где-то есть ошибка.
  */
-const onUploadPictureFormSubmit = function (evt) {
+const onUploadPictureFormSubmit = (evt) => {
   evt.preventDefault();
   if (!getPristine().validate()) {
     return;
@@ -130,7 +128,7 @@ const onUploadPictureFormSubmit = function (evt) {
 /**
  * Инициализация формы загрузки фото.
  */
-const initUploadPicture = function () {
+const initUploadPicture = () => {
   uploadPictureInputElement.setAttribute(
     'accept',
     'image/*'
@@ -140,8 +138,7 @@ const initUploadPicture = function () {
     onUploadPictureFormSubmit
   );
   uploadPictureInputElement.addEventListener('change', onPictureInputChange);
-  inputFieldContainerElement.addEventListener('keydown', (evt) =>
-    evt.stopPropagation()
+  inputFieldContainerElement.addEventListener('keydown', (evt) => evt.stopPropagation()
   );
 };
 

@@ -5,7 +5,7 @@ import { renderBigPicture } from './picture-view';
 /**
  * Очистка миниатюр
  */
-const clearThumbnails = function () {
+const clearThumbnails = () => {
   picturePoolElement.querySelectorAll('.picture').forEach((element) => {
     element.remove();
   });
@@ -14,7 +14,7 @@ const clearThumbnails = function () {
 /**
  * Обработчик события клик на миниатюре
  */
-const onThumbnailClick = function (evt) {
+const onThumbnailClick = (evt) => {
   const picture = evt.target.closest('.picture');
   if (!picture) {
     return;
@@ -30,7 +30,7 @@ const onThumbnailClick = function (evt) {
  * @param {{id: number, url: string, description: string, likes: number, comments: string}} данные миниатюры
  * @returns {DocumentFragment}
  */
-const getThumbnailElement = function ({ id, url, description, likes, comments }) {
+const getThumbnailElement = ({ id, url, description, likes, comments }) => {
   const pictureElement = templatePictureElement.content.cloneNode(true);
   const img = pictureElement.querySelector('.picture__img');
   const like = pictureElement.querySelector('.picture__likes');
@@ -49,11 +49,10 @@ const getThumbnailElement = function ({ id, url, description, likes, comments })
 /**
  * Создание миниатюр
  */
-const createThumbnails = function () {
+const createThumbnails = () => {
   clearThumbnails();
   const pictures = getPictures();
-  pictures.forEach((picture) =>
-    picturePoolElement.appendChild(getThumbnailElement(picture))
+  pictures.forEach((picture) => picturePoolElement.appendChild(getThumbnailElement(picture))
   );
   picturePoolElement.addEventListener('click', onThumbnailClick);
 };

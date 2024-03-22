@@ -9,15 +9,13 @@ import {
 /**
  * Функция получения текущего значения масштаба в процентах
  */
-const getScaleValue = function () {
-  return Number(scaleControlValueElement.value.replace('%', ''));
-};
+const getScaleValue = () => Number(scaleControlValueElement.value.replace('%', ''));
 
 /**
  * Обработчик изменения значения масштаба.
  * Тут просто стиль надо допнуть
  */
-const onScaleValueChange = function () {
+const onScaleValueChange = () => {
   const currentScaleValue = getScaleValue() / 100;
   picturePreviewElement.style.transform = `scale(${currentScaleValue})`;
 };
@@ -26,7 +24,7 @@ const onScaleValueChange = function () {
  * Записать новое значение в поле с масштабом
  * @param {number} value значение масштаба 0..100
  */
-const setScaleValue = function (value) {
+const setScaleValue = (value) => {
   scaleControlValueElement.value = `${value}%`;
   onScaleValueChange();
 };
@@ -35,7 +33,7 @@ const setScaleValue = function (value) {
  * Обработчик клика на +/- масштаба
  * @param {number} changeValue на сколько изменить масштаб
  */
-const changeScaleValue = function (changeValue) {
+const changeScaleValue = (changeValue) => {
   const currentScaleValue = getScaleValue();
   const newScaleValue = currentScaleValue + changeValue;
   if (newScaleValue <= 0 || newScaleValue > ScaleProperties.MAX_VALUE) {
@@ -44,15 +42,15 @@ const changeScaleValue = function (changeValue) {
   setScaleValue(newScaleValue);
 };
 
-const onScaleControlSmallerClick = function () {
+const onScaleControlSmallerClick = () => {
   changeScaleValue(ScaleProperties.STEP * -1);
 };
 
-const onScaleControlBiggerClick = function () {
+const onScaleControlBiggerClick = () => {
   changeScaleValue(ScaleProperties.STEP);
 };
 
-const initScalePicture = function () {
+const initScalePicture = () => {
   scaleControlSmallerElement.addEventListener(
     'click',
     onScaleControlSmallerClick

@@ -17,20 +17,20 @@ import { isEscapeKey } from './utils';
  * @param {HTMLElement} messageContainer указатель на контейнер формы
  * @returns {function} функция для отображения формы
  */
-const createMessageDialog = function (messageButton, messageContainer) {
-  const onMessageButtonKeyDown = function (evt) {
+const createMessageDialog = (messageButton, messageContainer) => {
+  const onMessageButtonKeyDown = (evt) => {
     if (isEscapeKey(evt)) {
       closeMessageDialog();
     }
   };
 
-  const onOutsideContainerClick = function (evt) {
+  const onOutsideContainerClick = (evt) => {
     if (evt.target === messageContainer) {
       closeMessageDialog();
     }
   };
 
-  const onMessageButtonClick = function () {
+  const onMessageButtonClick = () => {
     closeMessageDialog();
   };
 
@@ -46,7 +46,7 @@ const createMessageDialog = function (messageButton, messageContainer) {
    * Показать форму
    * @param {[{ type: string, cb: EventListenerOrEventListenerObject }]} preventEvents при отображения формы события удаляются и восстанавливаются в момент закрытия формы
    */
-  const showMessage = function (preventEvents = []) {
+  const showMessage = (preventEvents = []) => {
     setPreventEvents(preventEvents);
     resetPreventEvents();
     document.addEventListener('keydown', onMessageButtonKeyDown);

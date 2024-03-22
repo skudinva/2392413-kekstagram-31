@@ -11,17 +11,15 @@ import { addOrRemoveClass } from './utils';
 /**
  * Получение выбранного эффекта
  */
-const getSelectedEffect = function () {
-  return effectsListElement.querySelector(
-    'input[type="radio"][name="effect"]:checked'
-  ).value;
-};
+const getSelectedEffect = () => effectsListElement.querySelector(
+  'input[type="radio"][name="effect"]:checked'
+).value;
 
 /**
  * Установить эффект
  * @param {string} value код эффекта none|chrome|sepia|marvin|phobos|heat
  */
-const setSelectedEffect = function (value) {
+const setSelectedEffect = (value) => {
   effectsListElement.querySelector(
     `input[type="radio"][value="${value}"]`
   ).checked = true;
@@ -30,7 +28,7 @@ const setSelectedEffect = function (value) {
 /**
  * Применить эффект
  */
-const applyEffect = function () {
+const applyEffect = () => {
   effectLevelValueElement.value = Number(effectLevelSliderElement.noUiSlider.get());
   const curentEffect = getSelectedEffect();
   const newStyleEffect = effectStyle[curentEffect]?.css(
@@ -42,7 +40,7 @@ const applyEffect = function () {
 /**
  * Создание слайдера
  */
-const initUISlider = function () {
+const initUISlider = () => {
   noUiSlider.create(effectLevelSliderElement, {
     range: {
       min: 0,
@@ -60,7 +58,6 @@ const initUISlider = function () {
    * (предоставляется API слайдера), CSS-стили картинки внутри .img-upload__preview обновляются
    * следующим образом (см. effectStyle).
    */
-
   effectLevelSliderElement.noUiSlider.on('slide', applyEffect);
 };
 
@@ -69,7 +66,7 @@ const initUISlider = function () {
  * При переключении эффектов, уровень насыщенности сбрасывается до начального значения (100%):
  * слайдер, CSS-стиль изображения и значение поля должны обновляться.
  */
-const resetEffect = function () {
+const resetEffect = () => {
   const curentEffect = getSelectedEffect();
   const sliderOption = effectStyle[curentEffect].slider;
   effectLevelSliderElement.noUiSlider.updateOptions(sliderOption);
@@ -85,12 +82,10 @@ const resetEffect = function () {
 /**
  * Обработчик переключателя эффекта.
  */
-const onEffectItemClick = function (evt) {
+const onEffectItemClick = (evt) => {
   evt.preventDefault();
-  if (
-    evt.target !== effectsListElement &&
-    !evt.target.classList.contains('effects__radio')
-  ) {
+  if (evt.target !== effectsListElement &&
+    !evt.target.classList.contains('effects__radio')) {
     return;
   }
   resetEffect();
@@ -99,7 +94,7 @@ const onEffectItemClick = function (evt) {
 /**
  * Инициализация эффектов.
  */
-const initEffectPicture = function () {
+const initEffectPicture = () => {
   if (!effectLevelSliderElement.noUiSlider) {
     initUISlider();
   }

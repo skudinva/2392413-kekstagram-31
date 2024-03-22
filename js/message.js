@@ -17,7 +17,7 @@ import { isEscapeKey } from './utils';
  * @param {HTMLElement} messageContainer указатель на контейнер формы
  * @returns {function} функция для отображения формы
  */
-const message = function (messageButton, messageContainer) {
+const createMessageDialog = function (messageButton, messageContainer) {
   const onMessageButtonKeyDown = function (evt) {
     if (isEscapeKey(evt)) {
       messageFormClose();
@@ -57,7 +57,7 @@ const message = function (messageButton, messageContainer) {
   return showMessage;
 };
 
-const showError = message(errorButtonElement, errorContainerElement);
-const showSuccess = message(successButtonElement, successContainerElement);
+const showError = createMessageDialog(errorButtonElement, errorContainerElement);
+const showSuccess = createMessageDialog(successButtonElement, successContainerElement);
 
 export { showError, showSuccess };

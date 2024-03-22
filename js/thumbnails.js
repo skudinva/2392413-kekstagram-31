@@ -15,13 +15,13 @@ const clearThumbnails = () => {
  * Обработчик события клик на миниатюре
  */
 const onThumbnailClick = (evt) => {
-  const picture = evt.target.closest('.picture');
-  if (!picture) {
+  const pictureElement = evt.target.closest('.picture');
+  if (!pictureElement) {
     return;
   }
 
   evt.preventDefault();
-  setSelectedPicture(Number(picture.dataset.pictureId));
+  setSelectedPicture(Number(pictureElement.dataset.pictureId));
   renderBigPicture();
 };
 

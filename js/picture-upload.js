@@ -1,6 +1,4 @@
 import { sendData } from './api';
-import { FILE_TYPES } from './config';
-import { showErrorData } from './error-data';
 import { showError, showSuccess } from './message';
 import {
   descriptionInputElement,
@@ -25,15 +23,8 @@ import { isEscapeKey } from './utils';
  * @param {Elemetn} fileElement указатель на input type="file"
  * @returns {string|null}
  */
-const getBlobURL = function (fileElement) {
-  const file = fileElement.files[0];
-  const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  if (!matches) {
-    showErrorData('Формат файла не поддерживается.');
-    return;
-  }
-  return URL.createObjectURL(file);
+const getBlobURL = function (fileElement){
+  return URL.createObjectURL(fileElement.files[0]);
 };
 
 const onUploadFormKeydown = function (evt) {
@@ -142,7 +133,7 @@ const onUploadPictureFormSubmit = function (evt) {
 const initUploadPicture = function () {
   uploadPictureInputElement.setAttribute(
     'accept',
-    `image/${FILE_TYPES.join(', image/')}`
+    'image/*'
   );
   uploadPictureFormElement.addEventListener(
     'submit',

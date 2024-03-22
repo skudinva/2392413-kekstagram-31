@@ -1,7 +1,6 @@
 const ERROR_DATA_SHOW_TIME = 5000;
 const DEBOUNCE_TIMEOUT = 500;
 const PICTURE_RANDOM_COUNT = 10;
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const COMMENT_LOADING_COUNT = 5;
 
 const ScaleProperties = {
@@ -73,7 +72,6 @@ export {
   DEBOUNCE_TIMEOUT,
   DESCRIPTION_MAX_LENGTH,
   ERROR_DATA_SHOW_TIME,
-  FILE_TYPES,
   HASHTAG_MAX_COUNT,
   PICTURE_RANDOM_COUNT,
   ScaleProperties, effectStyle

@@ -32,16 +32,16 @@ const onThumbnailClick = (evt) => {
  */
 const getThumbnailElement = ({ id, url, description, likes, comments }) => {
   const pictureElement = templatePictureElement.content.cloneNode(true);
-  const img = pictureElement.querySelector('.picture__img');
-  const like = pictureElement.querySelector('.picture__likes');
-  const comment = pictureElement.querySelector('.picture__comments');
-  const link = pictureElement.querySelector('a');
+  const imgElement = pictureElement.querySelector('.picture__img');
+  const likeElement = pictureElement.querySelector('.picture__likes');
+  const commentElement = pictureElement.querySelector('.picture__comments');
+  const linkElement = pictureElement.querySelector('a');
 
-  link.dataset.pictureId = id;
-  img.src = url;
-  img.alt = description;
-  like.textContent = likes;
-  comment.textContent = comments.length;
+  linkElement.dataset.pictureId = id;
+  imgElement.src = url;
+  imgElement.alt = description;
+  likeElement.textContent = likes;
+  commentElement.textContent = comments.length;
 
   return pictureElement;
 };

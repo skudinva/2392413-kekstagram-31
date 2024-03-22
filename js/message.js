@@ -20,21 +20,21 @@ import { isEscapeKey } from './utils';
 const createMessageDialog = function (messageButton, messageContainer) {
   const onMessageButtonKeyDown = function (evt) {
     if (isEscapeKey(evt)) {
-      messageFormClose();
+      closeMessageDialog();
     }
   };
 
   const onOutsideContainerClick = function (evt) {
     if (evt.target === messageContainer) {
-      messageFormClose();
+      closeMessageDialog();
     }
   };
 
   const onMessageButtonClick = function () {
-    messageFormClose();
+    closeMessageDialog();
   };
 
-  function messageFormClose() {
+  function closeMessageDialog() {
     messageContainer.remove();
     document.removeEventListener('keydown', onMessageButtonKeyDown);
     document.removeEventListener('click', onOutsideContainerClick);

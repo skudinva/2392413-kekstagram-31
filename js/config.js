@@ -4,9 +4,11 @@ const PICTURE_RANDOM_COUNT = 10;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const COMMENT_LOADING_COUNT = 5;
 
-const SCALE_STEP = 25;
-const SCALE_MAX_VALUE = 100;
-const SCALE_DEFAULT_VALUE = 100;
+const ScaleProperties = {
+  STEP: 25,
+  MAX_VALUE: 100,
+  DEFAULT_VALUE: 100
+};
 
 const DESCRIPTION_MAX_LENGTH = 140;
 const HASHTAG_MAX_COUNT = 5;
@@ -74,8 +76,6 @@ export {
   FILE_TYPES,
   HASHTAG_MAX_COUNT,
   PICTURE_RANDOM_COUNT,
-  SCALE_DEFAULT_VALUE,
-  SCALE_MAX_VALUE,
-  SCALE_STEP,
-  effectStyle,
+  ScaleProperties, effectStyle
 };
+

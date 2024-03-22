@@ -1,4 +1,4 @@
-import { SCALE_DEFAULT_VALUE, SCALE_MAX_VALUE, SCALE_STEP } from './config';
+import { ScaleProperties } from './config';
 import {
   picturePreviewElement,
   scaleControlBiggerElement,
@@ -39,18 +39,18 @@ const changeScaleValue = function (changeValue) {
   const currentScaleValue = getScaleValue();
   const newScaleValue = currentScaleValue + changeValue;
 
-  if (newScaleValue <= 0 || newScaleValue > SCALE_MAX_VALUE) {
+  if (newScaleValue <= 0 || newScaleValue > ScaleProperties.MAX_VALUE) {
     return;
   }
   setScaleValue(newScaleValue);
 };
 
 const onScaleControlSmallerClick = function () {
-  changeScaleValue(SCALE_STEP * -1);
+  changeScaleValue(ScaleProperties.STEP * -1);
 };
 
 const onScaleControlBiggerClick = function () {
-  changeScaleValue(SCALE_STEP);
+  changeScaleValue(ScaleProperties.STEP);
 };
 
 const initScalePicture = function () {
@@ -63,7 +63,7 @@ const initScalePicture = function () {
     onScaleControlBiggerClick
   );
   scaleControlValueElement.addEventListener('change', onScaleValueChange);
-  setScaleValue(SCALE_DEFAULT_VALUE);
+  setScaleValue(ScaleProperties.DEFAULT_VALUE);
   onScaleValueChange();
 };
 

@@ -17,7 +17,7 @@ import { addOrRemoveClass, debounce } from './utils';
 /**
  * Устранение дребезга. Перерисовываем фото только через DEBOUNCE_TIMEOUT
  */
-const createThumbnailsDebounce = debounce(createThumbnails, DEBOUNCE_TIMEOUT);
+const getThumbnailsDebounce = debounce(createThumbnails, DEBOUNCE_TIMEOUT);
 
 /**
  * Отрисовка выбранного фильтра
@@ -33,7 +33,7 @@ const renderActiveFilter = () => {
   });
 
   if (useDebounce()) {
-    createThumbnailsDebounce();
+    getThumbnailsDebounce();
   } else {
     createThumbnails();
     setUseDebounce(true);

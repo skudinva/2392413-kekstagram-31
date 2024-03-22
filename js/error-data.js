@@ -6,7 +6,7 @@ import {
 
 /**
  * Показать предупреждение
- * @param {string} errorText текст предупреждени
+ * @param {string} errorText
  */
 const showErrorData = function (errorText) {
   if (errorText) {

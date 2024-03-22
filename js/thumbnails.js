@@ -26,11 +26,11 @@ const onThumbnailClick = function (evt) {
 };
 
 /**
- * Создание одной миниатюры
+ * Создание миниатюры
  * @param {{id: number, url: string, description: string, likes: number, comments: string}} данные миниатюры
  * @returns {DocumentFragment}
  */
-const createThumbnail = function ({ id, url, description, likes, comments }) {
+const getThumbnailElement = function ({ id, url, description, likes, comments }) {
   const pictureElement = templatePictureElement.content.cloneNode(true);
   const img = pictureElement.querySelector('.picture__img');
   const like = pictureElement.querySelector('.picture__likes');
@@ -53,7 +53,7 @@ const createThumbnails = function () {
   clearThumbnails();
   const pictures = getPictures();
   pictures.forEach((picture) =>
-    picturePoolElement.appendChild(createThumbnail(picture))
+    picturePoolElement.appendChild(getThumbnailElement(picture))
   );
   picturePoolElement.addEventListener('click', onThumbnailClick);
 };

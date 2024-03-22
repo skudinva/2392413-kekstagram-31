@@ -4,9 +4,9 @@ import { getComments } from './picture-state';
  * Создание иконци аватара в списке с комментариями
  * @param {string} avatar ссылка на картинку с аватар
  * @param {string} name пользователь
- * @returns {DocumentFragment}
+ * @returns {HTMLImageElement}
  */
-const createAvatar = function (avatar, name) {
+const getAvatarElement = function (avatar, name) {
   const userAvatar = document.createElement('img');
   userAvatar.classList.add('social__picture');
   userAvatar.src = avatar;
@@ -19,9 +19,9 @@ const createAvatar = function (avatar, name) {
 /**
  * Создание текста коммментария
  * @param {string} message текст комментария
- * @returns {DocumentFragment}
+ * @returns {HTMLParagraphElement}
  */
-const createMessage = function (message) {
+const getMessageElement = function (message) {
   const userMessage = document.createElement('p');
   userMessage.classList.add('social__text');
   userMessage.textContent = message;
@@ -36,13 +36,13 @@ const createMessage = function (message) {
 /**
  * Создание комментария
  * @param {Comment} данные комментария
- * @returns {DocumentFragment}
+ * @returns {HTMLLIElement}
  */
-const createComment = function ({ avatar, name, message }) {
+const getCommentElement = function ({ avatar, name, message }) {
   const userComment = document.createElement('li');
   userComment.classList.add('social__comment');
-  userComment.appendChild(createAvatar(avatar, name));
-  userComment.appendChild(createMessage(message));
+  userComment.appendChild(getAvatarElement(avatar, name));
+  userComment.appendChild(getMessageElement(message));
   return userComment;
 };
 
@@ -64,7 +64,7 @@ const getNextComments = function (fromIndex, toIndex) {
 const renderComments = function (comments) {
   const commentFragment = document.createDocumentFragment();
   comments.forEach((comment) => {
-    commentFragment.appendChild(createComment(comment));
+    commentFragment.appendChild(getCommentElement(comment));
   });
   return commentFragment;
 };

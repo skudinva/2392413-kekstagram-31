@@ -12,15 +12,8 @@ const ScaleProperties = {
 const DESCRIPTION_MAX_LENGTH = 140;
 const HASHTAG_MAX_COUNT = 5;
 
-/**
+/*
  * В объекте хранится для каждого эффекта параметры слайдера и стиля.
- * CSS-стили картинки внутри .img-upload__preview обновляются следующим образом:
- * - Для эффекта «Хром» — filter: grayscale(0..1) с шагом 0.1;
- * - Для эффекта «Сепия» — filter: sepia(0..1) с шагом 0.1;
- * - Для эффекта «Марвин» — filter: invert(0..100%) с шагом 1%;
- * - Для эффекта «Фобос» — filter: blur(0..3px) с шагом 0.1px;
- * - Для эффекта «Зной» — filter: brightness(1..3) с шагом 0.1;
- * - Для эффекта «Оригинал» CSS-стили filter удаляются.
  */
 const effectStyle = {
   none: {

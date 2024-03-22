@@ -50,6 +50,9 @@ const onScaleControlBiggerClick = () => {
   changeScaleValue(ScaleProperties.STEP);
 };
 
+/**
+ * Инициализация масштаба
+ */
 const initScalePicture = () => {
   scaleControlSmallerElement.addEventListener(
     'click',

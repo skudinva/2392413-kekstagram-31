@@ -56,6 +56,9 @@ const onFilterClick = (evt) => {
   applyFilter(evt.target);
 };
 
+/**
+ * Инициализация фильтров
+ */
 const initFilters = () => {
   filtersFormElement.addEventListener('click', onFilterClick);
   addOrRemoveClass(

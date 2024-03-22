@@ -38,14 +38,6 @@ const onUploadCloseClick = () => {
 /**
  * Обработчик события закрытия формы. Срабатывает на Esc и Click
  * по иконке на форме.
- * Необходимо:
- * - вернуть класс hidden;
- * - у элемента body удаляется класс modal-open;
- * - у элемента с выбранным файлом необходимо сбросить value чтобы повторно можно
- * было загрузить одит и тот же файл.
- *
- * Нюанс: если фокус находится в поле ввода хэштега или комментария, нажатие на
- * Esc не должно приводить к закрытию формы редактирования изображения.
  */
 function closeUploadForm() {
   document.removeEventListener('keydown', onUploadFormKeydown);
@@ -61,10 +53,6 @@ function closeUploadForm() {
 
 /**
  * Обработчик собития change поля с выбором файла.
- * После выбора файла должна появиться модальная форма. Для этого
- * удаляется класс hidden, а для body задаётся класс modal-open.
- * Для закрытия формы добавляем слушателя на событие
- * keydown на документ и событие click на иконку.
  */
 const onPictureInputChange = () => {
   if (!getPristine()) {
@@ -105,7 +93,7 @@ const unblockSubmitButton = () => {
 
 /**
  * Обработчик события submit (отправка формы).
- * Если Pristine возвращает false, значит где-то есть ошибка.
+ * Если Pristine возвращает false, значит где-то ошибка.
  */
 const onUploadPictureFormSubmit = (evt) => {
   evt.preventDefault();

@@ -2,3 +2,19 @@
 Todo:
   ✔ Вынести настройки в отдельный config.js @done(24-02-24 16:21)
   ✔ dicts переименовать в единственное число @done(24-02-27 22:50)
+
+config.js:
+  Как писать комменты можно почитать https://learn.javascript.ru/comments
+
+main.js:
+  нейминг не корректный, нужно вместо фильтра именовать сортировка
+
+page-elements.js:
+  нейминги поиска селекторов можно писать короче, например uploadPictureFormElement => pictureFormElement и т.п. можем на созвоне пройтись можно от Д3 абстрагироваться (он про другое, но суть похожа)
+
+picture-effect.js:
+  Object.assign(picturePreviewElement.style, newStyleEffect); сейчас как правило используют более современный вид записи
+  picturePreviewElement.style = {…picturePreviewElement.style, …newStyleEffect} - для объединения нескольких объектов
+
+utils.js:
+  если функция используется только в одном модуле, то лучше ее там и писать, потому что если все доп функции выносить в общий файл, то он разрастется очень быстро

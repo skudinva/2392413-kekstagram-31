@@ -29,12 +29,12 @@ const getBlobURL = function (fileElement){
 
 const onUploadFormKeydown = function (evt) {
   if (isEscapeKey(evt)) {
-    uploadFormClose();
+    closeUploadForm();
   }
 };
 
 const onUploadCloseClick = function () {
-  uploadFormClose();
+  closeUploadForm();
 };
 
 /**
@@ -49,7 +49,7 @@ const onUploadCloseClick = function () {
  * Нюанс: если фокус находится в поле ввода хэштега или комментария, нажатие на
  * Esc не должно приводить к закрытию формы редактирования изображения.
  */
-function uploadFormClose() {
+function closeUploadForm() {
   document.removeEventListener('keydown', onUploadFormKeydown);
   uploadPictureOverlayElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -118,7 +118,7 @@ const onUploadPictureFormSubmit = function (evt) {
   blockSubmitButton();
   sendData(new FormData(evt.target))
     .then(() => {
-      uploadFormClose();
+      closeUploadForm();
       showSuccess();
     })
     .catch(() => {

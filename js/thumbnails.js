@@ -21,7 +21,7 @@ const onThumbnailClick = function (evt) {
   }
 
   evt.preventDefault();
-  setSelectedPicture(+picture.dataset.pictureId);
+  setSelectedPicture(Number(picture.dataset.pictureId));
   renderBigPicture();
 };
 

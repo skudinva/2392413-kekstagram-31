@@ -31,7 +31,7 @@ const setSelectedEffect = function (value) {
  * Применить эффект
  */
 const applyEffect = function () {
-  effectLevelValueElement.value = +effectLevelSliderElement.noUiSlider.get();
+  effectLevelValueElement.value = Number(effectLevelSliderElement.noUiSlider.get());
   const curentEffect = getSelectedEffect();
   const newStyleEffect = effectStyle[curentEffect]?.css(
     effectLevelValueElement.value

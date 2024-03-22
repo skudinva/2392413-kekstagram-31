@@ -10,7 +10,7 @@ import {
  * Функция получения текущего значения масштаба в процентах
  */
 const getScaleValue = function () {
-  return +scaleControlValueElement.value.replace('%', '');
+  return Number(scaleControlValueElement.value.replace('%', ''));
 };
 
 /**
@@ -38,7 +38,6 @@ const setScaleValue = function (value) {
 const changeScaleValue = function (changeValue) {
   const currentScaleValue = getScaleValue();
   const newScaleValue = currentScaleValue + changeValue;
-
   if (newScaleValue <= 0 || newScaleValue > ScaleProperties.MAX_VALUE) {
     return;
   }

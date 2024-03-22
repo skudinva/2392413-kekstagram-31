@@ -31,7 +31,7 @@ const onThumbnailClick = function (evt) {
  * @returns {DocumentFragment}
  */
 const createThumbnail = function ({ id, url, description, likes, comments }) {
-  const pictureElement = templatePictureElement.cloneNode(true);
+  const pictureElement = templatePictureElement.content.cloneNode(true);
   const img = pictureElement.querySelector('.picture__img');
   const like = pictureElement.querySelector('.picture__likes');
   const comment = pictureElement.querySelector('.picture__comments');

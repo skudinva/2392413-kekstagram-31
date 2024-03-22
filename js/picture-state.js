@@ -2,7 +2,7 @@ import { PICTURE_RANDOM_COUNT } from './config';
 import { getUniqueRandomArrayElement } from './utils';
 
 const pictureState = {
-  useDebaunce: false,
+  useDebounce: false,
   pictures: [],
   selectedPicture: null,
   lastCommentShowItem: -1,
@@ -18,12 +18,12 @@ const pictureState = {
 
 const defaultPictureState = { ...pictureState };
 
-const useDebaunce = function () {
-  return pictureState.useDebaunce;
+const useDebounce = function () {
+  return pictureState.useDebounce;
 };
 
-const setUseDebaunce = function (value) {
-  pictureState.useDebaunce = value;
+const setUseDebounce = function (value) {
+  pictureState.useDebounce = value;
 };
 
 const getPictureCount = function () {
@@ -89,6 +89,7 @@ export {
   setPictures,
   setSelectedFilter,
   setSelectedPicture,
-  setUseDebaunce,
-  useDebaunce,
+  setUseDebounce,
+  useDebounce
 };
+

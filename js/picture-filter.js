@@ -8,8 +8,8 @@ import {
   getPictureCount,
   getSelectedFilter,
   setSelectedFilter,
-  setUseDebaunce,
-  useDebaunce,
+  setUseDebounce,
+  useDebounce,
 } from './picture-state';
 import { createThumbnails } from './thumbnails';
 import { addOrRemoveClass, debounce } from './utils';
@@ -32,11 +32,11 @@ const renderActiveFilter = function () {
     );
   });
 
-  if (useDebaunce()) {
+  if (useDebounce()) {
     createThumbnailsDebounce();
   } else {
     createThumbnails();
-    setUseDebaunce(true);
+    setUseDebounce(true);
   }
 };
 

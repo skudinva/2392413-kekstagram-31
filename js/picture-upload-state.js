@@ -1,5 +1,5 @@
 const pictureUploadState = {
-  pristine: undefined,
+  pristine: null,
 };
 
 const getPristine = function () {

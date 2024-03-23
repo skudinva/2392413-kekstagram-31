@@ -4,8 +4,10 @@ import {
   hashtagInputElement,
   uploadPictureFormElement,
 } from './page-elements';
-import { validateHashtag, validateStringLen } from './utils';
 
+const validateHashtag = (hashtag) => /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
+
+const validateStringLen = (stringValue, maxLength) => stringValue.length <= maxLength;
 const pristineInit = () => {
   /**
    * Инициализация Pristine для валидации формы ввода.

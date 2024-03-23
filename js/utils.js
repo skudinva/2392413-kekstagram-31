@@ -18,11 +18,12 @@ const getUniqueRandomArrayElement = (elements, maxCount) => {
   return result;
 };
 
-const validateHashtag = (hashtag) => /^#[a-zа-яё0-9]{1,19}$/i.test(hashtag);
-
-const allowHashtagChar = (char) => /[#a-zа-яё0-9 ]/.test(char);
-
-const validateStringLen = (stringValue, maxLength) => stringValue.length <= maxLength;
+const renderTemplate = (templateId, selector) => {
+  const template = document.querySelector(templateId).content;
+  return (selector ? template.querySelector(selector) : template).cloneNode(
+    true
+  );
+};
 
 const debounce = (callback, timeoutDelay) => {
   let timeoutId = 0;
@@ -32,13 +33,6 @@ const debounce = (callback, timeoutDelay) => {
       callback.apply(this, rest);
     }, timeoutDelay);
   };
-};
-
-const renderTemplate = (templateId, selector) => {
-  const template = document.querySelector(templateId).content;
-  return (selector ? template.querySelector(selector) : template).cloneNode(
-    true
-  );
 };
 
 const addOrRemoveClass = (element, className, condition) => {
@@ -52,15 +46,10 @@ const addOrRemoveClass = (element, className, condition) => {
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 export {
-  addOrRemoveClass,
-  allowHashtagChar,
-  debounce,
-  getRandomArrayElement,
+  addOrRemoveClass, debounce, getRandomArrayElement,
   getRandomInteger,
   getUniqueRandomArrayElement,
   isEscapeKey,
-  renderTemplate,
-  validateHashtag,
-  validateStringLen
+  renderTemplate
 };
 
